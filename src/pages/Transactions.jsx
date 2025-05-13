@@ -6,6 +6,7 @@ const Transactions = () => {
       <h1>kjsfngjfjgsf</h1>
       <h1>kesbgbkfkdnjd</h1>
       <h3>ejfngn</h3>
+      <p>dfbgfiuhrfukvsbgfkjnbajdfjgakdg</p>
     </div>
   )
 }
