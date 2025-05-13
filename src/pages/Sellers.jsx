@@ -30,7 +30,7 @@ const Sellers = () => {
             <li>Action</li>
           </ul>
         </ul>
-        
+        <h1>salom</h1>
       </div>
     </div>
   )
