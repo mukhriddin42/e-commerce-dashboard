@@ -7,16 +7,15 @@ function App() {
   return (
     <>
       <div className="flex">
-      <DashboardSideBar />
-      <div className="w-full">
-        <DashboardNavbar />
-        <main className="p-4">
-          {/* Asosiy kontent shu yerda bo‘ladi */}
-          <Outlet/>
-        </main>
+        <DashboardSideBar />
+        <div className="w-full">
+          <DashboardNavbar />
+          <main className="p-4">
+            {/* Asosiy kontent shu yerda bo‘ladi */}
+            <Outlet />
+          </main>
+        </div>
       </div>
-    </div>
-
     </>
   )
 }
