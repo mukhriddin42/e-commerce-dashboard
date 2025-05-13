@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Sellers = () => {
+const SellerList = () => {
   return (
     <div className='max-w-full h-max'>
       <div className='flex justify-between items-center '>
@@ -35,4 +35,4 @@ const Sellers = () => {
     </div>
   )
 }
-export default Sellers
+export default SellerList
