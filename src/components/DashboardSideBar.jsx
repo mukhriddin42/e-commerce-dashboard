@@ -16,9 +16,13 @@ import React, { forwardRef, useState } from 'react';
 import Logo from '../assets/icons/logo.png';
 import { Link } from 'react-router-dom';
 
+
+
 const DashboardSideBar = () => {
     const [expanded, setExpanded] = useState(true);
     const [activeKey, setActiveKey] = useState('1');
+
+
 
     // this is for React Router DOM to work with rsuite
     const NavLink = forwardRef(({ href, children, ...rest }, ref) => (
@@ -44,7 +48,7 @@ const DashboardSideBar = () => {
 
             <Sidenav.Body>
                 <Nav activeKey={activeKey} onSelect={setActiveKey}>
-                    <Nav.Item eventKey="1" as={NavLink} href="/" icon={<DashboardIcon />}>
+                    <Nav.Item eventKey="1" as={NavLink} href="/"  icon={<DashboardIcon />}>
                         Dashboard
                     </Nav.Item>
 
