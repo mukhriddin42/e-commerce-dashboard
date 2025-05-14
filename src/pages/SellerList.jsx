@@ -24,12 +24,19 @@ const SellerList = () => {
     let form = document.querySelector('form')
     let formData = new FormData(form)
 
+    let now = new Date()
+    let month = String(now.getMonth() + 1).padStart(2, '0') // getMonth() 0-based
+    let day = String(now.getDate()).padStart(2, '0')
+    let year = now.getFullYear()
+    let formattedDate = `${month}.${day}.${year}`
+
     let obj = {
       id: users.length + 1,
       firstname: formData.get('firstname'),
       lastname: formData.get('lastname'),
       email: formData.get('email'),
-      status: formData.get('select')
+      status: formData.get('select'),
+      registerDate: formattedDate
     }
 
     setUsers(val => [...val, obj])
@@ -61,17 +68,20 @@ const SellerList = () => {
             </select>
           </ul>
         </ul>
-        <ul className='w-full  p-3 rounded h-10 flex items-center justify-between bg-gray-100'>
+        <ul className='w-full  p-3 rounded h-10 flex  items-center justify-between bg-gray-100'>
           <li>Seller</li>
           <li>Email</li>
-          <li>Status</li>
+          <ul className='flex items-center  w-50 justify-between'>
+            <li>Status</li>
+            <li >Registered</li>
+          </ul>
           <li>Action</li>
         </ul>
 
         {users.map(user => {
           return (
-            <ul className='flex w-full h-15 p-1 items-center justify-between'>
-              <ul className=' flex gap-3 '>
+            <ul className='flex w-full h-15 p-1 items-center justify-between '>
+              <ul className=' flex gap-3  '>
                 <div className='bg-gray-600 w-10 h-10 rounded-[50%]'></div>
                 <ul>
                   <li >{user.firstname} {user.lastname}</li>
@@ -79,9 +89,12 @@ const SellerList = () => {
                 </ul>
               </ul>
               <li className=''>{user.email}</li>
-              <li className={`${user.status === 'active' ? 'bg-green-200 text-green-500' : 'bg-red-200  text-red-500'}   py-2 px-4 rounded-3xl`}>
-                {user.status}
-              </li>
+              <ul className='flex items-center gap-25'>
+                <li className={`${user.status === 'active' ? 'bg-green-200 text-green-500' : 'bg-red-200  text-red-500'}   py-2 px-4 rounded-3xl`}>
+                  {user.status}
+                </li>
+                <li>{user.registerDate}</li>
+              </ul>
 
 
               <button className='p-2 bg-green-500 text-white! rounded! '>Wiev detail</button>
@@ -92,9 +105,9 @@ const SellerList = () => {
         <div className='modal w-100 h-100 shadow-md p-3   absolute right-[-500px] top-0 flex flex-col  items-center z-50 bg-white rounded-[10px] duration-300 ease-in-out'>
           <h3>New Seller</h3>
           <form onSubmit={getUser} className='flex flex-col gap-7 mt-4'>
-            <input name='firstname'  type="text" placeholder='FirstName' className='border-1 p-2 rounded border-green-600 outline-none *:' />
-            <input name='lastname'  type="text" placeholder='LastName' className='border-1 p-2 rounded border-green-600 outline-none' />
-            <input name='email'  type="email" placeholder='Email' className='border-1 p-2 rounded border-green-600 outline-none' />
+            <input name='firstname' type="text" placeholder='FirstName' className='border-1 p-2 rounded border-green-600 outline-none *:' />
+            <input name='lastname' type="text" placeholder='LastName' className='border-1 p-2 rounded border-green-600 outline-none' />
+            <input name='email' type="email" placeholder='Email' className='border-1 p-2 rounded border-green-600 outline-none' />
             <select name='select' id="select" className='border-1 p-2 rounded border-green-600 outline-none'>
               <option value="active">Active</option>
               <option value="inactive">Inactive</option>
