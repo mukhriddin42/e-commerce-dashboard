@@ -5,47 +5,98 @@ import SignOutIcon from '@rsuite/icons/legacy/SignOut';
 import UserInfoIcon from '@rsuite/icons/legacy/UserInfo';
 import { Input, InputGroup } from 'rsuite';
 import SearchIcon from '@rsuite/icons/Search';
+import { Badge, Button } from 'rsuite';
+
+// react-icons
+import { IoTvSharp } from "react-icons/io5";
+import { FaEarthAmericas } from "react-icons/fa6";
+import { IoMdMoon } from "react-icons/io";
+import { FaBell } from "react-icons/fa";
+
 
 import 'rsuite/dist/rsuite.min.css';
 
 
 const styles = {
   width: 300,
-  marginBottom: 10
 };
 
 const DashboardNavbar = () => {
   return (
-    <div  className="shadow-sm  py-1 flex justify-around items-center">
+    <div className=" shadow-sm h-[110px] md:h-[64px]  flex flex-col gap-2 ">
 
-      {/* Chap tomon –  menyu */}
-
-      <InputGroup style={styles}>
-        <Input />
-        <InputGroup.Button>
-          <SearchIcon />
-        </InputGroup.Button>
-      </InputGroup>
+      <div className=" flex px-2 md:px-5 mt-2 w-full justify-end md:flex-row  md:justify-between items-center">
+        {/* Chap tomon –  menyu */}
 
 
-      {/* O'ng tomon – foydalanuvchi menyusi */}
-      <Nav pullRight>
-        <Dropdown
-          placement="bottomEnd"
-          title={
-            <Avatar
-              circle
-              src="https://i.pravatar.cc/40" // Bu avatar o‘rniga o‘zingizning rasm URL’ingizni qo‘yishingiz mumkin
-              alt="User"
-            />
-          }
-        >
-          <Dropdown.Item icon={<UserInfoIcon />}>Profile</Dropdown.Item>
-          <Dropdown.Item icon={<CogIcon />}>Settings</Dropdown.Item>
-          <Dropdown.Separator />
-          <Dropdown.Item icon={<SignOutIcon />}>Logout</Dropdown.Item>
-        </Dropdown>
-      </Nav>
+        <InputGroup style={styles} className='hidden! md:flex!'>
+          <Input className='bg-gray-100!' />
+          <InputGroup.Button className='bg-gray-200!'>
+            <SearchIcon />
+          </InputGroup.Button>
+        </InputGroup>
+
+
+        {/* O'ng tomon – foydalanuvchi menyusi */}
+        <div className='flex gap-1 md:gap-3 mt-2 items-center'>
+
+          <Badge content={3}>
+            <Button>
+              <FaBell size={15} />
+
+            </Button>
+          </Badge>
+          <Button>
+            <IoMdMoon size={15} />
+
+          </Button>
+
+          <Button>
+            <IoTvSharp size={15} />
+          </Button>
+          <Nav pullRight className=''>
+            <Dropdown
+              placement="bottomEnd"
+              className='border border-gray-300 rounded-sm mr-2'
+              title={
+                <FaEarthAmericas size={15} />
+
+              }
+            >
+              <Dropdown.Item icon={<UserInfoIcon />}>Profile</Dropdown.Item>
+              <Dropdown.Item icon={<CogIcon />}>Settings</Dropdown.Item>
+              <Dropdown.Separator />
+              <Dropdown.Item icon={<SignOutIcon />}>Logout</Dropdown.Item>
+            </Dropdown>
+            <Dropdown
+              placement="bottomEnd"
+              className='border w-17 md:w-auto border-gray-300  rounded-sm '            
+              title={
+                <Avatar
+                  circle
+                  src="https://i.pravatar.cc/40" // Bu avatar o‘rniga o‘zingizning rasm URL’ingizni qo‘yishingiz mumkin
+                  alt="User"
+                  className='w-5! h-5! md:w-8! md:h-8!'
+                />
+              }
+            >
+              <Dropdown.Item icon={<UserInfoIcon />}>Profile</Dropdown.Item>
+              <Dropdown.Item icon={<CogIcon />}>Settings</Dropdown.Item>
+              <Dropdown.Separator />
+              <Dropdown.Item icon={<SignOutIcon />}>Logout</Dropdown.Item>
+            </Dropdown>
+          </Nav>
+        </div>
+
+      </div>
+
+      <InputGroup className='flex! md:hidden! max-w-[90%] mx-auto '>
+          <Input className='bg-gray-50!' />
+          <InputGroup.Button className='bg-gray-200!'>
+            <SearchIcon />
+          </InputGroup.Button>
+        </InputGroup>
+
     </div>
   );
 };
