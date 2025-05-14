@@ -1,4 +1,4 @@
-import { Sidenav, Nav, Toggle } from 'rsuite';
+import { Sidenav, Nav } from 'rsuite';
 import DashboardIcon from '@rsuite/icons/legacy/Dashboard';
 import GroupIcon from '@rsuite/icons/legacy/Group';
 import SwitchCoordinatesIcon from '@rsuite/icons/SwitchCoordinates';
@@ -12,110 +12,103 @@ import MessageIcon from '@rsuite/icons/Message';
 
 
 import 'rsuite/dist/rsuite.min.css';
-import React, { useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import Logo from '../assets/icons/logo.png';
-import {  NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const DashboardSideBar = () => {
     const [expanded, setExpanded] = useState(true);
-    // const [activeKey, setActiveKey] = useState('1');
+    const [activeKey, setActiveKey] = useState('1');
+
+    // this is for React Router DOM to work with rsuite
+    const NavLink = forwardRef(({ href, children, ...rest }, ref) => (
+        <Link ref={ref} to={href} {...rest}>
+            {children}
+        </Link>
+    ));
+
     return (
 
-
-
-        <Sidenav expanded={expanded} className='max-w-[15vw]!'>
+        <Sidenav expanded={expanded} className='max-w-[15vw]! z-20 shadow-lg  transition-all duration-100 ease-in-out' >
             <Sidenav.Header>
                 <div className="flex items-center justify-between h-16">
-                    {expanded && (
-                        <img src={Logo} className="w-[50%]" alt="Logo" />
-                    )}
+                    <Link to="/" >
+                        {expanded && (
+                            <img src={Logo} className="w-[50%] " alt="Logo" />
+                        )}
+                    </Link>
                     <Sidenav.Toggle onToggle={expanded => setExpanded(expanded)} className='border-t-0!' />
                 </div>
             </Sidenav.Header>
             <hr className='my-0!' />
 
             <Sidenav.Body>
-                <Nav  >
-                    <Nav.Item  icon={<DashboardIcon />}>
-                        <NavLink to="/" >Dashboard</NavLink>
+                <Nav activeKey={activeKey} onSelect={setActiveKey}>
+                    <Nav.Item eventKey="1" as={NavLink} href="/" icon={<DashboardIcon />}>
+                        Dashboard
                     </Nav.Item>
 
-                    <Nav.Menu placement="rightStart"  title="Products" icon={<CreditCardMinusIcon />}>
-
-                        <Nav.Item>
-                            <NavLink className="hover:text-green-600! no-underline!" to="/products">Products list</NavLink>
-                        </Nav.Item>
-
-                        <Nav.Item>
-                            <NavLink  to="/categories">Categories</NavLink>
-                        </Nav.Item>
+                    <Nav.Menu placement="" eventKey="2" title="Products" icon={<CreditCardMinusIcon />}>
+                        <Nav.Item eventKey="2-1"
+                            as={NavLink} href="/products" >Product List</Nav.Item>
+                        <Nav.Item eventKey="2-2"
+                            as={NavLink} href="/categories" >Categories</Nav.Item>
                     </Nav.Menu>
                     <Nav.Menu
-                        placement="rightStart"
-                        
+                        placement=""
+                        eventKey="3"
                         title="Orders"
                         icon={<SwitchCoordinatesIcon />}
                     >
-                        <Nav.Item >
-                            <NavLink to="/order-list">Order List</NavLink>
-                        </Nav.Item>
-                        <Nav.Item >
-                            <NavLink to="/order-details">Order Details</NavLink>
-                        </Nav.Item>
+                        <Nav.Item eventKey="3-1"
+                            as={NavLink} href="/order-list" >Order List</Nav.Item>
+                        <Nav.Item eventKey="3-2"
+                            as={NavLink} href="/order-details" >Order Detail</Nav.Item>
 
                     </Nav.Menu>
 
 
                     <Nav.Menu
-                        placement="rightStart"
+                        placement=""
+                        eventKey="4"
                         title="Sellers"
                         icon={<RelatedMapIcon />}
                     >
-                        <Nav.Item>
-                            <NavLink to="/seller-list">Sellers List</NavLink>
-                        </Nav.Item>
-                        <Nav.Item eventKey="4-2">
-                            <NavLink to="/seller-profile">Sellers Profile</NavLink>
-                        </Nav.Item>
+                        <Nav.Item eventKey="4-1"
+                            as={NavLink} href="/seller-list" >Sellers List</Nav.Item>
+                        <Nav.Item eventKey="4-2"
+                            as={NavLink} href="/seller-profile" >Sellers Profile</Nav.Item>
 
                     </Nav.Menu>
 
                     <Nav.Menu
-                        placement="rightStart"
+                        placement=""
                         eventKey="5"
                         title="Add Product"
                         icon={<AddOutlineIcon />}
                     >
-                        <Nav.Item>
-                            <NavLink to="/addproduct">Add Product</NavLink>
-                        </Nav.Item>
-                        <Nav.Item>Add Product 2</Nav.Item>
+                        <Nav.Item eventKey="5-1"
+                            as={NavLink} href="/addproduct" >Add Product 1</Nav.Item>
+                        <Nav.Item eventKey="5-2"
+                            as={NavLink} href="/" >Add Product 2</Nav.Item>
 
                     </Nav.Menu>
 
-                    <Nav.Menu
-                        placement="rightStart"
-                        title="Transactions"
-                        icon={<TagNumberIcon />}
-                    >
-                        <Nav.Item >
-                            <NavLink to="/transactions">Transactions List</NavLink>
-                        </Nav.Item>
-
-                    </Nav.Menu>
+                    <Nav.Item eventKey="6" icon={<TagNumberIcon />}
+                        as={NavLink} href="/transactions" >
+                        Transactions
+                    </Nav.Item>
 
                     <Nav.Menu
-                        placement="rightStart"
+                        placement=""
                         eventKey="7"
                         title="Account"
                         icon={<OperatePeopleIcon />}
                     >
-                        <Nav.Item eventKey="7-1">
-                            <NavLink to="/profile-setting">Profile settings</NavLink>
-                        </Nav.Item>
-                        <Nav.Item eventKey="7-2">
-                            <NavLink to="/site-setting">Site settings</NavLink>
-                        </Nav.Item>
+                        <Nav.Item eventKey="7-1"
+                            as={NavLink} href="/profile-setting" >Profile Settings</Nav.Item>
+                        <Nav.Item eventKey="7-2"
+                            as={NavLink} href="/site-setting" >Site Settings</Nav.Item>
 
                     </Nav.Menu>
 
@@ -123,8 +116,9 @@ const DashboardSideBar = () => {
 
 
 
-                    <Nav.Item eventKey="8" icon={<MessageIcon />}>
-                        <NavLink to="/reviews">Reviews</NavLink>
+                    <Nav.Item eventKey="8" icon={<MessageIcon />}
+                        as={NavLink} href="/reviews" >
+                        Reviews
                     </Nav.Item>
 
 
@@ -132,6 +126,7 @@ const DashboardSideBar = () => {
                 </Nav>
             </Sidenav.Body>
         </Sidenav>
+
 
     );
 };
