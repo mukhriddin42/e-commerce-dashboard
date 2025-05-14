@@ -1,3 +1,4 @@
+
 @import "tailwindcss";
 
 .active {
@@ -8,3 +9,15 @@ a:hover {
     text-decoration: none;
 }
 
+
+@media (max-width: 487px) {
+    .mainConten {
+        width: 88%;
+    }
+}
+  
+@media (min-width: 488px) and (max-width: 768px) {
+    .mainConten {
+        width: 90%;
+    }
+}

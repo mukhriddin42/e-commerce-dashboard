@@ -23,7 +23,7 @@ const styles = {
 
 const DashboardNavbar = () => {
   return (
-    <div className=" shadow-sm h-[110px] md:h-[64px]  flex flex-col gap-2 ">
+    <div className=" shadow-sm h-[110px] md:h-[64px]   flex flex-col gap-2 ">
 
       <div className=" flex px-2 md:px-5 mt-2 w-full justify-end md:flex-row  md:justify-between items-center">
         {/* Chap tomon –  menyu */}
@@ -90,7 +90,7 @@ const DashboardNavbar = () => {
 
       </div>
 
-      <InputGroup className='flex! md:hidden! max-w-[90%] mx-auto '>
+      <InputGroup className='flex! md:hidden! max-w-[80%] mx-auto '>
           <Input className='bg-gray-50!' />
           <InputGroup.Button className='bg-gray-200!'>
             <SearchIcon />

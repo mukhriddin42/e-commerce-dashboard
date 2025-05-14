@@ -29,7 +29,7 @@ const DashboardSideBar = () => {
 
     return (
 
-        <Sidenav expanded={expanded} className='max-w-[15vw]! z-20 shadow-lg  transition-all duration-100 ease-in-out' >
+        <Sidenav expanded={expanded} className='w-[50vw] absolute md:relative md:max-w-[15vw]! z-20 shadow-lg  transition-all duration-100 ease-in-out' >
             <Sidenav.Header>
                 <div className="flex items-center justify-between h-16">
                     <Link to="/" >
