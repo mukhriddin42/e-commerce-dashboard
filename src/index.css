@@ -13,6 +13,8 @@ a:hover {
     display: none;
 }
 
+
+/* This is Azamat Pulatov styles */
 @media (max-width: 487px) {
     .mainConten {
         width: 88%;
@@ -24,3 +26,24 @@ a:hover {
         width: 90%;
     }
 }
+
+/* Green active nav item */
+.rs-nav-item.rs-nav-item-active {
+    color: #16a34a !important;
+  }
+  
+  /* Green icon in active item */
+  .rs-nav-item.rs-nav-item-active .rs-nav-item-icon {
+    color: #16a34a !important;
+  }
+  
+  /* Optional: green background for active item */
+  .rs-nav-item.rs-nav-item-active {
+    background-color: #e6f4ea !important; /* optional */
+  }
+  
+  
+  
+
+
+/* End */
