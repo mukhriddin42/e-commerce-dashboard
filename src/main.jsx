@@ -2,15 +2,22 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Dashboard from './pages/Dashboard.jsx'
 import AddProducts from './pages/AddProducts.jsx'
 import Products from './pages/Products.jsx'
-import Orders from './pages/Orders.jsx'
+import Orders from './pages/OrderList.jsx'
 import Reviews from './pages/Reviews.jsx'
-import Sellers from './pages/Sellers.jsx'
-import Settings from './pages/Settings.jsx'
+import Sellers from './pages/SellerList.jsx'
+import Settings from './pages/ProfileSettings.jsx'
 import Transactions from './pages/Transactions.jsx'
+import Categories from './pages/Categories.jsx'
+import OrderList from './pages/OrderList.jsx'
+import OrderDetails from './pages/OrderDetails.jsx'
+import SellerList from './pages/SellerList.jsx'
+import SellerProfile from './pages/SellerProfile.jsx'
+import ProfileSettings from './pages/ProfileSettings.jsx'
+import SiteSettings from './pages/SiteSettings.jsx'
 
 
 const router = createBrowserRouter([
@@ -27,28 +34,44 @@ const router = createBrowserRouter([
         element: <AddProducts />
       },
       {
-        path: "product",
+        path: "products",
         element: <Products />
       },
       {
-        path: "orders",
-        element: <Orders />
+        path: "order-list",
+        element: <OrderList />
+      },
+      {
+        path: "order-details",
+        element: <OrderDetails />
       },
       {
         path: "reviews",
         element: <Reviews />
       },
       {
-        path: "sellers",
-        element: <Sellers />
+        path: "seller-list",
+        element: <SellerList />
       },
       {
-        path: "settings",
-        element: <Settings />
+        path: "seller-profile",
+        element: <SellerProfile />
+      },
+      {
+        path: "profile-setting",
+        element: <ProfileSettings />
+      },
+      {
+        path: "site-setting",
+        element: <SiteSettings />
       },
       {
         path: "transactions",
         element: <Transactions />
+      },
+      {
+        path: "categories",
+        element: <Categories />
       }
     ]
   }
@@ -56,6 +79,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <RouterProvider router={router}>
+
+    </RouterProvider>
   </StrictMode>,
 )
