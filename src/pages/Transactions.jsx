@@ -65,7 +65,7 @@ const Transactions = () => {
                 <td>{transaction.date.toString().split("T")[0]}, 14:01</td>
                 <td>
                   {/* <p className='inline px-4 py-1 rounded-sm cursor-pointer border-2 border-[#5DB996] hover:border-[#118B50] hover:bg-[#118B50] hover:text-white transactions-text transition-colors duration-300'>Details</p> */}
-                  < DetailButton/>
+                  < DetailButton onClick={() => handleClick(transaction.id)} text="Details"/>
                 </td>
               </tr>
             ))}
