@@ -3,8 +3,11 @@ import DetailButton from '../components/DetailButton'
 
 const SellerList = () => {
   const [users, setUsers] = useState([])
-  let [select, setSelect] = useState('all')
+  const [select, setSelect] = useState('all')
+  const [searchTerm, setSearchTerm] = useState('');
+
   let filter = useRef(null)
+
 
   function modalExit() {
     let modal = document.querySelector('.modal')
@@ -55,6 +58,7 @@ const SellerList = () => {
   }
 
   const filteredUsers = select === 'all' ? users : users.filter(item => item.status === select)
+
   return (
     <div className='max-w-full min-h-150 h-max p-3 overflow-hidden'>
       <div className='flex justify-between items-center '>
@@ -63,7 +67,7 @@ const SellerList = () => {
       </div>
       <div className='flex flex-col my-3 gap-1  relative '>
         <ul className='flex justify-between items-center'>
-          <input type="search" placeholder='Search...' className='bg-gray-100 w-70  p-2 rounded outline-none' />
+          <input onChange={(e) => setSearchTerm(e.target.value.toLowerCase())} type="search" placeholder='Search...' className='bg-gray-100 w-70  p-2 rounded outline-none' />
           <ul className='flex gap-5'>
             <select ref={filter} onChange={selectvalue} name="select" id="selectStatus" className='p-3 w-40 rounded bg-gray-100 outline-none'>
               <option value="all">All</option>
@@ -88,29 +92,32 @@ const SellerList = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredUsers.map(user => (
-              <tr key={user.id} className="bg-white shadow h-15">
-                <td className="p-2">
-                  <div className="flex items-center gap-3">
-                    <div className="bg-gray-600 w-10 h-10 rounded-full"></div>
-                    <div>
-                      <div>{user.firstname} {user.lastname}</div>
-                      <div className="text-[13px] text-gray-400">Seller ID: #{user.id}</div>
+            {filteredUsers.map(user => {
+              const match = user.firstname.toLowerCase().includes(searchTerm);
+              return (
+                <tr style={{ display: match ? 'opacity-0' : 'opacity-100' }} key={user.id} className="bg-white shadow h-15">
+                  <td className="p-2">
+                    <div className="flex items-center gap-3">
+                      <div className="bg-gray-600 w-10 h-10 rounded-full"></div>
+                      <div>
+                        <div>{user.firstname} {user.lastname}</div>
+                        <div className="text-[13px] text-gray-400">Seller ID: #{user.id}</div>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td className="p-2">{user.email}</td>
-                <td className="p-2">
-                  <span className={`py-2 px-4 rounded-3xl text-sm ${user.status === 'active' ? 'bg-green-200 text-green-500' : 'bg-red-200 text-red-500'}`}>
-                    {user.status}
-                  </span>
-                </td>
-                <td className="p-2">{user.registerDate}</td>
-                <td className="p-2">
-                  <DetailButton text='Wiev detail'/>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                  <td className="p-2">{user.email}</td>
+                  <td className="p-2">
+                    <span className={`py-2 px-4 rounded-3xl text-sm ${user.status === 'active' ? 'bg-green-200 text-green-500' : 'bg-red-200 text-red-500'}`}>
+                      {user.status}
+                    </span>
+                  </td>
+                  <td className="p-2">{user.registerDate}</td>
+                  <td className="p-2">
+                    <DetailButton text='Wiev detail' />
+                  </td>
+                </tr>
+              )
+            })}
           </tbody>
         </table>
 
