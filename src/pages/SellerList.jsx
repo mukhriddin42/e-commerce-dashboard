@@ -1,8 +1,14 @@
-import React, { use, useState } from 'react'
+import React, { use, useRef, useState } from 'react'
+import DetailButton from '../components/DetailButton'
 
 const SellerList = () => {
   const [users, setUsers] = useState([])
-  console.log(users);
+  const [select, setSelect] = useState('all')
+  const [searchTerm, setSearchTerm] = useState('');
+
+  let filter = useRef(null)
+  let search = useRef(null)
+
 
   function modalExit() {
     let modal = document.querySelector('.modal')
@@ -47,6 +53,19 @@ const SellerList = () => {
     form.reset()
   }
 
+  function selectvalue() {
+    setSelect(filter.current.value)
+
+  }
+
+  function handleInput() {
+    setSearchTerm(search.current.value)
+  }
+  function handleUser(id) {
+    alert(id)
+  }
+
+  const filteredUsers = select === 'all' ? users : users.filter(item => item.status === select)
 
   return (
     <div className='max-w-full min-h-150 h-max p-3 overflow-hidden'>
@@ -56,9 +75,10 @@ const SellerList = () => {
       </div>
       <div className='flex flex-col my-3 gap-1  relative '>
         <ul className='flex justify-between items-center'>
-          <input type="search" placeholder='Search...' className='bg-gray-100 w-70  p-2 rounded outline-none' />
+          <input ref={search} onChange={handleInput} type="search" placeholder='Search...' className='bg-gray-100 w-70  p-2 rounded outline-none' />
           <ul className='flex gap-5'>
-            <select name="select" id="selectStatus" className='p-3 w-40 rounded bg-gray-100 outline-none'>
+            <select ref={filter} onChange={selectvalue} name="select" id="selectStatus" className='p-3 w-40 rounded bg-gray-100 outline-none'>
+              <option value="all">All</option>
               <option value="active">Active</option>
               <option value="inactive">Inactive</option>
             </select>
@@ -68,39 +88,49 @@ const SellerList = () => {
             </select>
           </ul>
         </ul>
-        <ul className='w-full  p-3 rounded h-10 flex  items-center justify-between bg-gray-100'>
-          <li>Seller</li>
-          <li>Email</li>
-          <ul className='flex items-center  w-50 justify-between'>
-            <li>Status</li>
-            <li >Registered</li>
-          </ul>
-          <li>Action</li>
-        </ul>
+        <table className="w-full border-separate !border-spacing-y-4">
 
-        {users.map(user => {
-          return (
-            <ul className='flex w-full h-15 p-1 items-center justify-between '>
-              <ul className=' flex gap-3  '>
-                <div className='bg-gray-600 w-10 h-10 rounded-[50%]'></div>
-                <ul>
-                  <li >{user.firstname} {user.lastname}</li>
-                  <li className='text-[13px] text-gray-400'>Seller ID: #{user.id}</li>
-                </ul>
-              </ul>
-              <li className=''>{user.email}</li>
-              <ul className='flex items-center gap-25'>
-                <li className={`${user.status === 'active' ? 'bg-green-200 text-green-500' : 'bg-red-200  text-red-500'}   py-2 px-4 rounded-3xl`}>
-                  {user.status}
-                </li>
-                <li>{user.registerDate}</li>
-              </ul>
+          <thead className=''>
+            <tr className="text-left bg-gray-100 h-10 ">
+              <th className="p-2">User</th>
+              <th className="p-2">Email</th>
+              <th className="p-2">Status</th>
+              <th className="p-2">Register Date</th>
+              <th className="p-2">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredUsers.filter(user => user.firstname.toLowerCase().includes(searchTerm)).map(user => {
+              return (
+                <tr key={user.id} className="bg-white shadow h-15">
+                  <td className="p-2">
+                    <div className="flex items-center gap-3">
+                      <div className="bg-gray-600 w-10 h-10 rounded-full"></div>
+                      <div>
+                        <div>{user.firstname} {user.lastname}</div>
+                        <div className="text-[13px] text-gray-400">Seller ID: #{user.id}</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="p-2">{user.email}</td>
+                  <td className="p-2">
+                    <span className={`py-2 px-4 rounded-3xl text-sm ${user.status === 'active' ? 'bg-green-200 text-green-500' : 'bg-red-200 text-red-500'}`}>
+                      {user.status}
+                    </span>
+                  </td>
+                  <td className="p-2">{user.registerDate}</td>
+                  <td className="p-2">
+                    <DetailButton onClick={() => handleUser(user.id)} text='Wiev detail' />
+                  </td>
+                </tr>
+              )
+            })
+
+            }
+          </tbody>
+        </table>
 
 
-              <button className='p-2 bg-green-500 text-white! rounded! '>Wiev detail</button>
-            </ul>
-          )
-        })}
 
         <div className='modal w-100 h-100 shadow-md p-3   absolute right-[-500px] top-0 flex flex-col  items-center z-50 bg-white rounded-[10px] duration-300 ease-in-out'>
           <h3>New Seller</h3>
