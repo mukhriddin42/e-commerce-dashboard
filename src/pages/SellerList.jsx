@@ -7,6 +7,7 @@ const SellerList = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   let filter = useRef(null)
+  let search = useRef(null)
 
 
   function modalExit() {
@@ -57,6 +58,13 @@ const SellerList = () => {
 
   }
 
+  function handleInput() {
+    setSearchTerm(search.current.value)
+  }
+  function handleUser(id) {
+    alert(id)
+  }
+
   const filteredUsers = select === 'all' ? users : users.filter(item => item.status === select)
 
   return (
@@ -67,7 +75,7 @@ const SellerList = () => {
       </div>
       <div className='flex flex-col my-3 gap-1  relative '>
         <ul className='flex justify-between items-center'>
-          <input onChange={(e) => setSearchTerm(e.target.value.toLowerCase())} type="search" placeholder='Search...' className='bg-gray-100 w-70  p-2 rounded outline-none' />
+          <input ref={search} onChange={handleInput} type="search" placeholder='Search...' className='bg-gray-100 w-70  p-2 rounded outline-none' />
           <ul className='flex gap-5'>
             <select ref={filter} onChange={selectvalue} name="select" id="selectStatus" className='p-3 w-40 rounded bg-gray-100 outline-none'>
               <option value="all">All</option>
@@ -92,10 +100,9 @@ const SellerList = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredUsers.map(user => {
-              const match = user.firstname.toLowerCase().includes(searchTerm);
+            {filteredUsers.filter(user => user.firstname.toLowerCase().includes(searchTerm)).map(user => {
               return (
-                <tr style={{ display: match ? 'opacity-0' : 'opacity-100' }} key={user.id} className="bg-white shadow h-15">
+                <tr key={user.id} className="bg-white shadow h-15">
                   <td className="p-2">
                     <div className="flex items-center gap-3">
                       <div className="bg-gray-600 w-10 h-10 rounded-full"></div>
@@ -113,11 +120,13 @@ const SellerList = () => {
                   </td>
                   <td className="p-2">{user.registerDate}</td>
                   <td className="p-2">
-                    <DetailButton text='Wiev detail' />
+                    <DetailButton onClick={() => handleUser(user.id)} text='Wiev detail' />
                   </td>
                 </tr>
               )
-            })}
+            })
+
+            }
           </tbody>
         </table>
 
