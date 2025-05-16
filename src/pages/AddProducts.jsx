@@ -21,15 +21,15 @@ const AddProducts = () => {
     <>
 
       <div className="mx-3">
-        <div className="flex items-center justify-between">
-          <h2 className='font-semibold! mb-3 font-sans!'>Add New Product</h2>
-          <div className="flex">
-            <ButtonToolbar>
+        <div className="block md:flex items-center justify-between">
+          <h2 className='font-semibold! text-xl!  mb-3 font-sans!'>Add New Product</h2>
+          <div className="flex justify-between mt-2 md:justify-end gap-2">
+            
               <Button color='cyan' appearance='ghost' >Save to Drafts</Button>
               <Button color="green" appearance="primary">
                 Publich
               </Button>
-            </ButtonToolbar>
+            
           </div>
         </div>
 
@@ -53,7 +53,7 @@ const AddProducts = () => {
 
                   </Form.Group>
 
-                  <div className="flex justify-between gap-2" >
+                  <div className="flex flex-col md:flex-row justify-between gap-2" >
                     <Form.Group controlId="reg-price-1">
                       <Form.ControlLabel>Regular Price</Form.ControlLabel>
                       <InputGroup inside style={styles}>
@@ -70,7 +70,7 @@ const AddProducts = () => {
                         <InputGroup.Addon>.00</InputGroup.Addon>
                       </InputGroup>
                     </Form.Group>
-                    <Form.Group controlId="currency-price-1">
+                    <Form.Group controlId="currency-price-1" className='mb-4'>
                       <Form.ControlLabel>Currency Price</Form.ControlLabel>
                       <VStack>
                         <SelectPicker data={data} style={{ width: 224 }} />
@@ -179,7 +179,7 @@ const AddProducts = () => {
               <div className="m-4!">
                 <Form fluid>
 
-                  <div className="justify-between grid grid-cols-2 gap-4">
+                  <div className="justify-between grid grid-cols-1 md:grid-cols-2 gap-1">
 
                     <Form.Group >
                       <Form.ControlLabel>Category</Form.ControlLabel>
@@ -190,7 +190,7 @@ const AddProducts = () => {
                     <Form.Group >
                       <Form.ControlLabel>Sub Category</Form.ControlLabel>
                       <VStack>
-                        <SelectPicker style={{ width: "100%" }} data={data} />
+                        <SelectPicker style={{ width: "100%", marginBottom: "1rem" }} data={data} />
                       </VStack>
                     </Form.Group>
 
