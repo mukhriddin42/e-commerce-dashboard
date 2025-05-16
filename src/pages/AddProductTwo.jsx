@@ -103,7 +103,7 @@ const AddProductTwo = () => {
 
 
                     <div>
-                        
+
 
 
                         <div className='bg-gray-50 border border-gray-300 rounded-2xl  pb-5'>
@@ -112,18 +112,47 @@ const AddProductTwo = () => {
                             <div className="m-4!">
                                 <Form fluid>
 
-                                        <Form.Group controlId="tags-1">
-                                            <Form.ControlLabel>Tags</Form.ControlLabel>
-                                            <Form.Control name="name" />
+                                    <Form.Group controlId="tags-1">
+                                        <Form.ControlLabel>Tags</Form.ControlLabel>
+                                        <Form.Control name="name" />
 
-                                        </Form.Group>
-                                    
-                                        <Form.Group >
-                                            <Form.ControlLabel>Status</Form.ControlLabel>
-                                            <VStack>
-                                                <SelectPicker style={{ width: "100%" }} data={data} />
-                                            </VStack>
-                                        </Form.Group>
+                                    </Form.Group>
+
+                                    <Form.Group >
+                                        <Form.ControlLabel>Status</Form.ControlLabel>
+                                        <VStack>
+                                            <SelectPicker style={{ width: "100%" }} data={data} />
+                                        </VStack>
+                                    </Form.Group>
+
+
+                                    <Form.Group >
+                                        <Form.ControlLabel>Tags</Form.ControlLabel>
+                                        <VStack>
+                                            <SelectPicker style={{ width: "100%" }} data={data} />
+                                        </VStack>
+                                    </Form.Group>
+
+                                    <hr />
+                                    <h5>Categorys</h5>
+                                    <Checkbox defaultChecked color="green" className='block!'>
+                                        Make me Template
+                                    </Checkbox>
+                                    <Checkbox defaultChecked color="green" className='block!'>
+                                        Make me Template
+                                    </Checkbox>
+                                    <Checkbox defaultChecked color="green" className='block!'>
+                                        Make me Template
+                                    </Checkbox>
+                                    <Checkbox defaultChecked color="green" className='block!'>
+                                        Make me Template
+                                    </Checkbox>
+                                    <Checkbox defaultChecked color="green" className='block!'>
+                                        Make me Template
+                                    </Checkbox>
+                                    <Checkbox defaultChecked color="green" className='block!'>
+                                        Make me Template
+                                    </Checkbox>
 
 
 

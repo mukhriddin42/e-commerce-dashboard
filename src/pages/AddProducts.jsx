@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react'
 import { Button, ButtonToolbar, VStack, Form, Input, InputGroup, } from 'rsuite'
 import { Checkbox } from 'rsuite';
 
+
 const Textarea = forwardRef((props, ref) => <Input {...props} as="textarea" ref={ref} />);
 
 const styles = {
@@ -11,12 +12,20 @@ const styles = {
 
 import { SelectPicker } from 'rsuite';
 import ImagePickerHook from '../hooks/ImagePicker';
+import useFetch from '../hooks/api';
 
-const data = ['USD', 'RUBL', 'EURO', 'BITC', 'UZS', 'KZTENGE', 'LOREM', 'LOREM2'].map(
+const selectdata = ['USD', 'RUBL', 'EURO', 'BITC', 'UZS', 'KZTENGE', 'LOREM', 'LOREM2'].map(
   item => ({ label: item, value: item })
 );
 
+
+
 const AddProducts = () => {
+
+  // const {data ,loading , error} = useFetch('https://67ff8e4c58f18d7209f1b2db.mockapi.io/users/imgget')
+  // console.log(data);
+
+  
   return (
     <>
 
@@ -74,7 +83,7 @@ const AddProducts = () => {
                       <Form.Group controlId="currency-price-1" className='mb-4'>
                         <Form.ControlLabel>Currency Price</Form.ControlLabel>
                         <VStack>
-                          <SelectPicker data={data} style={{ width: 224 }} />
+                          <SelectPicker data={selectdata} style={{ width: 224 }} />
                         </VStack>
                       </Form.Group>
 
@@ -185,13 +194,13 @@ const AddProducts = () => {
                       <Form.Group >
                         <Form.ControlLabel>Category</Form.ControlLabel>
                         <VStack>
-                          <SelectPicker style={{ width: "100%" }} data={data} />
+                          <SelectPicker style={{ width: "100%" }} data={selectdata} />
                         </VStack>
                       </Form.Group>
                       <Form.Group >
                         <Form.ControlLabel>Sub Category</Form.ControlLabel>
                         <VStack>
-                          <SelectPicker style={{ width: "100%", marginBottom: "1rem" }} data={data} />
+                          <SelectPicker style={{ width: "100%", marginBottom: "1rem" }} data={selectdata} />
                         </VStack>
                       </Form.Group>
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 
 const orders = [
   {
@@ -122,49 +122,119 @@ const statusClasses = {
 };
 
 const OrderList = () => {
-  const [curentPage, setCurentPage] = useState(1);
-  const [curentPerPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
 
-  const indexOfLastDetails = curentPage * curentPerPage;
-  const indexOfFirstDetails = indexOfLastDetails - curentPerPage;
-  const curentDetails = orders.slice(indexOfFirstDetails, indexOfLastDetails);
-  const totalPage = Math.ceil(orders.length / curentPerPage);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterStatus, setFilterStatus] = useState("");
+    const [filters, setFilters] = useState({
+    orderId: "",
+    customer: "",
+    customer2: "",
+    orderStatus: "",
+    published: "",
+    total: "",
+    dataAdet: "",
+    dateModified: "",
+  });
+
+    const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Filter va search orqali yangi array hosil qilish uchun useMemo
+  const filteredOrders = useMemo(() => {
+    return orders.filter((order) => {
+    if (searchTerm && !order.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+      return false;
+    }
+      if (
+        filters.orderId &&
+        !order.orderId.toLowerCase().includes(filters.orderId.toLowerCase())
+      )
+        return false;
+      if (
+        filters.customer &&
+        !order.customer.toLowerCase().includes(filters.customer.toLowerCase())
+      )
+        return false;
+      if (
+        filters.customer2 &&
+        !order.customer2.toLowerCase().includes(filters.customer2.toLowerCase())
+      )
+        return false;
+      if (filters.orderStatus && order.orderStatus !== filters.orderStatus)
+        return false;
+      if (filters.published) {
+        const pubBool = filters.published === "true";
+        if (order.published !== pubBool) return false;
+      }
+      if (
+        filters.total &&
+        !order.total.toString().includes(filters.total.toString())
+      )
+        return false;
+      if (
+        filters.dataAdet &&
+        !order.dataAdet.toString().includes(filters.dataAdet.toString())
+      )
+        return false;
+      if (
+        filters.dateModified &&
+        !order.dateModified.includes(filters.dateModified)
+      )
+        return false;
+
+      return true;
+    });
+  }, [searchTerm, filterStatus, filters]);
+
+  const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
+
+  // Paginate qilingan buyurtmalar
+  const currentOrders = filteredOrders.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const getCurrentRange = () => {
     const range = [];
-    if (totalPage <= 5) {
-      return Array.from({length:totalPage},(_,i)=>i+1)
+    if (totalPages <= 5) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
     }
-
-    if (curentPage <= 3) {
-      range.push(1, 2, 3, 4, "...", totalPage);
-      return range;
+    if (currentPage <= 3) {
+      return [1, 2, 3, 4, "...", totalPages];
     }
-
-    if (curentPage >= totalPage - 2) {
-      range.push(
+    if (currentPage >= totalPages - 2) {
+      return [
         1,
         "...",
-        totalPage - 4,
-        totalPage - 3,
-        totalPage - 2,
-        totalPage - 1,
-        totalPage
-      );
-      return range;
+        totalPages - 4,
+        totalPages - 3,
+        totalPages - 2,
+        totalPages - 1,
+        totalPages,
+      ];
     }
-
-    range.push(
+    return [
       1,
       "...",
-      curentPage - 1,
-      curentPage,
-      curentPage + 1,
+      currentPage - 1,
+      currentPage,
+      currentPage + 1,
       "...",
-      totalPage
-    );
-    return range;
+      totalPages,
+    ];
   };
+
+  // Agar filter yoki search o‘zgarsa sahifa 1 ga qaytadi
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, filterStatus]);
 
   return (
     <div className="min-h-screen w-full bg-gray-100 p-6">
@@ -178,14 +248,27 @@ const OrderList = () => {
           <div className="flex justify-between items-center mb-4 border-b pb-3">
             <input
               type="text"
-              placeholder="Search..."
-              className="border bg-gray-200 text-gray-500! border-gray-300 rounded px-4 py-2 w-1/3"
+              placeholder="Search by customer name..."
+              className="border bg-gray-200 text-gray-700 border-gray-300 rounded px-4 py-2 w-1/3"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
             <div className="flex space-x-3 gap-5">
-              <select className="border border-gray-300 bg-gray-200 text-gray-500! rounded px-4 py-2">
-                <option>Status</option>
+              <select
+                className="border border-gray-300 bg-gray-200 text-gray-700 rounded px-4 py-2"
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+              >
+                <option value="">All Status</option>
+                <option value="Received">Received</option>
+                <option value="Cancelled">Cancelled</option>
+                <option value="Pending">Pending</option>
               </select>
-              <select className="border bg-gray-200 text-gray-500! border-gray-300 rounded px-4 py-2">
+              <select
+                className="border bg-gray-200 text-gray-700 border-gray-300 rounded px-4 py-2"
+                // Hozircha show 20 ishlamayapti, balki kelajakda o‘zgartirish kiritish uchun
+                disabled
+              >
                 <option>Show 20</option>
               </select>
             </div>
@@ -204,31 +287,39 @@ const OrderList = () => {
                 </tr>
               </thead>
               <tbody>
-                {curentDetails.map((order) => (
-                  <tr
-                    key={order.id}
-                    className="border-none h-[60px] hover:bg-gray-50"
-                  >
-                    <td className="p-2!">{order.id}</td>
-                    <td>{order.name}</td>
-                    <td>{order.price}</td>
-                    <td>
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                          statusClasses[order.status]
-                        }`}
-                      >
-                        {order.status}
-                      </span>
-                    </td>
-                    <td>{order.date}</td>
-                    <td>
-                      <button className="bg-green-400 text-white! px-4 py-2 rounded-[8px]! hover:bg-green-600">
-                        Detail
-                      </button>
+                {currentOrders.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} className="text-center py-10 text-gray-500">
+                      No orders found.
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  currentOrders.map((order) => (
+                    <tr
+                      key={order.id}
+                      className="border-none h-[60px] hover:bg-gray-50"
+                    >
+                      <td className="p-2">{order.id}</td>
+                      <td>{order.name}</td>
+                      <td>{order.price}</td>
+                      <td>
+                        <span
+                          className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                            statusClasses[order.status]
+                          }`}
+                        >
+                          {order.status}
+                        </span>
+                      </td>
+                      <td>{order.date}</td>
+                      <td>
+                        <button className="bg-green-400 text-white px-4 py-2 rounded hover:bg-green-600">
+                          Detail
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
@@ -240,71 +331,98 @@ const OrderList = () => {
           <div className="space-y-4">
             <label htmlFor="order-id">Order Id</label>
             <input
-              type="text"
-              placeholder="Type here"
-              className="border-none bg-gray-200 text-gray-500! mb-4! mt-1! border-gray-300 rounded px-1 py-2 w-full"
+              name="orderId"
+              value={filters.orderId}
+              onChange={handleFilterChange}
+              placeholder="Filter by Order Id"
+              className="border rounded px-2 py-1"
             />
             <label htmlFor="customer">Customer</label>
             <input
               type="text"
               placeholder="Type here"
-              className="border-none bg-gray-200 text-gray-500! mb-4! mt-1! border-gray-300 rounded px-1 py-2 w-full"
+              className="bg-gray-200 text-gray-700 mb-4 mt-1 border border-gray-300 rounded px-1 py-2 w-full"
+              disabled
             />
             <label htmlFor="order-status">Order Status</label>
-            <select className="border-none border-gray-300 bg-gray-200 mt-1! mb-4! text-gray-400! rounded px-1 py-2 w-full">
+            <select
+              className="bg-gray-200 text-gray-700 mb-4 mt-1 border border-gray-300 rounded px-1 py-2 w-full"
+              disabled
+            >
               <option>Published</option>
             </select>
             <label htmlFor="total">Total</label>
             <input
               type="text"
               placeholder="Type here"
-              className="border-none bg-gray-200 text-gray-500! mb-4! mt-1! border-gray-300 rounded px-1 py-2 w-full"
+              className="bg-gray-200 text-gray-700 mb-4 mt-1 border border-gray-300 rounded px-1 py-2 w-full"
+              disabled
             />
             <label htmlFor="data-adet">Data Adet</label>
             <input
               type="text"
               placeholder="Type here"
-              className="border-none bg-gray-200 text-gray-500! mb-4! mt-1! border-gray-300 rounded px-1 py-2 w-full"
+              className="bg-gray-200 text-gray-700 mb-4 mt-1 border border-gray-300 rounded px-1 py-2 w-full"
+              disabled
             />
             <label htmlFor="date-modified">Date Modified</label>
             <input
               type="text"
               placeholder="Type here"
-              className="border-none bg-gray-200 text-gray-500! mb-4! mt-1! border-gray-300 rounded px-1 py-2 w-full"
+              className="bg-gray-200 text-gray-700 mb-4 mt-1 border border-gray-300 rounded px-1 py-2 w-full"
+              disabled
             />
             <label htmlFor="customer">Customer</label>
             <input
               type="text"
               placeholder="Type here"
-              className="border-none bg-gray-200 text-gray-500! mb-4! mt-1! border-gray-300 rounded px-1 py-2 w-full"
+              className="bg-gray-200 text-gray-700 mb-4 mt-1 border border-gray-300 rounded px-1 py-2 w-full"
+              disabled
             />
           </div>
         </div>
       </div>
 
-      <div className="m-5 flex gap-1">
-        <button disabled={curentPage===1} onClick={() => setCurentPage((prev) => Math.max(prev - 1, 1))} className={`${curentPage===1?'opacity-0':'opacity-100'}`}>
-          Prev
+      {/* Pagination */}
+      <nav className="flex justify-center items-center mt-8 gap-3 text-gray-500 font-semibold">
+        <button
+          className={`hover:text-gray-900 px-2 py-1 rounded ${
+            currentPage === 1 ? "opacity-40 pointer-events-none" : ""
+          }`}
+          onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+        >
+          &lt;
         </button>
-        {getCurrentRange().map((page, index) => {
-          return (
-            <button key={index} onClick={()=>{
-              if(page!=='...'){
-                setCurentPage(page)
-              }
-            }} className={`w-[60px] h-[40px] text-[18px]! border p-1 ${page === curentPage ? 'bg-green-500 text-amber-50!': page==='...'?'bg-gray-400 text-gray-200':'bg-white text-black'}`}>
+
+        {getCurrentRange().map((page, idx) =>
+          page === "..." ? (
+            <span key={`dots-${idx}`} className="px-3 py-1 cursor-default">
+              ...
+            </span>
+          ) : (
+            <button
+              key={page}
+              className={`hover:text-gray-900 px-3 py-1 rounded ${
+                page === currentPage
+                  ? "bg-gray-700 text-white"
+                  : "bg-white text-gray-700"
+              }`}
+              onClick={() => setCurrentPage(page)}
+            >
               {page}
             </button>
-          );
-        })}
+          )
+        )}
+
         <button
-          disabled={curentPage===totalPage}
-          onClick={() => setCurentPage((prev) => Math.min(prev + 1, totalPage))}
-          className={`${curentPage===totalPage?'opacity-0':'opacity-100'}`}
+          className={`hover:text-gray-900 px-2 py-1 rounded ${
+            currentPage === totalPages ? "opacity-40 pointer-events-none" : ""
+          }`}
+          onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
         >
-          Next
+          &gt;
         </button>
-      </div>
+      </nav>
     </div>
   );
 };
