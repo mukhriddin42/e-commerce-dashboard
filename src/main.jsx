@@ -18,6 +18,7 @@ import SellerList from './pages/SellerList.jsx'
 import SellerProfile from './pages/SellerProfile.jsx'
 import ProfileSettings from './pages/ProfileSettings.jsx'
 import SiteSettings from './pages/SiteSettings.jsx'
+import AddProductTwo from './pages/AddProductTwo.jsx'
 
 
 const router = createBrowserRouter([
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "addproduct",
         element: <AddProducts />
+      },
+      {
+        path: "addproducttwo",
+        element: <AddProductTwo />
       },
       {
         path: "products",

@@ -1,5 +1,5 @@
 import { Uploader, Message, Loader, useToaster } from 'rsuite';
-import AvatarIcon from '@rsuite/icons/legacy/Avatar';
+import ImageIcon from '@rsuite/icons/Image';
 import { useState } from 'react';
 
 function previewFile(file, callback) {
@@ -18,9 +18,9 @@ const ImagePickerHook = () => {
 
   return (
     <Uploader
-        style={{ width: "100%", height: "100%", display: "flex", justifyContent: "center" }}
+        style={{ width: "100%", height: "100%", display: "block"}}
       fileListVisible={false}
-      listType="picture"
+      listType="pictur"
       action="//jsonplaceholder.typicode.com/posts/"
       onUpload={file => {
         setUploading(true);
@@ -44,7 +44,7 @@ const ImagePickerHook = () => {
         {fileInfo ? (
           <img src={fileInfo} width="100%" height="100%" />
         ) : (
-          <AvatarIcon style={{ fontSize: MyIconSize }} />
+          <ImageIcon style={{ fontSize: MyIconSize }} />
         )}
       </button>
     </Uploader>

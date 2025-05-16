@@ -94,7 +94,7 @@ const DashboardSideBar = () => {
                         <Nav.Item eventKey="5-1"
                             as={NavLink} href="/addproduct" >Add Product 1</Nav.Item>
                         <Nav.Item eventKey="5-2"
-                            as={NavLink} href="/" >Add Product 2</Nav.Item>
+                            as={NavLink} href="/addproducttwo" >Add Product 2</Nav.Item>
 
                     </Nav.Menu>
 

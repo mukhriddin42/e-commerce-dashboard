@@ -12,7 +12,7 @@ function App() {
         <DashboardSideBar />
         <div className="mainConten  absolute right-0 md:relative flex flex-col md:w-full ">
           <DashboardNavbar />
-          <main className="p-4  ">
+          <main className=" p-4">
             {/* Asosiy kontent shu yerda bo‘ladi */}
             <Outlet />
           </main>
