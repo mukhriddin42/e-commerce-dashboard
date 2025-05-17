@@ -50,8 +50,10 @@ const Transactions = () => {
           </select>
         </div>
         <div className='my-4'>
-          {loading? (
-            <p>Loading..</p>
+          {loading ? (
+            <div className='w-full py-40 flex items-center justify-center'>
+              <div className='loader'></div>
+            </div>
           ) : (
             <table className='table-auto border-separate border-spacing-y-2'>
               <tr >
