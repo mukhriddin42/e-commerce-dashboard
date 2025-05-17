@@ -3,53 +3,60 @@
 @tailwind components;
 @tailwind utilities;
 
-h1,h2,h3,h4,h5,h6 {
-    font-weight: normal !important;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal !important;
 }
+
 .active {
-    color: green;
+  color: green;
 }
 
 a:hover {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .mymodal {
-    background-color: rgba(0, 0, 0, .2);
-    display: none;
+  background-color: rgba(0, 0, 0, .2);
+  display: none;
 }
 
 
 /* This is Azamat Pulatov styles */
 @media (max-width: 487px) {
-    .mainConten {
-        width: 88%;
-    }
+  .mainConten {
+    width: 88%;
+  }
 }
 
 @media (min-width: 488px) and (max-width: 768px) {
-    .mainConten {
-        width: 90%;
-    }
+  .mainConten {
+    width: 90%;
+  }
 }
 
 /* Green active nav item */
 .rs-nav-item.rs-nav-item-active {
-    color: #16a34a !important;
-  }
-  
-  /* Green icon in active item */
-  .rs-nav-item.rs-nav-item-active .rs-nav-item-icon {
-    color: #16a34a !important;
-  }
-  
-  /* Optional: green background for active item */
-  .rs-nav-item.rs-nav-item-active {
-    background-color: #e6f4ea !important; /* optional */
-  }
-  
-  
-  
+  color: #16a34a !important;
+}
+
+/* Green icon in active item */
+.rs-nav-item.rs-nav-item-active .rs-nav-item-icon {
+  color: #16a34a !important;
+}
+
+/* Optional: green background for active item */
+.rs-nav-item.rs-nav-item-active {
+  background-color: #e6f4ea !important;
+  /* optional */
+}
+
+
+
 
 
 /* End */
@@ -58,5 +65,36 @@ a:hover {
 @layer utilities {
   .shadow-main {
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  }
+}
+
+
+
+
+/* Loader style umumiy */
+
+.loader {
+  height: 80px;
+  aspect-ratio: 1;
+  box-sizing: border-box;
+  position: relative;
+  mask:
+    radial-gradient(#0000 47%, #000 48% 71%, #0000 72%) exclude,
+    conic-gradient(#000 0 0) no-clip;
+  animation: l11 1.5s linear infinite;
+}
+
+.loader:before {
+  content: "";
+  position: absolute;
+  inset: 0 35% 70%;
+  border-radius: 50%;
+  background: #000;
+  filter: blur(15px);
+}
+
+@keyframes l11 {
+  to {
+    rotate: 1turn;
   }
 }
