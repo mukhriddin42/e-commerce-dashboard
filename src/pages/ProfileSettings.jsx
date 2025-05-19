@@ -2,8 +2,8 @@ import React from 'react'
 
 const ProfileSettings = () => {
   return (
-    <div className='w-full h-150 '>
-      <div className="max-w-6xl mx-auto p-6 bg-white shadow-md rounded-lg flex flex-col md:flex-row gap-8 ">
+    <div className='w-full h-150  '>
+      <div className="w-full mx-auto p-10 bg-white border border-gray-300 rounded-lg flex flex-col md:flex-row gap-8 ">
 
         <form className="flex-1">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -82,26 +82,26 @@ const ProfileSettings = () => {
         </form>
 
         
-        <div className="flex flex-col items-center gap-3 ">
+        <div className="flex flex-col items-center gap-3  ">
           <div className='w-30 h-30 rounded-[50%] bg-gray-400'>
           </div>
           <button className="mt-3 text-blue-600 hover:underline">Upload</button>
         </div>
       </div>
-      <div className='w-full h-40  flex items-center p-3 gap-5 shadow-xl!'>
-        <div className='flex w-[50%] h-full bg-gray-200 p-4 rounded! justify-between items-center'>
+      <div className='w-full h-40  flex items-center p-3 gap-5 border border-gray-300 mt-5 rounded'>
+        <div className='flex w-[50%] h-full bg-gray-100 rounded! justify-between items-center p-3'>
           <ul>
             <h1 className='text-[20px]!'>Password</h1>
             <li className='text-gray-400!'>You can reset or change your password by <br /> clicking here</li>
           </ul>
-          <button className='px-5 h-10 rounded! border-gray-500! border!'>Change </button>
+          <button className='px-5 h-10 rounded! border-gray-300! border!'>Change </button>
         </div>
-        <div className='flex w-[50%] h-full bg-gray-200 p-4 rounded! justify-between items-center'>
+        <div className='flex w-[50%] h-full bg-gray-100 p-4 rounded! justify-between items-center p-3'>
           <ul>
             <h1 className='text-[20px]!'>Remove account</h1>
             <li className='text-gray-400!'>Once you delete your acount there is no <br />  going back</li>
           </ul>
-          <button className='px-5 h-10 rounded! border-gray-500! border!'>Deactive </button>
+          <button className='px-5 h-10 rounded! border-gray-300! border! '>Deactive </button>
         </div>
       </div>
     </div>
