@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState, useMemo, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const statusClasses = {
   Received: "bg-green-100 text-green-700",
@@ -37,7 +38,7 @@ const OrderList = () => {
         const res = await axios.get(baseUrl);
         console.log("So‘rov muvaffaqiyatli", res.data);
         setData(res.data);
-        setLoading(true)
+        setLoading(true);
       } catch (error) {
         if (error.name === "CanceledError") {
           console.log("So‘rov abort qilindi");
@@ -143,9 +144,9 @@ const OrderList = () => {
         <h1 className="text-2xl font-semibold">Order List</h1>
         <p className="text-gray-500 text-sm">Lorem ipsum dolor sit amet.</p>
       </div>
-      <div className="w-full! max-w-7xl! mx-auto flex gap-6">
+      <div className="mx-auto flex flex-col md:flex-row gap-6">
         {/* Left Table */}
-        <div className="flex-1 w-full bg-white rounded-lg shadow-lg p-6">
+        <div className="flex-1 w-full bg-white rounded-lg shadow-lg p-6 overflow-x-auto">
           <div className="flex justify-between items-center mb-4 border-b pb-3">
             <input
               type="text"
@@ -215,9 +216,12 @@ const OrderList = () => {
                       </td>
                       <td>{order.date}</td>
                       <td>
-                        <button className="bg-green-400 text-white! px-4 py-2 rounded! hover:bg-green-600">
+                        <Link
+                          to={`/order-details/${order.id}`}
+                          className="bg-green-400 text-white px-4 py-2 rounded hover:bg-green-600"
+                        >
                           Detail
-                        </button>
+                        </Link>
                       </td>
                     </tr>
                   ))
@@ -228,7 +232,7 @@ const OrderList = () => {
         </div>
 
         {/* Right Filter Panel */}
-        <div className="w-80 bg-white rounded-lg shadow-lg p-6">
+        <div className="w-full md:w-65 bg-white rounded-lg shadow-lg p-6">
           <h2 className="font-bold text-lg mb-4">Filter by</h2>
           <div className="space-y-4">
             <label
@@ -320,7 +324,7 @@ const OrderList = () => {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center items-center gap-2 mt-6">
+      <div className="flex flex-wrap justify-center items-center gap-2 mt-6">
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"

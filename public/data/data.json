@@ -4,111 +4,26 @@
     "name": "Devon Lane",
     "price": "$948.55",
     "status": "Received",
-    "date": "07.05.2020"
+    "date": "07.05.2020",
+    "details": {
+      "address": "1234 Elm St, Springfield",
+      "phone": "+998901234567",
+      "items": [
+        { "product": "Laptop", "quantity": 1, "price": "$900" },
+        { "product": "Mouse", "quantity": 1, "price": "$48.55" }
+      ]
+    }
   },
   {
     "id": 789,
     "name": "Guy Hawkins",
     "price": "$0.00",
     "status": "Cancelled",
-    "date": "25.05.2020"
-  },
-  {
-    "id": 478,
-    "name": "Leslie Alexander",
-    "price": "$293.01",
-    "status": "Pending",
-    "date": "18.05.2020"
-  },
-  {
-    "id": 589,
-    "name": "Albert Flores",
-    "price": "$105.55",
-    "status": "Pending",
-    "date": "07.02.2020"
-  },
-  {
-    "id": 345,
-    "name": "Eleanor Pena",
-    "price": "$779.58",
-    "status": "Received",
-    "date": "18.03.2020"
-  },
-  {
-    "id": 456,
-    "name": "Dianne Russell",
-    "price": "$576.28",
-    "status": "Received",
-    "date": "23.04.2020"
-  },
-  {
-    "id": 768,
-    "name": "Savannah Nguyen",
-    "price": "$589.99",
-    "status": "Received",
-    "date": "18.05.2020"
-  },
-  {
-    "id": 977,
-    "name": "Kathryn Murphy",
-    "price": "$149.43",
-    "status": "Received",
-    "date": "23.03.2020"
-  },
-  {
-    "id": 687,
-    "name": "Jacob Jones",
-    "price": "$219.78",
-    "status": "Received",
-    "date": "07.05.2020"
-  },
-  {
-    "id": 688,
-    "name": "Jacob Jones",
-    "price": "$219.78",
-    "status": "Received",
-    "date": "07.05.2020"
-  },
-  {
-    "id": 1000,
-    "name": "Jacob Jones",
-    "price": "$219.78",
-    "status": "Received",
-    "date": "07.05.2020"
-  },
-  {
-    "id": 1001,
-    "name": "Jacob Jones",
-    "price": "$219.78",
-    "status": "Received",
-    "date": "07.05.2020"
-  },
-  {
-    "id": 1002,
-    "name": "Jacob Jones",
-    "price": "$219.78",
-    "status": "Received",
-    "date": "07.05.2020"
-  },
-  {
-    "id": 1003,
-    "name": "Jacob Jones",
-    "price": "$219.78",
-    "status": "Received",
-    "date": "07.05.2020"
-  },
-  {
-    "id": 1004,
-    "name": "Jacob Jones",
-    "price": "$219.78",
-    "status": "Received",
-    "date": "07.05.2020"
-  },
-  {
-    "id": 1005,
-    "name": "Jacob Jones",
-    "price": "$219.78",
-    "status": "Received",
-    "date": "07.05.2020"
+    "date": "25.05.2020",
+    "details": {
+      "address": "5678 Oak St, Springfield",
+      "phone": "+998909876543",
+      "items": []
+    }
   }
 ]
