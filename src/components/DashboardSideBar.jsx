@@ -12,7 +12,7 @@ import MessageIcon from '@rsuite/icons/Message';
 
 
 import 'rsuite/dist/rsuite.min.css';
-import React, { forwardRef, memo, useState } from 'react';
+import React, { forwardRef, memo, useEffect, useState } from 'react';
 import Logo from '../assets/icons/logo.png';
 import { Link, NavLink } from 'react-router-dom';
 
@@ -21,6 +21,17 @@ import { Link, NavLink } from 'react-router-dom';
 const DashboardSideBar = () => {
     const [expanded, setExpanded] = useState(true);
     const [activeKey, setActiveKey] = useState('1');
+
+    useEffect(() => {
+        const screenW = window.innerWidth;
+        
+        if (screenW < 1080) {
+            setExpanded(false)
+        }
+
+    }, [])
+
+    
 
 
 
