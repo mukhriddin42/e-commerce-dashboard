@@ -242,7 +242,7 @@ const OrderList = () => {
         <h1 className="text-2xl font-semibold">Order List</h1>
         <p className="text-gray-500 text-sm">Lorem ipsum dolor sit amet.</p>
       </div>
-      <div className="w-full max-w-[2020px] mx-auto flex gap-6">
+      <div className="w-full max-w-7xl mx-auto flex gap-6">
         {/* Left Table */}
         <div className="flex-1 w-[1000px] bg-white rounded-lg shadow-lg p-6">
           <div className="flex justify-between items-center mb-4 border-b pb-3">
