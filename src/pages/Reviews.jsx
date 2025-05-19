@@ -5,7 +5,8 @@ import axios from 'axios';
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const [oneReview, setOneReview] = useState([]);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     axios
@@ -47,12 +48,13 @@ const Reviews = () => {
         </div>
         <div className='my-4'>
           {loading ? (
+          
             <div className='w-full py-40 flex items-center justify-center'>
-              <div className='loader'></div>
+              <div className='loader z-35'></div>
             </div>
           ) : (
             <table className='table-auto border-separate border-spacing-y-2'>
-              <tr >
+              <tr>
                 <th className='w-20 text-left'>#ID</th>
                 <th className='w-80 text-left'>Product</th>
                 <th className='w-80 text-left'>Name</th>

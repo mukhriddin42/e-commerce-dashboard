@@ -1,119 +1,5 @@
-import React, { useState, useMemo } from "react";
-
-const orders = [
-  {
-    id: 452,
-    name: "Devon Lane",
-    price: "$948.55",
-    status: "Received",
-    date: "07.05.2020",
-  },
-  {
-    id: 789,
-    name: "Guy Hawkins",
-    price: "$0.00",
-    status: "Cancelled",
-    date: "25.05.2020",
-  },
-  {
-    id: 478,
-    name: "Leslie Alexander",
-    price: "$293.01",
-    status: "Pending",
-    date: "18.05.2020",
-  },
-  {
-    id: 589,
-    name: "Albert Flores",
-    price: "$105.55",
-    status: "Pending",
-    date: "07.02.2020",
-  },
-  {
-    id: 345,
-    name: "Eleanor Pena",
-    price: "$779.58",
-    status: "Received",
-    date: "18.03.2020",
-  },
-  {
-    id: 456,
-    name: "Dianne Russell",
-    price: "$576.28",
-    status: "Received",
-    date: "23.04.2020",
-  },
-  {
-    id: 768,
-    name: "Savannah Nguyen",
-    price: "$589.99",
-    status: "Received",
-    date: "18.05.2020",
-  },
-  {
-    id: 977,
-    name: "Kathryn Murphy",
-    price: "$149.43",
-    status: "Received",
-    date: "23.03.2020",
-  },
-  {
-    id: 687,
-    name: "Jacob Jones",
-    price: "$219.78",
-    status: "Received",
-    date: "07.05.2020",
-  },
-  {
-    id: 688,
-    name: "Jacob Jones",
-    price: "$219.78",
-    status: "Received",
-    date: "07.05.2020",
-  },
-  {
-    id: 1000,
-    name: "Jacob Jones",
-    price: "$219.78",
-    status: "Received",
-    date: "07.05.2020",
-  },
-  {
-    id: 1001,
-    name: "Jacob Jones",
-    price: "$219.78",
-    status: "Received",
-    date: "07.05.2020",
-  },
-  {
-    id: 1002,
-    name: "Jacob Jones",
-    price: "$219.78",
-    status: "Received",
-    date: "07.05.2020",
-  },
-  {
-    id: 1003,
-    name: "Jacob Jones",
-    price: "$219.78",
-    status: "Received",
-    date: "07.05.2020",
-  },
-  {
-    id: 1004,
-    name: "Jacob Jones",
-    price: "$219.78",
-    status: "Received",
-    date: "07.05.2020",
-  },
-  {
-    id: 1005,
-    name: "Jacob Jones",
-    price: "$219.78",
-    status: "Received",
-    date: "07.05.2020",
-  },
-];
+import axios from "axios";
+import React, { useState, useMemo, useEffect } from "react";
 
 const statusClasses = {
   Received: "bg-green-100 text-green-700",
@@ -123,11 +9,15 @@ const statusClasses = {
 
 const OrderList = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [itemsPerPage] = useState(5);
+  const baseUrl = "/data/data.json";
+  const [data, setData] = useState([]);
+  console.log(data);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
-    const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState({
     orderId: "",
     customer: "",
     customer2: "",
@@ -138,7 +28,35 @@ const OrderList = () => {
     dateModified: "",
   });
 
-    const handleFilterChange = (e) => {
+  useEffect(() => {
+    // const controller = new AbortController();
+
+    const FetchData = async () => {
+      try {
+        console.log("So‘rov yuborilmoqda...");
+        const res = await axios.get(baseUrl);
+        console.log("So‘rov muvaffaqiyatli", res.data);
+        setData(res.data);
+      } catch (error) {
+        if (error.name === "CanceledError") {
+          console.log("So‘rov abort qilindi");
+        } else {
+          console.error("malumot olishda xatolik bor", error);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    FetchData();
+
+    // return () => {
+    //   console.log("Cleanup: abort chaqirildi");
+    //   controller.abort();
+    // };
+  }, []);
+
+  const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters((prev) => ({
       ...prev,
@@ -148,50 +66,29 @@ const OrderList = () => {
 
   // Filter va search orqali yangi array hosil qilish uchun useMemo
   const filteredOrders = useMemo(() => {
-    return orders.filter((order) => {
-    if (searchTerm && !order.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-      return false;
-    }
+    if (!data) return [];
+
+    return data.filter((order) => {
       if (
-        filters.orderId &&
-        !order.orderId.toLowerCase().includes(filters.orderId.toLowerCase())
-      )
-        return false;
-      if (
-        filters.customer &&
-        !order.customer.toLowerCase().includes(filters.customer.toLowerCase())
-      )
-        return false;
-      if (
-        filters.customer2 &&
-        !order.customer2.toLowerCase().includes(filters.customer2.toLowerCase())
-      )
-        return false;
-      if (filters.orderStatus && order.orderStatus !== filters.orderStatus)
-        return false;
-      if (filters.published) {
-        const pubBool = filters.published === "true";
-        if (order.published !== pubBool) return false;
-      }
-      if (
-        filters.total &&
-        !order.total.toString().includes(filters.total.toString())
-      )
-        return false;
-      if (
-        filters.dataAdet &&
-        !order.dataAdet.toString().includes(filters.dataAdet.toString())
-      )
-        return false;
-      if (
-        filters.dateModified &&
-        !order.dateModified.includes(filters.dateModified)
+        searchTerm &&
+        !order.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
         return false;
 
+      if (filters.id && !order.id.toString().includes(filters.id.toString()))
+        return false;
+      if (
+        filters.name &&
+        !order.name.toLowerCase().includes(filters.name.toLowerCase())
+      )
+        return false;
+      if (filters.price && !order.price.includes(filters.price)) return false;
+      if (filters.status && order.status !== filters.status) return false;
+      if (filters.date && !order.date.includes(filters.date)) return false;
+
       return true;
     });
-  }, [searchTerm, filterStatus, filters]);
+  }, [data, searchTerm, filterStatus, filters]);
 
   const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
 
@@ -234,7 +131,10 @@ const OrderList = () => {
   // Agar filter yoki search o‘zgarsa sahifa 1 ga qaytadi
   React.useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm, filterStatus]);
+  }, [searchTerm, filterStatus, filters]);
+
+  if (loading) return <div>Ma’lumot yuklanmoqda...</div>;
+  if (!data) return <div>Ma’lumot topilmadi</div>;
 
   return (
     <div className="min-h-screen w-full bg-gray-100 p-6">
@@ -242,7 +142,7 @@ const OrderList = () => {
         <h1 className="text-2xl font-semibold">Order List</h1>
         <p className="text-gray-500 text-sm">Lorem ipsum dolor sit amet.</p>
       </div>
-      <div className="w-full max-w-[2020px] mx-auto flex gap-6">
+      <div className="w-full! max-w-7xl! mx-auto flex gap-6">
         {/* Left Table */}
         <div className="flex-1 w-[1000px] bg-white rounded-lg shadow-lg p-6">
           <div className="flex justify-between items-center mb-4 border-b pb-3">
@@ -313,7 +213,7 @@ const OrderList = () => {
                       </td>
                       <td>{order.date}</td>
                       <td>
-                        <button className="bg-green-400 text-white px-4 py-2 rounded hover:bg-green-600">
+                        <button className="bg-green-400 text-white! px-4 py-2 rounded! hover:bg-green-600">
                           Detail
                         </button>
                       </td>
@@ -329,100 +229,127 @@ const OrderList = () => {
         <div className="w-80 bg-white rounded-lg shadow-lg p-6">
           <h2 className="font-bold text-lg mb-4">Filter by</h2>
           <div className="space-y-4">
-            <label htmlFor="order-id">Order Id</label>
-            <input
-              name="orderId"
-              value={filters.orderId}
-              onChange={handleFilterChange}
-              placeholder="Filter by Order Id"
-              className="border rounded px-2 py-1"
-            />
-            <label htmlFor="customer">Customer</label>
-            <input
-              type="text"
-              placeholder="Type here"
-              className="bg-gray-200 text-gray-700 mb-4 mt-1 border border-gray-300 rounded px-1 py-2 w-full"
-              disabled
-            />
-            <label htmlFor="order-status">Order Status</label>
-            <select
-              className="bg-gray-200 text-gray-700 mb-4 mt-1 border border-gray-300 rounded px-1 py-2 w-full"
-              disabled
+            <label
+              htmlFor="order-id"
+              className="block text-sm font-medium mb-1!"
             >
-              <option>Published</option>
+              Order Id
+            </label>
+            <input
+              name="id"
+              placeholder="Order ID"
+              value={filters.id}
+              onChange={handleFilterChange}
+              className="w-full border bg-gray-100 px-3 py-2 rounded text-sm"
+            />
+
+            <label
+              htmlFor="customer"
+              className="block text-sm font-medium m-1! "
+            >
+              Customer
+            </label>
+            <input
+              name="name"
+              value={filters.name}
+              onChange={handleFilterChange}
+              className="w-full border bg-gray-100 px-3 py-2 rounded text-sm"
+              placeholder="Enter customer"
+            />
+
+            <label
+              htmlFor="customer2"
+              className="block text-sm font-medium m-1! "
+            >
+              Customer 2
+            </label>
+            <input
+              name="name"
+              value={filters.name}
+              onChange={handleFilterChange}
+              className="w-full border bg-gray-100 px-3 py-2 rounded text-sm"
+              placeholder="Enter customer 2"
+            />
+
+            <label
+              htmlFor="orderStatus"
+              className="block text-sm font-medium m-1! "
+            >
+              Order Status
+            </label>
+            <select
+              name="status"
+              value={filters.status}
+              onChange={handleFilterChange}
+              className="w-full border bg-gray-100 px-3 py-2 rounded text-sm"
+            >
+              <option value="">All</option>
+              <option value="Received">Received</option>
+              <option value="Pending">Pending</option>
+              <option value="Cancelled">Cancelled</option>
             </select>
-            <label htmlFor="total">Total</label>
+
+            <label htmlFor="total" className="block text-sm font-medium m-1">
+              Total
+            </label>
             <input
-              type="text"
-              placeholder="Type here"
-              className="bg-gray-200 text-gray-700 mb-4 mt-1 border border-gray-300 rounded px-1 py-2 w-full"
-              disabled
+              name="price"
+              value={filters.price}
+              onChange={handleFilterChange}
+              className="w-full border bg-gray-100 px-3 py-2 rounded text-sm"
+              placeholder="Enter total"
             />
-            <label htmlFor="data-adet">Data Adet</label>
+
+            <label
+              htmlFor="dateModified"
+              className="block text-sm font-medium m-1!"
+            >
+              Date
+            </label>
             <input
-              type="text"
-              placeholder="Type here"
-              className="bg-gray-200 text-gray-700 mb-4 mt-1 border border-gray-300 rounded px-1 py-2 w-full"
-              disabled
-            />
-            <label htmlFor="date-modified">Date Modified</label>
-            <input
-              type="text"
-              placeholder="Type here"
-              className="bg-gray-200 text-gray-700 mb-4 mt-1 border border-gray-300 rounded px-1 py-2 w-full"
-              disabled
-            />
-            <label htmlFor="customer">Customer</label>
-            <input
-              type="text"
-              placeholder="Type here"
-              className="bg-gray-200 text-gray-700 mb-4 mt-1 border border-gray-300 rounded px-1 py-2 w-full"
-              disabled
+              name="date"
+              value={filters.date}
+              onChange={handleFilterChange}
+              className="w-full border bg-gray-100 px-3 py-2 rounded text-sm"
+              placeholder="Enter date (e.g. 07.05.2020)"
             />
           </div>
         </div>
       </div>
 
       {/* Pagination */}
-      <nav className="flex justify-center items-center mt-8 gap-3 text-gray-500 font-semibold">
+      <div className="flex justify-center items-center gap-2 mt-6">
         <button
-          className={`hover:text-gray-900 px-2 py-1 rounded ${
-            currentPage === 1 ? "opacity-40 pointer-events-none" : ""
-          }`}
-          onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+          disabled={currentPage === 1}
         >
-          &lt;
+          Prev
         </button>
-
-        {getCurrentRange().map((page, idx) =>
-          page === "..." ? (
-            <span key={`dots-${idx}`} className="px-3 py-1 cursor-default">
-              ...
-            </span>
-          ) : (
-            <button
-              key={page}
-              className={`hover:text-gray-900 px-3 py-1 rounded ${
-                page === currentPage
-                  ? "bg-gray-700 text-white"
-                  : "bg-white text-gray-700"
-              }`}
-              onClick={() => setCurrentPage(page)}
-            >
-              {page}
-            </button>
-          )
-        )}
-
+        {getCurrentRange().map((page, index) => (
+          <button
+            key={index}
+            onClick={() => typeof page === "number" && setCurrentPage(page)}
+            className={`px-3 py-1 rounded ${
+              page === currentPage
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 hover:bg-gray-300"
+            }`}
+            disabled={page === "..."}
+          >
+            {page}
+          </button>
+        ))}
         <button
-          className={`hover:text-gray-900 px-2 py-1 rounded ${
-            currentPage === totalPages ? "opacity-40 pointer-events-none" : ""
-          }`}
-          onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
+          className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+          disabled={currentPage === totalPages}
         >
-          &gt;
+          Next
         </button>
-      </nav>
+      </div>
     </div>
   );
 };

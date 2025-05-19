@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Navbar, Nav, Dropdown, Avatar } from 'rsuite';
 import CogIcon from '@rsuite/icons/legacy/Cog';
 import SignOutIcon from '@rsuite/icons/legacy/SignOut';
@@ -101,4 +101,4 @@ const DashboardNavbar = () => {
   );
 };
 
-export default DashboardNavbar;
+export default memo(DashboardNavbar);

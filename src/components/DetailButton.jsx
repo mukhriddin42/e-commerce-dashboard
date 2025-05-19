@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 const DetailButton = ({text, onClick}) => {
   return (
@@ -8,4 +8,4 @@ const DetailButton = ({text, onClick}) => {
   )
 }
 
-export default DetailButton
+export default memo(DetailButton)

@@ -12,7 +12,7 @@ import MessageIcon from '@rsuite/icons/Message';
 
 
 import 'rsuite/dist/rsuite.min.css';
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, memo, useState } from 'react';
 import Logo from '../assets/icons/logo.png';
 import { Link, NavLink } from 'react-router-dom';
 
