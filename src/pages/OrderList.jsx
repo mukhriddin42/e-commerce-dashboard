@@ -37,6 +37,7 @@ const OrderList = () => {
         const res = await axios.get(baseUrl);
         console.log("So‘rov muvaffaqiyatli", res.data);
         setData(res.data);
+        setLoading(true)
       } catch (error) {
         if (error.name === "CanceledError") {
           console.log("So‘rov abort qilindi");
@@ -144,7 +145,7 @@ const OrderList = () => {
       </div>
       <div className="w-full! max-w-7xl! mx-auto flex gap-6">
         {/* Left Table */}
-        <div className="flex-1 w-[1000px] bg-white rounded-lg shadow-lg p-6">
+        <div className="flex-1 w-full bg-white rounded-lg shadow-lg p-6">
           <div className="flex justify-between items-center mb-4 border-b pb-3">
             <input
               type="text"
@@ -156,8 +157,9 @@ const OrderList = () => {
             <div className="flex space-x-3 gap-5">
               <select
                 className="border border-gray-300 bg-gray-200 text-gray-700 rounded px-4 py-2"
-                value={filterStatus}
-                onChange={(e) => setFilterStatus(e.target.value)}
+                name="status"
+                value={filters.status}
+                onChange={handleFilterChange}
               >
                 <option value="">All Status</option>
                 <option value="Received">Received</option>
@@ -240,7 +242,7 @@ const OrderList = () => {
               placeholder="Order ID"
               value={filters.id}
               onChange={handleFilterChange}
-              className="w-full border bg-gray-100 px-3 py-2 rounded text-sm"
+              className="w-full border-none  bg-gray-100 px-3 py-2 rounded text-sm"
             />
 
             <label
@@ -253,7 +255,7 @@ const OrderList = () => {
               name="name"
               value={filters.name}
               onChange={handleFilterChange}
-              className="w-full border bg-gray-100 px-3 py-2 rounded text-sm"
+              className="w-full border-none bg-gray-100 px-3 py-2 rounded text-sm"
               placeholder="Enter customer"
             />
 
@@ -267,7 +269,7 @@ const OrderList = () => {
               name="name"
               value={filters.name}
               onChange={handleFilterChange}
-              className="w-full border bg-gray-100 px-3 py-2 rounded text-sm"
+              className="w-full border-none bg-gray-100 px-3 py-2 rounded text-sm"
               placeholder="Enter customer 2"
             />
 
@@ -281,7 +283,7 @@ const OrderList = () => {
               name="status"
               value={filters.status}
               onChange={handleFilterChange}
-              className="w-full border bg-gray-100 px-3 py-2 rounded text-sm"
+              className="w-full border-none bg-gray-100 px-3 py-2 rounded text-sm"
             >
               <option value="">All</option>
               <option value="Received">Received</option>
@@ -296,7 +298,7 @@ const OrderList = () => {
               name="price"
               value={filters.price}
               onChange={handleFilterChange}
-              className="w-full border bg-gray-100 px-3 py-2 rounded text-sm"
+              className="w-full border-none bg-gray-100 px-3 py-2 rounded text-sm"
               placeholder="Enter total"
             />
 
@@ -310,7 +312,7 @@ const OrderList = () => {
               name="date"
               value={filters.date}
               onChange={handleFilterChange}
-              className="w-full border bg-gray-100 px-3 py-2 rounded text-sm"
+              className="w-full border-none bg-gray-100 px-3 py-2 rounded text-sm"
               placeholder="Enter date (e.g. 07.05.2020)"
             />
           </div>
