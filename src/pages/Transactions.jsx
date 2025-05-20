@@ -3,6 +3,7 @@ import { Button } from 'rsuite'
 import paypalLogo from '../assets/icons/image.png'
 import axios from 'axios'
 import DetailButton from '../components/DetailButton'
+import jsPDF from 'jspdf'
 
 
 
@@ -36,6 +37,29 @@ const Transactions = () => {
     openModal()
   }
 
+  function downloadTransactionAsPdf(transaction) {
+    const doc = new jsPDF({
+      orientation: 'portrait',
+      unit: 'mm',
+      format: [120, 150]
+    });
+
+    const t = transaction[0];
+
+    doc.setFontSize(16);
+    doc.text("Transaction details", 10, 10);
+
+    doc.setFontSize(12);
+    doc.text(`Supplier: TemplateMount`, 10, 30);
+    doc.text(`Date: ${t?.date?.toString().split("T")[0]}`, 10, 40);
+    doc.text(`Billing Address: ${t?.billingAddress}`, 10, 50);
+    doc.text(`VAT ID: ${t?.vatId}`, 10, 60);
+    doc.text(`Email: ${t?.email}`, 10, 70);
+    doc.text(`Payment Method: ${t?.method}`, 10, 80);
+    doc.text(`Paid Amount: ${t?.paid}`, 10, 90);
+
+    doc.save(`transaction_${t?.id || 'unknown'}.pdf`);
+  }
 
   return (
     <div className='border-red-400 shadow-main p-10 rounded-sm flex gap-6 justify-between'>
@@ -119,7 +143,7 @@ const Transactions = () => {
                 </div>
               </div>
             </div>
-            <p className='inline px-4 py-1 rounded-sm cursor-pointer border-2 border-[#5DB996] hover:border-[#118B50] hover:bg-[#118B50] hover:text-white transactions-text transition-colors duration-300'>Download recipe</p>
+            <p onClick={() => downloadTransactionAsPdf(oneTransaction)} className='inline px-4 py-1 rounded-sm cursor-pointer border-2 border-[#5DB996] hover:border-[#118B50] hover:bg-[#118B50] hover:text-white transactions-text transition-colors duration-300'>Download transaciton</p>
           </div>
         )}
       </div>
