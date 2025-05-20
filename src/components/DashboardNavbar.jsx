@@ -15,6 +15,7 @@ import { FaBell } from "react-icons/fa";
 
 
 import 'rsuite/dist/rsuite.min.css';
+import { Link } from 'react-router-dom';
 
 
 const styles = {
@@ -66,11 +67,13 @@ const DashboardNavbar = () => {
               <Dropdown.Item icon={<UserInfoIcon />}>Profile</Dropdown.Item>
               <Dropdown.Item icon={<CogIcon />}>Settings</Dropdown.Item>
               <Dropdown.Separator />
-              <Dropdown.Item icon={<SignOutIcon />}>Logout</Dropdown.Item>
+              <Link to='login'>
+                <Dropdown.Item icon={<SignOutIcon />}> Logout </Dropdown.Item>
+              </Link>
             </Dropdown>
             <Dropdown
               placement="bottomEnd"
-              className='border w-17 md:w-auto border-gray-300  rounded-sm '            
+              className='border w-17 md:w-auto border-gray-300  rounded-sm '
               title={
                 <Avatar
                   circle
@@ -83,7 +86,9 @@ const DashboardNavbar = () => {
               <Dropdown.Item icon={<UserInfoIcon />}>Profile</Dropdown.Item>
               <Dropdown.Item icon={<CogIcon />}>Settings</Dropdown.Item>
               <Dropdown.Separator />
-              <Dropdown.Item icon={<SignOutIcon />}>Logout</Dropdown.Item>
+              <Link to='login'>
+                <Dropdown.Item icon={<SignOutIcon />}> Logout </Dropdown.Item>
+              </Link>
             </Dropdown>
           </Nav>
         </div>
@@ -91,11 +96,11 @@ const DashboardNavbar = () => {
       </div>
 
       <InputGroup className='flex! md:hidden! max-w-[80%] mx-auto '>
-          <Input className='bg-gray-50!' />
-          <InputGroup.Button className='bg-gray-200!'>
-            <SearchIcon />
-          </InputGroup.Button>
-        </InputGroup>
+        <Input className='bg-gray-50!' />
+        <InputGroup.Button className='bg-gray-200!'>
+          <SearchIcon />
+        </InputGroup.Button>
+      </InputGroup>
 
     </div>
   );

@@ -118,9 +118,10 @@ const SellerList = () => {
               <th className="p-2">Action</th>
             </tr>
           </thead>
-          <tbody>
-
-            {loading ? <h1 className='text-4xl'>Loading...</h1> : filteredUsers?.filter(user => user.firstname?.toLowerCase().includes(searchTerm)).map(user => {
+          <tbody className='relative'>
+            {loading ? <div className='flex justify-center items-center w-[80%] h-90 absolute  '>
+              <div className='loader'></div>
+            </div> : filteredUsers?.filter(user => user.firstname?.toLowerCase().includes(searchTerm)).map(user => {
               return (
                 <tr key={user.id} className="bg-white shadow h-15">
                   <td className="p-2">
