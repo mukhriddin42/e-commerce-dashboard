@@ -1,4 +1,4 @@
-import { StrictMode } from 'react'
+import { StrictMode, useContext } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
@@ -19,6 +19,7 @@ import AddProductTwo from './pages/AddProductTwo.jsx'
 import Login from './components/Login.jsx'
 import Sign from './components/Routes/Sign.jsx'
 import Createakk from './components/Routes/Createakk.jsx'
+import ContextThemeProvider  from './hooks/useContext.jsx'
 
 
 const router = createBrowserRouter([
@@ -96,11 +97,10 @@ const router = createBrowserRouter([
   }
 
 ])
-
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router}>
-
-    </RouterProvider>
+    <ContextThemeProvider>
+      <RouterProvider router={router}></RouterProvider>
+    </ContextThemeProvider>
   </StrictMode>,
 )

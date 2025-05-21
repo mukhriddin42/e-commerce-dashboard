@@ -46,7 +46,7 @@ const AddProducts = () => {
           <div className='grid grid-cols-1  md:grid-cols-3 gap-0 md:gap-5 mt-5'>
             <div className="col-span-2 ">
               <div className='bg-gray-50 border border-gray-300 rounded-2xl'>
-                <h4 className='m-4'>Basic</h4>
+                <h4 className='m-4!'>Basic</h4>
                 <hr className='m-0!' />
                 <div className="m-4!">
                   <Form fluid>

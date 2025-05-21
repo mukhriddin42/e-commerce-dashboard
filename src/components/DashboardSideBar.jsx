@@ -10,15 +10,27 @@ import OperatePeopleIcon from "@rsuite/icons/OperatePeople";
 import MessageIcon from "@rsuite/icons/Message";
 
 import "rsuite/dist/rsuite.min.css";
-import React, { forwardRef, memo, useEffect, useState } from "react";
+import React, { forwardRef, memo, useContext, useEffect, useLayoutEffect, useState } from "react";
 import Logo from "../assets/icons/logo.png";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { ThemeContext } from "../hooks/useContext";
 
 const DashboardSideBar = () => {
+  const { theme } = useContext(ThemeContext)
+
   const location = useLocation();
   const [expanded, setExpanded] = useState(true);
   const [activeKey, setActiveKey] = useState("1");
   const [lastViewedOrderId, setLastViewedOrderId] = useState(localStorage.getItem("lastId"));
+
+  useLayoutEffect(() => {
+    const screenW = window.innerWidth;
+    
+    if (screenW < 1080) {
+        setExpanded(false)
+    }
+
+}, [])
 
   const hasValidLastOrderId = lastViewedOrderId && /^\d+$/.test(lastViewedOrderId);
 
@@ -36,7 +48,8 @@ const DashboardSideBar = () => {
   return (
     <Sidenav
       expanded={expanded}
-      className="w-[50vw] absolute md:relative md:max-w-[15vw]! z-20 shadow-lg  transition-all duration-100 ease-in-out"
+      className={"w-[50vw] absolute md:relative md:max-w-[15vw]! z-20 shadow-lg  transition-all duration-100 ease-in-out" }
+     
     >
       <Sidenav.Header>
         <div className="flex items-center justify-between h-16">
