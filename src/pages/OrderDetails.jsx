@@ -1,5 +1,5 @@
-import { CalendarIcon, Download } from "lucide-react";
-
+import { CiCalendar } from "react-icons/ci";
+import { GoDownload } from "react-icons/go";
 
 const OrderDetails = () => {
   return (
@@ -13,7 +13,7 @@ const OrderDetails = () => {
           {/* Header */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
             <div className="flex items-start space-x-2">
-              <CalendarIcon className="h-5 w-5 text-gray-500 mt-0.5" />
+              <CiCalendar className="h-5 w-5 text-gray-500 mt-0.5" />
               <div className="flex flex-col">
                 <span className="text-sm text-gray-500">
                   Wed Aug 15, 2020, 4:34PM
@@ -104,7 +104,7 @@ const OrderDetails = () => {
                   href="#"
                   className="text-sm text-green-500 hover:underline flex items-center"
                 >
-                  <Download className="h-3 w-3 mr-1" />
+                  <GoDownload className="h-3 w-3 mr-1" />
                   Download info
                 </a>
               </div>
