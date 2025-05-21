@@ -21,7 +21,7 @@ const ApexChartRow = () => {
                     },
                 }
             },
-            colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B'],
+            colors: ['green', 'blue', 'black', '#13d8aa', '#A5978B'],
             dataLabels: {
                 enabled: true,
                 textAnchor: 'start',

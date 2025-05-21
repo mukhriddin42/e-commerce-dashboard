@@ -10,7 +10,7 @@ import OperatePeopleIcon from "@rsuite/icons/OperatePeople";
 import MessageIcon from "@rsuite/icons/Message";
 
 import "rsuite/dist/rsuite.min.css";
-import React, { forwardRef, memo, useEffect, useState } from "react";
+import React, { forwardRef, memo, useEffect, useLayoutEffect, useState } from "react";
 import Logo from "../assets/icons/logo.png";
 import { Link, useLocation } from "react-router-dom";
 
@@ -19,6 +19,15 @@ const DashboardSideBar = () => {
   const [expanded, setExpanded] = useState(true);
   const [activeKey, setActiveKey] = useState("1");
   const [lastViewedOrderId, setLastViewedOrderId] = useState(localStorage.getItem("lastId"));
+
+  useLayoutEffect(() => {
+    const screenW = window.innerWidth;
+    
+    if (screenW < 1080) {
+        setExpanded(false)
+    }
+
+}, [])
 
   const hasValidLastOrderId = lastViewedOrderId && /^\d+$/.test(lastViewedOrderId);
 
