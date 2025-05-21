@@ -10,53 +10,20 @@ const statusClasses = {
 
 const OrderList = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [itemsPerPage] = useState(5);
+  const [loading, setLoading] = useState(true);
+  const itemsPerPage = 5;
   const baseUrl = "/data/data.json";
   const [data, setData] = useState([]);
-  console.log(data);
 
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterStatus, setFilterStatus] = useState("");
+  // Filters state
   const [filters, setFilters] = useState({
-    orderId: "",
-    customer: "",
+    id: "",
+    name: "",
     customer2: "",
-    orderStatus: "",
-    published: "",
-    total: "",
-    dataAdet: "",
-    dateModified: "",
+    status: "",
+    price: "",
+    date: "",
   });
-
-  useEffect(() => {
-    // const controller = new AbortController();
-
-    const FetchData = async () => {
-      try {
-        console.log("So‘rov yuborilmoqda...");
-        const res = await axios.get(baseUrl);
-        console.log("So‘rov muvaffaqiyatli", res.data);
-        setData(res.data);
-        setLoading(true);
-      } catch (error) {
-        if (error.name === "CanceledError") {
-          console.log("So‘rov abort qilindi");
-        } else {
-          console.error("malumot olishda xatolik bor", error);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    FetchData();
-
-    // return () => {
-    //   console.log("Cleanup: abort chaqirildi");
-    //   controller.abort();
-    // };
-  }, []);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -66,42 +33,70 @@ const OrderList = () => {
     }));
   };
 
-  // Filter va search orqali yangi array hosil qilish uchun useMemo
-  const filteredOrders = useMemo(() => {
-    if (!data) return [];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log("So‘rov yuborilmoqda...");
+        const res = await axios.get(baseUrl);
+        console.log("So‘rov muvaffaqiyatli", res.data);
+        setData(res.data);
+      } catch (error) {
+        console.error("Ma'lumot olishda xatolik bor", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    return data.filter((order) => {
+    fetchData();
+  }, []);
+
+  // Filter qilingan ma'lumotlar
+const filteredOrders = useMemo(() => {
+  return data.filter((order) => {
+    if (filters.id && !order.id.toString().includes(filters.id.toString()))
+      return false;
+
+    if (
+      filters.name &&
+      !order.name.toLowerCase().includes(filters.name.toLowerCase())
+    )
+      return false;
+
+    if (
+      filters.customer2 &&
+      !order.customer2?.toLowerCase().includes(filters.customer2.toLowerCase())
+    )
+      return false;
+
+    if (filters.price && !order.price.toString().includes(filters.price)) return false;
+
+    if (filters.status && order.status !== filters.status) return false;
+
+    if (filters.date) {
+      const filterDate = new Date(filters.date);
+      const orderDate = new Date(order.date);
       if (
-        searchTerm &&
-        !order.name.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+        orderDate.getFullYear() !== filterDate.getFullYear() ||
+        orderDate.getMonth() !== filterDate.getMonth() ||
+        orderDate.getDate() !== filterDate.getDate()
+      ) {
         return false;
+      }
+    }
 
-      if (filters.id && !order.id.toString().includes(filters.id.toString()))
-        return false;
-      if (
-        filters.name &&
-        !order.name.toLowerCase().includes(filters.name.toLowerCase())
-      )
-        return false;
-      if (filters.price && !order.price.includes(filters.price)) return false;
-      if (filters.status && order.status !== filters.status) return false;
-      if (filters.date && !order.date.includes(filters.date)) return false;
+    return true;
+  });
+}, [data, filters]);
 
-      return true;
-    });
-  }, [data, searchTerm, filterStatus, filters]);
 
   const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
 
-  // Paginate qilingan buyurtmalar
   const currentOrders = filteredOrders.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
   const getCurrentRange = () => {
-    const range = [];
     if (totalPages <= 5) {
       return Array.from({ length: totalPages }, (_, i) => i + 1);
     }
@@ -119,24 +114,16 @@ const OrderList = () => {
         totalPages,
       ];
     }
-    return [
-      1,
-      "...",
-      currentPage - 1,
-      currentPage,
-      currentPage + 1,
-      "...",
-      totalPages,
-    ];
+    return [1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages];
   };
 
-  // Agar filter yoki search o‘zgarsa sahifa 1 ga qaytadi
-  React.useEffect(() => {
+  // Filter o'zgarganda sahifa 1 ga qaytadi
+  useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm, filterStatus, filters]);
+  }, [filters]);
 
   if (loading) return <div>Ma’lumot yuklanmoqda...</div>;
-  if (!data) return <div>Ma’lumot topilmadi</div>;
+  if (!data.length) return <div>Ma’lumot topilmadi</div>;
 
   return (
     <div className="min-h-screen w-full bg-gray-100 p-6">
@@ -152,8 +139,9 @@ const OrderList = () => {
               type="text"
               placeholder="Search by customer name..."
               className="border bg-gray-200 text-gray-700 border-gray-300 rounded px-4 py-2 w-1/3"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              name="name"
+              value={filters.name}
+              onChange={handleFilterChange}
             />
             <div className="flex space-x-3 gap-5">
               <select
@@ -169,7 +157,6 @@ const OrderList = () => {
               </select>
               <select
                 className="border bg-gray-200 text-gray-700 border-gray-300 rounded px-4 py-2"
-                // Hozircha show 20 ishlamayapti, balki kelajakda o‘zgartirish kiritish uchun
                 disabled
               >
                 <option>Show 20</option>
@@ -235,10 +222,7 @@ const OrderList = () => {
         <div className="w-full md:w-65 bg-white rounded-lg shadow-lg p-6">
           <h2 className="font-bold text-lg mb-4">Filter by</h2>
           <div className="space-y-4">
-            <label
-              htmlFor="order-id"
-              className="block text-sm font-medium mb-1!"
-            >
+            <label htmlFor="order-id" className="block text-sm font-medium mb-1">
               Order Id
             </label>
             <input
@@ -249,10 +233,7 @@ const OrderList = () => {
               className="w-full border-none  bg-gray-100 px-3 py-2 rounded text-sm"
             />
 
-            <label
-              htmlFor="customer"
-              className="block text-sm font-medium m-1! "
-            >
+            <label htmlFor="customer" className="block text-sm font-medium mb-1">
               Customer
             </label>
             <input
@@ -263,24 +244,18 @@ const OrderList = () => {
               placeholder="Enter customer"
             />
 
-            <label
-              htmlFor="customer2"
-              className="block text-sm font-medium m-1! "
-            >
+            <label htmlFor="customer2" className="block text-sm font-medium mb-1">
               Customer 2
             </label>
             <input
-              name="name"
-              value={filters.name}
+              name="customer2"
+              value={filters.customer2}
               onChange={handleFilterChange}
               className="w-full border-none bg-gray-100 px-3 py-2 rounded text-sm"
               placeholder="Enter customer 2"
             />
 
-            <label
-              htmlFor="orderStatus"
-              className="block text-sm font-medium m-1! "
-            >
+            <label htmlFor="orderStatus" className="block text-sm font-medium mb-1">
               Order Status
             </label>
             <select
@@ -295,7 +270,7 @@ const OrderList = () => {
               <option value="Cancelled">Cancelled</option>
             </select>
 
-            <label htmlFor="total" className="block text-sm font-medium m-1">
+            <label htmlFor="total" className="block text-sm font-medium mb-1">
               Total
             </label>
             <input
@@ -306,52 +281,56 @@ const OrderList = () => {
               placeholder="Enter total"
             />
 
-            <label
-              htmlFor="dateModified"
-              className="block text-sm font-medium m-1!"
-            >
+            <label htmlFor="date" className="block text-sm font-medium mb-1">
               Date
             </label>
             <input
+              type="date"
               name="date"
               value={filters.date}
               onChange={handleFilterChange}
               className="w-full border-none bg-gray-100 px-3 py-2 rounded text-sm"
-              placeholder="Enter date (e.g. 07.05.2020)"
             />
           </div>
         </div>
       </div>
 
       {/* Pagination */}
-      <div className="flex flex-wrap justify-center items-center gap-2 mt-6">
+      <div className="mt-5 flex justify-center gap-2 items-center">
         <button
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+          className={`px-3 py-1 rounded border ${
+            currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+          }`}
           disabled={currentPage === 1}
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
         >
           Prev
         </button>
-        {getCurrentRange().map((page, index) => (
-          <button
-            key={index}
-            onClick={() => typeof page === "number" && setCurrentPage(page)}
-            className={`px-3 py-1 rounded ${
-              page === currentPage
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 hover:bg-gray-300"
-            }`}
-            disabled={page === "..."}
-          >
-            {page}
-          </button>
-        ))}
+
+        {getCurrentRange().map((page, idx) =>
+          page === "..." ? (
+            <span key={`dots-${idx}`} className="px-3 py-1">
+              ...
+            </span>
+          ) : (
+            <button
+              key={page}
+              className={`px-3 py-1 rounded border ${
+                page === currentPage ? "bg-blue-500 text-white" : ""
+              }`}
+              onClick={() => setCurrentPage(page)}
+            >
+              {page}
+            </button>
+          )
+        )}
+
         <button
-          onClick={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-          }
-          className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+          className={`px-3 py-1 rounded border ${
+            currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
+          }`}
           disabled={currentPage === totalPages}
+          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
         >
           Next
         </button>
