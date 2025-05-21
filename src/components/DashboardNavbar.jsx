@@ -100,8 +100,8 @@ const DashboardNavbar = () => {
                 />
               }
             >
-              <Dropdown.Item icon={<UserInfoIcon />}>Profile</Dropdown.Item>
-              <Dropdown.Item icon={<CogIcon />}>Settings</Dropdown.Item>
+              <Link to='/profile-setting'> <Dropdown.Item icon={<UserInfoIcon />}>Profile</Dropdown.Item></Link>
+              <Link to='/site-setting'><Dropdown.Item icon={<CogIcon />}>Settings</Dropdown.Item></Link>
               <Dropdown.Separator />
               <Link to='login'>
                 <Dropdown.Item icon={<SignOutIcon />}> Logout </Dropdown.Item>
