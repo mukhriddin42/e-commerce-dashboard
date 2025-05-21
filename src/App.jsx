@@ -11,7 +11,7 @@ function App() {
     <>
     <div className='w-full h-full mymodal fixed inset-0  z-30'>
     </div>
-      <div className="flex">
+      <div className={theme === 'black' ? "text-white! flex bg-black!" : "text-black bg-white flex"}>
         <DashboardSideBar />
         <div className="mainConten  absolute right-0 md:relative flex flex-col md:w-full ">
           <DashboardNavbar />
