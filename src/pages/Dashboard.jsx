@@ -8,8 +8,10 @@ import { AiFillDollarCircle } from "react-icons/ai";
 import { FaTruckMoving } from "react-icons/fa";
 import { AiFillProduct } from "react-icons/ai";
 import { FaOpencart } from "react-icons/fa6";
-import Chart from '../components/Chart';
 import MySteps from '../components/Steps';
+import ApexChart from '../components/charts/Chart';
+import ApexChartColumn from '../components/charts/ChartColumn';
+import ApexChartRow from '../components/charts/ChartRow';
 
 
 
@@ -79,10 +81,14 @@ const Dashboard = () => {
 
 
         <div className="w-full flex flex-col xl:flex-row  xl:gap-2">
+
+
           <div className='w-full xl:w-4/6 '>
             {/* chart */}
-            <div className="w-[98%]  overflow-hidden">
-              <Chart />
+            <div className="bg-green-50 rounded-md border border-green-200 shadow my-3 py-5">
+              <h4 className='m-2! font-bold!'>Sale Statistics</h4>
+              <ApexChart />
+
             </div>
 
 
@@ -93,21 +99,21 @@ const Dashboard = () => {
               <div className="w-full xl:w-2/5 bg-green-50 rounded-xl border-1 border-green-300 p-3">
                 {/* New members */}
                 <h5 className="font-bold!">New Members</h5>
-                <div className="flex justify-between items-center mt-3">
+                <div className="flex justify-between items-center mt-5">
                   <div className="flex gap-2 items-center">
                     <img src={avatarimg} className='w-10 h-10 rounded-full' alt="" />
                     <p className='font-bold! text-[12px]'>Patric Adams</p>
                   </div>
                   <Button color="green" appearance="primary"  startIcon={<AddOutlineIcon />}>Add</Button>
                 </div>
-                <div className="flex justify-between items-center mt-3">
+                <div className="flex justify-between items-center mt-5">
                   <div className="flex gap-2 items-center">
                     <img src={avatarimg} className='w-10 h-10 rounded-full' alt="" />
                     <p className='font-bold! text-[12px]'>Patric Adams</p>
                   </div>
                   <Button color="green" appearance="primary"  startIcon={<AddOutlineIcon />}>Add</Button>
                 </div>
-                <div className="flex justify-between items-center mt-3">
+                <div className="flex justify-between items-center my-5">
                   <div className="flex gap-2 items-center">
                     <img src={avatarimg} className='w-10 h-10 rounded-full' alt="" />
                     <p className='font-bold! text-[12px]'>Patric Adams</p>
@@ -134,7 +140,17 @@ const Dashboard = () => {
           </div>
 
 
-          <div className="w-full xl:w-2/6 "></div>
+          <div className="w-full xl:w-2/6 ">
+
+            <div className="w-full bg-green-50 rounded-md border border-green-200 shadow my-3 py-2">
+              <h6 className='ml-3! font-bold!'>Revenue Base on Area</h6>
+              <ApexChartColumn />
+            </div>
+
+            <div className="w-full bg-green-50 rounded-md border border-green-200 shadow my-3 py-2">
+              <ApexChartRow />
+            </div>
+          </div>
 
         </div>
 

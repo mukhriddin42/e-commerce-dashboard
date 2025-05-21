@@ -23,6 +23,15 @@ const DashboardSideBar = () => {
   const [activeKey, setActiveKey] = useState("1");
   const [lastViewedOrderId, setLastViewedOrderId] = useState(localStorage.getItem("lastId"));
 
+  useLayoutEffect(() => {
+    const screenW = window.innerWidth;
+    
+    if (screenW < 1080) {
+        setExpanded(false)
+    }
+
+}, [])
+
   const hasValidLastOrderId = lastViewedOrderId && /^\d+$/.test(lastViewedOrderId);
 
   useEffect(() => {
