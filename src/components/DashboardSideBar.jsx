@@ -1,5 +1,6 @@
 import { Sidenav, Nav } from "rsuite";
 import DashboardIcon from "@rsuite/icons/legacy/Dashboard";
+import GroupIcon from "@rsuite/icons/legacy/Group";
 import SwitchCoordinatesIcon from "@rsuite/icons/SwitchCoordinates";
 import CreditCardMinusIcon from "@rsuite/icons/CreditCardMinus";
 import RelatedMapIcon from "@rsuite/icons/RelatedMap";
@@ -150,5 +151,4 @@ const DashboardSideBar = () => {
     </Sidenav>
   );
 };
-
 export default DashboardSideBar;

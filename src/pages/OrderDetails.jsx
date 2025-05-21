@@ -21,13 +21,19 @@ const OrderDetails = () => {
     setStatus(e.target.value);
   };
 
-  const handleSave = () => {
-    setOrder((prevOrder) => ({
-      ...prevOrder,
-      status: status,
-    }));
-    alert(`Status changed to: ${status}`);
-  };
+  useEffect(() => {
+  if (order) {
+    setStatus(order.status);
+  }
+}, [order]);
+
+const handleSave = () => {
+  setOrder(prevOrder => ({
+    ...prevOrder,
+    status: status,
+  }));
+  alert(`Status changed to: ${status}`);
+};
 
   useEffect(() => {
     // Ma'lumotni yuklash, sizda data.json ni olish
@@ -87,15 +93,12 @@ const OrderDetails = () => {
                   onChange={handleStatusChange}
                   className="appearance-none bg-gray-100 border border-gray-200 rounded-md pl-3 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                 >
-                  <option value="" disabled>
-                    Change status
-                  </option>
-                  <option value="Processing">Processing</option>
-                  <option value="Shipped">Shipped</option>
-                  <option value="Delivered">Delivered</option>
-                  <option value="Cancelled">Cancelled</option>
+                  <option>Change status</option>
+                  <option>Processing</option>
+                  <option>Shipped</option>
+                  <option>Delivered</option>
+                  <option>Cancelled</option>
                 </select>
-
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
                   <svg
                     className="h-4 w-4"
@@ -271,7 +274,7 @@ const OrderDetails = () => {
                   <div className="flex justify-between pt-4 border-t border-gray-200 mt-4">
                     <span className="text-sm font-medium">Grand total:</span>
                     <span className="text-lg font-bold">
-                      ${(parseFloat(calculateSubtotal()) + 5).toFixed(2)}
+                     ${(Number(calculateSubtotal()) + 10).toFixed(2)}
                     </span>
                   </div>
                   <div className="mt-6">

@@ -28,6 +28,26 @@ const OrderList = () => {
     date: "",
   });
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log("So‘rov yuborilmoqda...");
+        const res = await axios.get(baseUrl);
+        console.log("So‘rov muvaffaqiyatli", res.data);
+        setData(res.data);
+      } catch (error) {
+        if (error.name === "CanceledError") {
+          console.log("So‘rov abort qilindi");
+        } else {
+          console.error("Malumot olishda xatolik bor", error);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters((prev) => ({
@@ -35,20 +55,6 @@ const OrderList = () => {
       [name]: value,
     }));
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(baseUrl);
-        setData(res.data);
-      } catch (error) {
-        console.error("Ma'lumot olishda xatolik bor", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
 
   const filteredOrders = useMemo(() => {
     return data.filter((order) => {
@@ -144,6 +150,7 @@ const OrderList = () => {
         </p>
       </div>
       <div className="mx-auto flex flex-col md:flex-row gap-6">
+        {/* Left Table */}
         <div className="flex-1 w-full bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 overflow-x-auto">
           <div className="flex justify-between items-center mb-4 border-b border-gray-200 dark:border-gray-700 pb-3">
             <input
@@ -170,9 +177,7 @@ const OrderList = () => {
           </div>
 
           <div className="overflow-x-auto">
-            <table
-              className={`w-full text-sm text-left text-gray-800 dark:text-gray-200`}
-            >
+            <table className="w-full text-sm text-left text-gray-800 dark:text-gray-200">
               <thead className="bg-gray-50 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
                 <tr>
                   <th className="py-3 px-4">ID</th>
@@ -228,6 +233,7 @@ const OrderList = () => {
           </div>
         </div>
 
+        {/* Right Filter Panel */}
         <div className="w-full md:w-65 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
           <h2 className="font-bold text-lg mb-4 text-gray-800 dark:text-gray-200">
             Filter by
@@ -243,62 +249,61 @@ const OrderList = () => {
                   type={key === "date" ? "date" : "text"}
                   value={filters[key]}
                   onChange={handleFilterChange}
-                  className="w-full border-none bg-gray-100 dark:bg-gray-700 text-sm px-3 py-2 rounded text-gray-800 dark:text-gray-200"
+                  className="w-full border-none bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded px-3 py-2"
                 />
               </div>
             ))}
+
             <div>
-              <label className="block text-sm font-medium mb-1">
-                Order Status
-              </label>
+              <label className="block text-sm font-medium mb-1">Status</label>
               <select
                 name="status"
                 value={filters.status}
                 onChange={handleFilterChange}
-                className="w-full border-none bg-gray-100 dark:bg-gray-700 text-sm px-3 py-2 rounded text-gray-800 dark:text-gray-200"
+                className="w-full border-none bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded px-3 py-2"
               >
                 <option value="">All</option>
                 <option value="Received">Received</option>
-                <option value="Pending">Pending</option>
                 <option value="Cancelled">Cancelled</option>
+                <option value="Pending">Pending</option>
               </select>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="mt-5 flex justify-center gap-2 items-center text-gray-800 dark:text-gray-200">
+      {/* Pagination */}
+      <div className="mt-6 flex justify-center space-x-2 text-gray-700 dark:text-gray-300">
         <button
-          className={`px-3 py-1 rounded border bg-gray-200 text-black! ${
-            currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
-          }`}
           disabled={currentPage === 1}
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          className="px-3 py-1 border rounded disabled:opacity-50"
         >
           Prev
         </button>
-        {getCurrentRange().map((page, index) => (
-          <button
-            key={index}
-            className={`px-3 py-1 rounded border ${
-              page === currentPage
-                ? "bg-green-500 text-white"
-                : "bg-gray-200 text-black!"
-            }`}
-            onClick={() => typeof page === "number" && setCurrentPage(page)}
-            disabled={page === "..."}
-          >
-            {page}
-          </button>
-        ))}
+        {getCurrentRange().map((page, index) =>
+          page === "..." ? (
+            <span key={index} className="px-2 py-1">
+              ...
+            </span>
+          ) : (
+            <button
+              key={index}
+              onClick={() => setCurrentPage(page)}
+              className={`px-3 py-1 border rounded ${
+                currentPage === page
+                  ? "bg-blue-600 text-white"
+                  : "hover:bg-gray-200 dark:hover:bg-gray-600"
+              }`}
+            >
+              {page}
+            </button>
+          )
+        )}
         <button
-          className={`px-3 py-1 rounded border bg-gray-200 text-black! ${
-            currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
-          }`}
           disabled={currentPage === totalPages}
-          onClick={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-          }
+          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+          className="px-3 py-1 border rounded disabled:opacity-50"
         >
           Next
         </button>
