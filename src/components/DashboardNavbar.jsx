@@ -29,10 +29,14 @@ const DashboardNavbar = () => {
 
 
   useEffect(() => {
-    fetchLastImage().then(img => {
-      if (img) setImage(img);
-    });
-  }, []);
+    const interval = setInterval(() => {
+      fetchLastImage().then(img => {
+        if (img !== image) setImage(img);
+      });
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [image]);
 
 
 
