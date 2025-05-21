@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Avatar, Button } from 'rsuite'
 import AddOutlineIcon from '@rsuite/icons/AddOutline';
 import avatarimg from "../assets/blog-1.jpg"
@@ -12,11 +12,14 @@ import MySteps from '../components/Steps';
 import ApexChart from '../components/charts/Chart';
 import ApexChartColumn from '../components/charts/ChartColumn';
 import ApexChartRow from '../components/charts/ChartRow';
+import { ThemeContext } from '../hooks/useContext';
 
 
 
 
 const Dashboard = () => {
+  const {theme} = useContext(ThemeContext)
+
   return (
     <>
       <div className="mx-3">
@@ -26,7 +29,12 @@ const Dashboard = () => {
 
         <div className='flex flex-col md:flex-col xl:flex-row xl:gap-2'>
 
-          <div className='my-3 w-full xl:w-1/4 p-5 bg-green-50 rounded-md border border-green-200 shadow'>
+          <div 
+          className={theme === "black"
+             ? "my-3 w-full xl:w-1/4 p-5 bg-green-800 rounded-md border border-green-200 shadow"
+             : "my-3 w-full xl:w-1/4 p-5 bg-green-50 rounded-md border border-green-200 shadow"
+            
+            }>
             <div className="flex flex-row items-center justify-start gap-5">
               <div className='w-15 h-15 bg-green-200 flex justify-center items-center rounded-full'>
                 <AiFillDollarCircle size={35} color='green' />
@@ -39,7 +47,11 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className='my-3 w-full xl:w-1/4 p-5 bg-green-50 rounded-md border border-green-200 shadow'>
+          <div className={theme === "black"
+             ? "my-3 w-full xl:w-1/4 p-5 bg-green-800 rounded-md border border-green-200 shadow"
+             : "my-3 w-full xl:w-1/4 p-5 bg-green-50 rounded-md border border-green-200 shadow"
+            
+            }>
             <div className="flex flex-row items-center justify-start gap-5">
               <div className='w-15 h-15 bg-green-300 flex justify-center items-center rounded-full'>
                 <FaTruckMoving  size={35} color='green' />
@@ -52,7 +64,12 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className='my-3 w-full xl:w-1/4 p-5 bg-green-50 rounded-md border border-green-200 shadow'>
+          <div 
+          className={theme === "black"
+             ? "my-3 w-full xl:w-1/4 p-5 bg-green-800 rounded-md border border-green-200 shadow"
+             : "my-3 w-full xl:w-1/4 p-5 bg-green-50 rounded-md border border-green-200 shadow"
+            
+            }>
             <div className="flex flex-row items-center justify-start gap-5">
               <div className='w-15 h-15 bg-orange-100 flex justify-center items-center rounded-full'>
                 <AiFillProduct size={35} color='orange' />
@@ -65,7 +82,12 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className='my-3 w-full xl:w-1/4 p-5 bg-green-50 rounded-md border border-green-200 shadow'>
+          <div 
+          className={theme === "black"
+             ? "my-3 w-full xl:w-1/4 p-5 bg-green-800 rounded-md border border-green-200 shadow"
+             : "my-3 w-full xl:w-1/4 p-5 bg-green-50 rounded-md border border-green-200 shadow"
+            
+            }>
             <div className="flex flex-row items-center justify-start gap-5">
               <div className='w-15 h-15 bg-blue-100 flex justify-center items-center rounded-full'>
                 <FaOpencart size={35} color='blue' />
@@ -85,7 +107,10 @@ const Dashboard = () => {
 
           <div className='w-full xl:w-4/6 '>
             {/* chart */}
-            <div className="bg-green-50 rounded-md border border-green-200 shadow my-3 py-5">
+            <div className={theme === "black" 
+              ? "bg-green-900 rounded-md border border-green-200 shadow my-3 py-5"
+              : "bg-green-50 rounded-md border border-green-200 shadow my-3 py-5"
+            }>
               <h4 className='m-2! font-bold!'>Sale Statistics</h4>
               <ApexChart />
 
@@ -96,7 +121,10 @@ const Dashboard = () => {
             <div className="w-full flex flex-col xl:flex-row gap-3 xl:items-start">
 
 
-              <div className="w-full xl:w-2/5 bg-green-50 rounded-xl border-1 border-green-300 p-3">
+              <div className={theme === 'black' 
+                ? "w-full xl:w-2/5 bg-green-800 rounded-xl border-1 border-green-300 p-3"
+                : "w-full xl:w-2/5 bg-green-50 rounded-xl border-1 border-green-300 p-3"
+              }>
                 {/* New members */}
                 <h5 className="font-bold!">New Members</h5>
                 <div className="flex justify-between items-center mt-5">
@@ -123,7 +151,10 @@ const Dashboard = () => {
               </div>
 
 
-              <div className='w-full xl:w-3/5 bg-green-50 rounded-xl border-1 border-green-300 p-3 flex'>
+              <div className={theme === 'black'
+                ? "w-full xl:w-3/5 bg-green-800 rounded-xl border-1 border-green-300 p-3 flex"
+                : "w-full xl:w-3/5 bg-green-50 rounded-xl border-1 border-green-300 p-3 flex"
+              }>
               {/* Steps */}
                 <MySteps />
                 <span>
@@ -142,12 +173,20 @@ const Dashboard = () => {
 
           <div className="w-full xl:w-2/6 ">
 
-            <div className="w-full bg-green-50 rounded-md border border-green-200 shadow my-3 py-2">
+            <div className={
+              theme === "black"
+                ? "w-full bg-green-800 rounded-md border border-green-200 shadow my-3 py-2"
+                : "w-full bg-green-50 rounded-md border border-green-200 shadow my-3 py-2"
+            }>
               <h6 className='ml-3! font-bold!'>Revenue Base on Area</h6>
               <ApexChartColumn />
             </div>
 
-            <div className="w-full bg-green-50 rounded-md border border-green-200 shadow my-3 py-2">
+            <div className={
+              theme === "black"
+                ? "w-full bg-green-800 rounded-md border border-green-200 shadow my-3 py-2"
+                : "w-full bg-green-50 rounded-md border border-green-200 shadow my-3 py-2"
+            }>
               <ApexChartRow />
             </div>
           </div>

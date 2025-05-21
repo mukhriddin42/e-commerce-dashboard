@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useContext, useEffect, useState } from 'react';
 import { Navbar, Nav, Dropdown, Avatar } from 'rsuite';
 import CogIcon from '@rsuite/icons/legacy/Cog';
 import SignOutIcon from '@rsuite/icons/legacy/SignOut';
@@ -19,6 +19,7 @@ import { Link } from 'react-router-dom';
 import { base_url } from '../pages/ProfileSettings';
 import axios from 'axios';
 import { fetchLastImage } from '../hooks/imagesFuncion';
+import { ThemeContext } from '../hooks/useContext';
 
 const styles = {
   width: 300,
@@ -37,6 +38,21 @@ const DashboardNavbar = () => {
 
     return () => clearInterval(interval);
   }, [image]);
+
+
+  // DARK mode 
+  const {theme, setTheme} = useContext(ThemeContext);
+
+  const handleMode = () => {
+    if (theme === "light"){
+      setTheme("black")
+    } else {
+      setTheme("light")
+    }
+  }
+
+   
+
 
 
 
@@ -64,20 +80,20 @@ const DashboardNavbar = () => {
 
             </Button>
           </Badge>
-          <Button>
+          <Button onClick={() => handleMode()}>
             <IoMdMoon size={15} />
 
           </Button>
 
           <Button>
-            <IoTvSharp size={15} />
+            <IoTvSharp color='red' size={15} />
           </Button>
           <Nav pullRight className=''>
             <Dropdown
               placement="bottomEnd"
               className='border border-gray-300 rounded-sm mr-2'
               title={
-                <FaEarthAmericas size={15} />
+                <FaEarthAmericas size={15}  />
 
               }
             >
