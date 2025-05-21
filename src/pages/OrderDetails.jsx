@@ -1,6 +1,5 @@
 import { CalendarIcon, Download } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+
 
 const OrderDetails = () => {
   return (
@@ -9,7 +8,7 @@ const OrderDetails = () => {
         <p>Order detail</p>
         <h6 className="text-[12px]!">Details for Order ID: 3453012</h6>
       </div>
-      <Card className="max-w-7xl mx-auto bg-white p-6 shadow-sm">
+      <div className="max-w-7xl mx-auto bg-white p-6 shadow-sm">
         <div className="flex flex-col space-y-6">
           {/* Header */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
@@ -47,10 +46,10 @@ const OrderDetails = () => {
                   </svg>
                 </div>
               </div>
-              <Button className="bg-green-500 hover:bg-green-600 text-white">
+              <button className="bg-green-500 hover:bg-green-600 text-white">
                 Save
-              </Button>
-              <Button variant="outline" className="border-gray-200">
+              </button>
+              <button variant="outline" className="border-gray-200">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -67,7 +66,7 @@ const OrderDetails = () => {
                   <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
                   <rect width="12" height="8" x="6" y="14"></rect>
                 </svg>
-              </Button>
+              </button>
             </div>
           </div>
 
@@ -305,15 +304,15 @@ const OrderDetails = () => {
                   ></textarea>
                 </div>
                 <div className="mt-2">
-                  <Button className="bg-green-500 hover:bg-green-600 text-white text-sm">
+                  <button className="bg-green-500 hover:bg-green-600 text-white text-sm">
                     Save note
-                  </Button>
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </Card>
+      </div>
     </div>
   );
 };

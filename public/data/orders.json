@@ -1,0 +1,31 @@
+[
+  {
+    "id": 452,
+    "name": "Devon Lane",
+    "price": "$948.55",
+    "status": "Received",
+    "date": "05.25.2020",
+    "details": {
+      "address": "1234 Elm St, Springfield",
+      "phone": "+998901234567",
+      "items": [
+        { "product": "Laptop", "quantity": 1, "price": "$900" },
+        { "product": "Mouse", "quantity": 1, "price": "$48.55" }
+      ]
+    }
+  },
+  {
+    "id": 453,
+    "name": "Courtney Henry",
+    "price": "$120.00",
+    "status": "Processing",
+    "date": "06.10.2020",
+    "details": {
+      "address": "5678 Oak Ave, Springfield",
+      "phone": "+998912345678",
+      "items": [
+        { "product": "Keyboard", "quantity": 2, "price": "$60.00" }
+      ]
+    }
+  }
+]
