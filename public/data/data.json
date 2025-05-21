@@ -2,22 +2,22 @@
   {
     "id": 452,
     "name": "Devon Lane",
-    "price": "$948.55",
+    "price": "948.55",
     "status": "Received",
     "date": "05.25.2020",
     "details": {
       "address": "1234 Elm St, Springfield",
       "phone": "+998901234567",
       "items": [
-        { "product": "Laptop", "quantity": 1, "price": "$900" },
-        { "product": "Mouse", "quantity": 1, "price": "$48.55" }
+        { "product": "Laptop", "quantity": 5, "price": "900" },
+        { "product": "Mouse", "quantity": 3, "price": "48.55" }
       ]
     }
   },
   {
     "id": 789,
     "name": "Guy Hawkins",
-    "price": "$0.00",
+    "price": "0.00",
     "status": "Cancelled",
     "date": "25.05.2020",
     "details": {
@@ -29,15 +29,15 @@
     {
     "id": 450,
     "name": "Devon Lane",
-    "price": "$948.55",
+    "price": "948.55",
     "status": "Received",
     "date": "07.05.2020",
     "details": {
       "address": "1234 Elm St, Springfield",
       "phone": "+998901234567",
       "items": [
-        { "product": "Laptop", "quantity": 1, "price": "$900" },
-        { "product": "Mouse", "quantity": 1, "price": "$48.55" }
+        { "product": "Laptop", "quantity": 1, "price": "900" },
+        { "product": "Mouse", "quantity": 1, "price": "48.55" }
       ]
     }
   },
@@ -56,22 +56,22 @@
     {
     "id": 455,
     "name": "Devon Lane",
-    "price": "$948.55",
+    "price": "948.55",
     "status": "Received",
     "date": "07.05.2020",
     "details": {
       "address": "1234 Elm St, Springfield",
       "phone": "+998901234567",
       "items": [
-        { "product": "Laptop", "quantity": 1, "price": "$900" },
-        { "product": "Mouse", "quantity": 1, "price": "$48.55" }
+        { "product": "Laptop", "quantity": 1, "price": "900" },
+        { "product": "Mouse", "quantity": 1, "price": "48.55" }
       ]
     }
   },
   {
     "id": 788,
     "name": "Guy Hawkins",
-    "price": "$0.00",
+    "price": "0.00",
     "status": "Cancelled",
     "date": "25.05.2020",
     "details": {
@@ -85,22 +85,22 @@
     {
     "id": 300,
     "name": "Devon Lane",
-    "price": "$948.55",
+    "price": "948.55",
     "status": "Received",
     "date": "07.05.2020",
     "details": {
       "address": "1234 Elm St, Springfield",
       "phone": "+998901234567",
       "items": [
-        { "product": "Laptop", "quantity": 1, "price": "$900" },
-        { "product": "Mouse", "quantity": 1, "price": "$48.55" }
+        { "product": "Laptop", "quantity": 1, "price": "900" },
+        { "product": "Mouse", "quantity": 1, "price": "48.55" }
       ]
     }
   },
   {
     "id": 301,
     "name": "Guy Hawkins",
-    "price": "$0.00",
+    "price": "0.00",
     "status": "Cancelled",
     "date": "25.05.2020",
     "details": {
@@ -112,22 +112,22 @@
     {
     "id": 302,
     "name": "Devon Lane",
-    "price": "$948.55",
+    "price": "948.55",
     "status": "Received",
     "date": "07.05.2020",
     "details": {
       "address": "1234 Elm St, Springfield",
       "phone": "+998901234567",
       "items": [
-        { "product": "Laptop", "quantity": 1, "price": "$900" },
-        { "product": "Mouse", "quantity": 1, "price": "$48.55" }
+        { "product": "Laptop", "quantity": 1, "price": "900" },
+        { "product": "Mouse", "quantity": 1, "price": "48.55" }
       ]
     }
   },
   {
     "id": 303,
     "name": "Guy Hawkins",
-    "price": "$0.00",
+    "price": "0.00",
     "status": "Cancelled",
     "date": "25.05.2020",
     "details": {
@@ -139,22 +139,22 @@
     {
     "id": 304,
     "name": "Devon Lane",
-    "price": "$948.55",
+    "price": "948.55",
     "status": "Received",
     "date": "07.05.2020",
     "details": {
       "address": "1234 Elm St, Springfield",
       "phone": "+998901234567",
       "items": [
-        { "product": "Laptop", "quantity": 1, "price": "$900" },
-        { "product": "Mouse", "quantity": 1, "price": "$48.55" }
+        { "product": "Laptop", "quantity": 1, "price": "900" },
+        { "product": "Mouse", "quantity": 1, "price": "48.55" }
       ]
     }
   },
   {
     "id": 305,
     "name": "Guy Hawkins",
-    "price": "$0.00",
+    "price": "0.00",
     "status": "Cancelled",
     "date": "25.05.2020",
     "details": {
@@ -168,15 +168,15 @@
     {
     "id": 306,
     "name": "Devon Lane",
-    "price": "$948.55",
+    "price": "948.55",
     "status": "Received",
     "date": "07.05.2020",
     "details": {
       "address": "1234 Elm St, Springfield",
       "phone": "+998901234567",
       "items": [
-        { "product": "Laptop", "quantity": 1, "price": "$900" },
-        { "product": "Mouse", "quantity": 1, "price": "$48.55" }
+        { "product": "Laptop", "quantity": 1, "price": "900" },
+        { "product": "Mouse", "quantity": 1, "price": "48.55" }
       ]
     }
   },
@@ -195,22 +195,22 @@
     {
     "id": 308,
     "name": "Beka boy",
-    "price": "$948.55",
+    "price": "948.55",
     "status": "Received",
     "date": "07.05.2020",
     "details": {
       "address": "1234 Elm St, Springfield",
       "phone": "+998901234567",
       "items": [
-        { "product": "Laptop", "quantity": 1, "price": "$900" },
-        { "product": "Mouse", "quantity": 1, "price": "$48.55" }
+        { "product": "Laptop", "quantity": 1, "price": "900" },
+        { "product": "Mouse", "quantity": 1, "price": "48.55" }
       ]
     }
   },
   {
     "id": 309,
     "name": "Guy beka",
-    "price": "$0.00",
+    "price": "0.00",
     "status": "Cancelled",
     "date": "25.05.2020",
     "details": {
@@ -222,22 +222,22 @@
     {
     "id": 310,
     "name": "Devon Aliyev",
-    "price": "$948.55",
+    "price": "48.55",
     "status": "Pending",
     "date": "07.05.2020",
     "details": {
       "address": "1234 Elm St, Springfield",
       "phone": "+998901234567",
       "items": [
-        { "product": "Laptop", "quantity": 1, "price": "$900" },
-        { "product": "Mouse", "quantity": 1, "price": "$48.55" }
+        { "product": "Laptop", "quantity": 1, "price": "900" },
+        { "product": "Mouse", "quantity": 1, "price": "48.55" }
       ]
     }
   },
   {
     "id": 311,
     "name": "Guy Jordin",
-    "price": "$550.00",
+    "price": "550.00",
     "status": "Cancelled",
     "date": "25.05.2020",
     "details": {
@@ -251,22 +251,22 @@
     {
     "id": 312,
     "name": "Devon Lorden",
-    "price": "$948.55",
+    "price": "948.55",
     "status": "Pending",
     "date": "07.05.2020",
     "details": {
       "address": "1234 Elm St, Springfield",
       "phone": "+998901234567",
       "items": [
-        { "product": "Laptop", "quantity": 1, "price": "$900" },
-        { "product": "Mouse", "quantity": 1, "price": "$48.55" }
+        { "product": "Laptop", "quantity": 1, "price": "900" },
+        { "product": "Mouse", "quantity": 1, "price": "48.55" }
       ]
     }
   },
   {
     "id": 313,
     "name": "Valijon Ergashov",
-    "price": "$0.00",
+    "price": "0.00",
     "status": "Received",
     "date": "25.05.2020",
     "details": {
@@ -278,22 +278,22 @@
     {
     "id": 314,
     "name": "toshmat Bolta",
-    "price": "$948.55",
+    "price": "948.55",
     "status": "Pending",
     "date": "07.05.2020",
     "details": {
       "address": "1234 Elm St, Springfield",
       "phone": "+998901234567",
       "items": [
-        { "product": "Laptop", "quantity": 1, "price": "$900" },
-        { "product": "Mouse", "quantity": 1, "price": "$48.55" }
+        { "product": "Laptop", "quantity": 1, "price": "900" },
+        { "product": "Mouse", "quantity": 1, "price": "48.55" }
       ]
     }
   },
   {
     "id": 315,
     "name": "Aliyev Vali",
-    "price": "$0.00",
+    "price": "0.00",
     "status": "Received",
     "date": "25.05.2020",
     "details": {
@@ -312,15 +312,15 @@
       "address": "1234 Elm St, Springfield",
       "phone": "+998901234567",
       "items": [
-        { "product": "Laptop", "quantity": 1, "price": "$900" },
-        { "product": "Mouse", "quantity": 1, "price": "$48.55" }
+        { "product": "Laptop", "quantity": 1, "price": "900" },
+        { "product": "Mouse", "quantity": 1, "price": "48.55" }
       ]
     }
   },
   {
     "id": 317,
     "name": "toshmat eshmatov",
-    "price": "$1000.00",
+    "price": "1000.00",
     "status": "Pending",
     "date": "25.05.2020",
     "details": {

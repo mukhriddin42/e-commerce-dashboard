@@ -1,12 +1,69 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { CiCalendar } from "react-icons/ci";
 import { GoDownload } from "react-icons/go";
+import { useNavigate, useParams } from "react-router-dom";
 
 const OrderDetails = () => {
+  const { id } = useParams(); // URL dan orderId olish
+  const navigate = useNavigate();
+  const [order, setOrder] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const calculateSubtotal = () => {
+    return order.details.items
+      .reduce((acc, item) => acc + item.price * item.quantity, 0)
+      .toFixed(2);
+  };
+
+  const [status, setStatus] = useState(order?.status || "new");
+
+  const handleStatusChange = (e) => {
+    setStatus(e.target.value);
+  };
+
+  const handleSave = () => {
+    setOrder((prevOrder) => ({
+      ...prevOrder,
+      status: status,
+    }));
+    alert(`Status changed to: ${status}`);
+  };
+
+  useEffect(() => {
+    // Ma'lumotni yuklash, sizda data.json ni olish
+    const fetchOrder = async () => {
+      if (id) {
+        localStorage.setItem("lastId", id); // id o'zgaruvchidan olinadi
+      }
+      try {
+        const res = await axios.get("/data/data.json");
+        const orderData = res.data.find((o) => o.id.toString() === id);
+        if (!orderData) {
+          alert("Order topilmadi");
+          setOrder(null);
+          navigate("/orders");
+          return;
+        } else {
+          setOrder(orderData);
+        }
+      } catch (error) {
+        console.error("Xatolik:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrder();
+  }, [id, navigate]);
+
+  if (loading) return <div>Yuklanmoqda...</div>;
+  if (!order) return <div>Order topilmadi</div>;
+
   return (
     <div className="bg-gray-50 min-h-screen p-6">
       <div className="w-50! text-[20px]! ml-8 mb-2.5 font-semibold!">
         <p>Order detail</p>
-        <h6 className="text-[12px]!">Details for Order ID: 3453012</h6>
+        <h6 className="text-[12px]!">Details for Order ID: {order.id}</h6>
       </div>
       <div className="max-w-7xl mx-auto bg-white p-6 shadow-sm">
         <div className="flex flex-col space-y-6">
@@ -16,20 +73,29 @@ const OrderDetails = () => {
               <CiCalendar className="h-5 w-5 text-gray-500 mt-0.5" />
               <div className="flex flex-col">
                 <span className="text-sm text-gray-500">
-                  Wed Aug 15, 2020, 4:34PM
+                  Order Date: {order.date}
                 </span>
-                <span className="text-sm text-gray-500">Order ID: 3453012</span>
+                <span className="text-sm text-gray-500">
+                  Order ID: {order.id}
+                </span>
               </div>
             </div>
             <div className="flex items-center space-x-2 mt-4 md:mt-0">
               <div className="relative">
-                <select className="appearance-none bg-gray-100 border border-gray-200 rounded-md pl-3 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
-                  <option>Change status</option>
-                  <option>Processing</option>
-                  <option>Shipped</option>
-                  <option>Delivered</option>
-                  <option>Cancelled</option>
+                <select
+                  value={status}
+                  onChange={handleStatusChange}
+                  className="appearance-none bg-gray-100 border border-gray-200 rounded-md pl-3 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                >
+                  <option value="" disabled>
+                    Change status
+                  </option>
+                  <option value="Processing">Processing</option>
+                  <option value="Shipped">Shipped</option>
+                  <option value="Delivered">Delivered</option>
+                  <option value="Cancelled">Cancelled</option>
                 </select>
+
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
                   <svg
                     className="h-4 w-4"
@@ -79,9 +145,9 @@ const OrderDetails = () => {
               </div>
               <div>
                 <h3 className="text-sm font-medium mb-2">Customer</h3>
-                <p className="text-sm">John Alexander</p>
+                <p className="text-sm">{order?.name}</p>
                 <p className="text-sm text-gray-500">alex@example.com</p>
-                <p className="text-sm text-gray-500">+998 99 2232456</p>
+                <p className="text-sm text-gray-500">{order.details?.phone}</p>
                 <a href="#" className="text-sm text-green-500 hover:underline">
                   View profile
                 </a>
@@ -98,7 +164,7 @@ const OrderDetails = () => {
                 <p className="text-sm">Shipping: Express</p>
                 <p className="text-sm">Pay method: card</p>
                 <p className="text-sm">
-                  Status: <span className="text-green-500">new</span>
+                  Status: <span className="text-green-500">{order.status}</span>
                 </p>
                 <a
                   href="#"
@@ -118,7 +184,7 @@ const OrderDetails = () => {
               <div>
                 <h3 className="text-sm font-medium mb-2">Deliver to</h3>
                 <p className="text-sm">City: Tashkent, Uzbekistan</p>
-                <p className="text-sm">Block A, house 123, Floor 2</p>
+                <p className="text-sm">{order.details?.address}</p>
                 <p className="text-sm">Po Box 10000</p>
                 <a href="#" className="text-sm text-green-500 hover:underline">
                   View profile
@@ -160,98 +226,31 @@ const OrderDetails = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  <tr>
-                    <td className="px-3 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="flex-shrink-0 h-10 w-10 bg-amber-100 rounded-md flex items-center justify-center">
-                          <span className="text-amber-800">🍦</span>
-                        </div>
-                        <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">
-                            Häagen-Dazs Caramel Cone Ice
+                  {order.details.items.map((item, index) => (
+                    <tr key={index}>
+                      <td className="px-3 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <div className="flex-shrink-0 h-10 w-10 bg-amber-100 rounded-md flex items-center justify-center">
+                            <span className="text-amber-800">🍦</span>
+                          </div>
+                          <div className="ml-4">
+                            <div className="text-sm font-medium text-gray-900">
+                              {item.name}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                      $44.25
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                      2
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
-                      $89.50
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="px-3 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="flex-shrink-0 h-10 w-10 bg-orange-100 rounded-md flex items-center justify-center">
-                          <span className="text-orange-800">🥤</span>
-                        </div>
-                        <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">
-                            Seeds of Change Organic
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                      $7.50
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                      2
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
-                      $15.00
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="px-3 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="flex-shrink-0 h-10 w-10 bg-green-100 rounded-md flex items-center justify-center">
-                          <span className="text-green-800">🍝</span>
-                        </div>
-                        <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">
-                            All Natural Italian-Style
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                      $45.50
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                      2
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
-                      $102.00
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="px-3 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="flex-shrink-0 h-10 w-10 bg-yellow-100 rounded-md flex items-center justify-center">
-                          <span className="text-yellow-800">🌽</span>
-                        </div>
-                        <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">
-                            Sweet & Salty Kettle Corn
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                      $99.00
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                      3
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
-                      $297.00
-                    </td>
-                  </tr>
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                        ${item.price}
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {item.quantity}
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
+                        ${(item.price * item.quantity).toFixed(2)}
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
               {/* Order Summary */}
@@ -259,7 +258,9 @@ const OrderDetails = () => {
                 <div className="bg-gray-50 p-4 rounded-md">
                   <div className="flex justify-between mb-2">
                     <span className="text-sm text-gray-600">Subtotal:</span>
-                    <span className="text-sm font-medium">$473.50</span>
+                    <span className="text-sm font-medium">
+                      {calculateSubtotal()}
+                    </span>
                   </div>
                   <div className="flex justify-between mb-2">
                     <span className="text-sm text-gray-600">
@@ -269,7 +270,9 @@ const OrderDetails = () => {
                   </div>
                   <div className="flex justify-between pt-4 border-t border-gray-200 mt-4">
                     <span className="text-sm font-medium">Grand total:</span>
-                    <span className="text-lg font-bold">$483.00</span>
+                    <span className="text-lg font-bold">
+                      ${(parseFloat(calculateSubtotal()) + 5).toFixed(2)}
+                    </span>
                   </div>
                   <div className="mt-6">
                     <div className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-1 rounded-md inline-block">
@@ -304,8 +307,11 @@ const OrderDetails = () => {
                   ></textarea>
                 </div>
                 <div className="mt-2">
-                  <button className="bg-green-500 hover:bg-green-600 text-white text-sm">
-                    Save note
+                  <button
+                    onClick={handleSave}
+                    className="!border !border-gray-200 !px-3 !py-1 !rounded-md !hover:bg-gray-100"
+                  >
+                    Save
                   </button>
                 </div>
               </div>
