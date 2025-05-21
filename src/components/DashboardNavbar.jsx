@@ -23,6 +23,9 @@ const styles = {
 };
 
 const DashboardNavbar = () => {
+  const img = localStorage.getItem('photo')
+  console.log(img);
+  
   return (
     <div className=" shadow-sm h-[110px] md:h-[64px]   flex flex-col gap-2 ">
 
@@ -75,11 +78,11 @@ const DashboardNavbar = () => {
               placement="bottomEnd"
               className='border w-17 md:w-auto border-gray-300  rounded-sm '
               title={
-                <Avatar
+                <Avatar 
                   circle
-                  src="https://i.pravatar.cc/40" // Bu avatar o‘rniga o‘zingizning rasm URL’ingizni qo‘yishingiz mumkin
+                  src={img} 
                   alt="User"
-                  className='w-5! h-5! md:w-8! md:h-8!'
+                  className='w-5! h-5! md:w-8! md:h-8! '
                 />
               }
             >

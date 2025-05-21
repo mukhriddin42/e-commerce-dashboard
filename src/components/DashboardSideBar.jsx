@@ -10,7 +10,7 @@ import OperatePeopleIcon from "@rsuite/icons/OperatePeople";
 import MessageIcon from "@rsuite/icons/Message";
 
 import "rsuite/dist/rsuite.min.css";
-import React, { forwardRef, memo, useContext, useEffect, useState } from "react";
+import React, { forwardRef, memo, useContext, useEffect, useLayoutEffect, useState } from "react";
 import Logo from "../assets/icons/logo.png";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { ThemeContext } from "../hooks/useContext";
