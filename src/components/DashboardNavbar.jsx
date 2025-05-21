@@ -1,4 +1,4 @@
-import React, { memo, useContext, useEffect, useState } from 'react';
+import React, { memo, use, useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { Navbar, Nav, Dropdown, Avatar } from 'rsuite';
 import CogIcon from '@rsuite/icons/legacy/Cog';
 import SignOutIcon from '@rsuite/icons/legacy/SignOut';
@@ -10,7 +10,7 @@ import { Badge, Button } from 'rsuite';
 // react-icons
 import { IoTvSharp } from "react-icons/io5";
 import { FaEarthAmericas } from "react-icons/fa6";
-import { IoMdMoon } from "react-icons/io";
+import { IoMdMoon, IoIosSunny } from "react-icons/io";
 import { FaBell } from "react-icons/fa";
 
 
@@ -43,6 +43,8 @@ const DashboardNavbar = () => {
   // DARK mode 
   const {theme, setTheme} = useContext(ThemeContext);
 
+  const [iconColor, setIconColor] = useState("white")
+
   const handleMode = () => {
     if (theme === "light"){
       setTheme("black")
@@ -51,22 +53,38 @@ const DashboardNavbar = () => {
     }
   }
 
+  useLayoutEffect(() => {
+      if (theme === "light") {
+        setIconColor("black")
+      } else {
+        setIconColor("white")
+      }
+
+  }, [theme])
+  
+
    
 
 
 
 
   return (
-    <div className=" shadow-sm h-[110px] md:h-[64px]   flex flex-col gap-2 ">
+    <div className={theme === "black" 
+      ? "shadow-md shadow-gray-500 h-[110px] md:h-[64px]   flex flex-col gap-2 "
+      : "shadow-sm h-[110px] md:h-[64px]   flex flex-col gap-2 "
+    }>
 
       <div className=" flex px-2 md:px-5 mt-2 w-full justify-end md:flex-row  md:justify-between items-center">
         {/* Chap tomon –  menyu */}
 
 
         <InputGroup style={styles} className='hidden! md:flex!'>
-          <Input className='bg-gray-100!' />
-          <InputGroup.Button className='bg-gray-200!'>
-            <SearchIcon />
+          <Input className={theme === "black"  ? "bg-gray-400! text-blue-900! " : "bg-gray-100!"} />
+          <InputGroup.Button className={theme === "black"
+            ? 'bg-gray-600!'
+            : "bg-gray-200!"
+          }>
+            <SearchIcon color={iconColor} />
           </InputGroup.Button>
         </InputGroup>
 
@@ -75,25 +93,37 @@ const DashboardNavbar = () => {
         <div className='flex gap-1 md:gap-3 mt-2 items-center'>
 
           <Badge content={3}>
-            <Button>
-              <FaBell size={15} />
+            <Button className={theme === "black" 
+            ? "bg-gray-600!"
+            : "bg-gray-100!"
+          } >
+              <FaBell color={iconColor} size={15} />
 
             </Button>
           </Badge>
-          <Button onClick={() => handleMode()}>
-            <IoMdMoon size={15} />
-
+          <Button className={theme === "black" 
+            ? "bg-gray-600!"
+            : "bg-gray-100!"
+          } onClick={() => handleMode()}>
+            {theme === "black" ? <IoIosSunny color={iconColor} size={15} /> : <IoMdMoon color={iconColor} size={15} /> }
+            
           </Button>
 
-          <Button>
-            <IoTvSharp color='red' size={15} />
+          <Button className={theme === "black" 
+            ? "bg-gray-600!"
+            : "bg-gray-100!"
+          } >
+            <IoTvSharp color={iconColor} size={15} />
           </Button>
           <Nav pullRight className=''>
             <Dropdown
               placement="bottomEnd"
-              className='border border-gray-300 rounded-sm mr-2'
+              className={theme === "black"
+                ? "border border-gray-700 bg-gray-600 rounded-sm mr-2"
+                : "border border-gray-300 rounded-sm mr-2"
+              }
               title={
-                <FaEarthAmericas size={15}  />
+                <FaEarthAmericas color={iconColor} size={15}  />
 
               }
             >
@@ -106,7 +136,10 @@ const DashboardNavbar = () => {
             </Dropdown>
             <Dropdown
               placement="bottomEnd"
-              className='border w-17 md:w-auto border-gray-300  rounded-sm '
+              className={theme === "black" 
+                ? "border w-17 md:w-auto border-gray-700 bg-gray-600  rounded-sm"
+                : "border w-17 md:w-auto border-gray-300  rounded-sm"
+              }
               title={
                 <Avatar
                   circle
