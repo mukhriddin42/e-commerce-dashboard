@@ -8,8 +8,8 @@ import { AiFillDollarCircle } from "react-icons/ai";
 import { FaTruckMoving } from "react-icons/fa";
 import { AiFillProduct } from "react-icons/ai";
 import { FaOpencart } from "react-icons/fa6";
-import Chart from '../components/Chart';
 import MySteps from '../components/Steps';
+import ApexChart from '../components/Chart';
 
 
 
@@ -81,9 +81,7 @@ const Dashboard = () => {
         <div className="w-full flex flex-col xl:flex-row  xl:gap-2">
           <div className='w-full xl:w-4/6 '>
             {/* chart */}
-            <div className="w-[98%]  overflow-hidden">
-              <Chart />
-            </div>
+            <ApexChart />
 
 
 

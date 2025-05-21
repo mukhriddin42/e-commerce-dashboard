@@ -1,41 +1,94 @@
-import React from 'react';
-import { LineChart, Line, YAxis } from '@rsuite/charts';
+import { useState } from "react";
+import ReactApexChart from "react-apexcharts";
 
-const random = () => Math.floor(Math.random() * 100000);
+const ApexChart = () => {
 
-const data = [
-    ["00:00", 24758, 18180, random()],
-    ["01:00", 57666, 73289, random()],
-    ["02:00", 1743, 1037, random()],
-    ["03:00", 60425, 86558, random()],
-    ["04:00", 2862, 63701, random()],
-    ["05:00", 3631, 55744, random()],
-    ["06:00", 83788, 53377, random()],
-    ["07:00", 34138, 8063, random()],
-    ["08:00", 65635, 87076, random()],
-    ["09:00", 40086, 32176, random()],
-    ["10:00", 89728, 36250, random()],
-    ["11:00", 55000, 64098, random()],
-    ["12:00", 67378, 56347, random()],
-    ["13:00", 53958, 89845, random()],
-    ["14:00", 30590, 1742, random()],
-    ["15:00", 59808, 87358, random()],
-    ["16:00", 6570, 58156, random()],
-    ["17:00", 20861, 48829, random()],
-    ["18:00", 64949, 75989, random()],
-    ["19:00", 85392, 63148, random()],
-    ["20:00", 57778, 60936, random()],
-    ["21:00", 27390, 2766, random()],
-    ["22:00", 35348, 45691, random()],
-    ["23:00", 50878, 8247, random()]
-]
+    function generateDayWiseTimeSeries(baseval, count, yrange) {
+        const series = [];
+        for (let i = 0; i < count; i++) {
+          const x = baseval;
+          const y =
+            Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
+      
+          series.push([x, y]);
+          baseval += 86400000; // kunlik vaqt
+        }
+        return series;
+      }
+      
+    const [state, setState] = useState({
 
-const Chart = () => (
-  <LineChart data={data} >
-    <Line name="Sales" area/>
-    <Line name="Visitors" area/>
-    <Line name="Products" area/>
-  </LineChart>
-);
+        series: [
+            {
+                name: 'Sales',
+                data: generateDayWiseTimeSeries(new Date('11 Feb 2017 GMT').getTime(), 20, {
+                    min: 10,
+                    max: 60
+                })
+            },
+            {
+                name: 'Visitors',
+                data: generateDayWiseTimeSeries(new Date('11 Feb 2017 GMT').getTime(), 20, {
+                    min: 10,
+                    max: 20
+                })
+            },
+            {
+                name: 'Products',
+                data: generateDayWiseTimeSeries(new Date('11 Feb 2017 GMT').getTime(), 20, {
+                    min: 10,
+                    max: 15
+                })
+            }
+        ],
+        options: {
+            chart: {
+                type: 'area',
+                height: 350,
+                stacked: true,
+                events: {
+                    selection: function (chart, e) {
+                        console.log(new Date(e.xaxis.min))
+                    }
+                },
+            },
+            colors: ['#008FFB', '#00E396', '#CED4DC'],
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: 'monotoneCubic'
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    opacityFrom: 0.6,
+                    opacityTo: 0.8,
+                }
+            },
+            legend: {
+                position: 'top',
+                horizontalAlign: 'left'
+            },
+            xaxis: {
+                type: 'datetime'
+            },
+        },
 
-export default Chart;
+
+    });
+
+
+
+    return (
+        <div>
+            <div id="chart">
+                <ReactApexChart options={state.options} series={state.series} type="area" height={350} />
+            </div>
+            <div id="html-dist"></div>
+        </div>
+    );
+}
+
+
+export default ApexChart;
