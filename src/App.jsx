@@ -5,7 +5,7 @@ import { useContext } from 'react'
 import { ThemeContext } from './hooks/useContext'
 
 function App() {
-  const { theme } = useContext(ThemeContext)
+  const { theme } = useContext(ThemeContext)  
   
   return (
     <>
