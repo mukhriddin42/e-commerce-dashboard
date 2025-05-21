@@ -1,16 +1,31 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { fetchLastImage, uploadImage } from '../hooks/imagesFuncion';
+export const base_url = 'https://682739736b7628c5290f890c.mockapi.io/ava'
 
 const ProfileSettings = () => {
+
   const [image, setImage] = useState(null);
 
-  const handleImageChange = (e) => {
+
+  useEffect(() => {
+    fetchLastImage().then(img => {
+      if (img) setImage(img);
+    });
+  }, []);
+
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      localStorage.setItem('photo', imageUrl)
-      setImage(imageUrl);
+      try {
+        const uploadedImg = await uploadImage(file);
+        setImage(uploadedImg);
+      } catch (err) {
+        console.error("Uploadda xatolik:", err);
+      }
     }
   };
+
 
   return (
     <div className='w-full h-auto'>

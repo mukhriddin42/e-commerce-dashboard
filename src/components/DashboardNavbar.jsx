@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { Navbar, Nav, Dropdown, Avatar } from 'rsuite';
 import CogIcon from '@rsuite/icons/legacy/Cog';
 import SignOutIcon from '@rsuite/icons/legacy/SignOut';
@@ -16,16 +16,30 @@ import { FaBell } from "react-icons/fa";
 
 import 'rsuite/dist/rsuite.min.css';
 import { Link } from 'react-router-dom';
-
+import { base_url } from '../pages/ProfileSettings';
+import axios from 'axios';
+import { fetchLastImage } from '../hooks/imagesFuncion';
 
 const styles = {
   width: 300,
 };
 
 const DashboardNavbar = () => {
-  const img = localStorage.getItem('photo')
-  console.log(img);
-  
+  const [image, setImage] = useState()
+
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchLastImage().then(img => {
+        if (img !== image) setImage(img);
+      });
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [image]);
+
+
+
   return (
     <div className=" shadow-sm h-[110px] md:h-[64px]   flex flex-col gap-2 ">
 
@@ -78,16 +92,16 @@ const DashboardNavbar = () => {
               placement="bottomEnd"
               className='border w-17 md:w-auto border-gray-300  rounded-sm '
               title={
-                <Avatar 
+                <Avatar
                   circle
-                  src={img} 
+                  src={image}
                   alt="User"
                   className='w-5! h-5! md:w-8! md:h-8! '
                 />
               }
             >
-              <Dropdown.Item icon={<UserInfoIcon />}>Profile</Dropdown.Item>
-              <Dropdown.Item icon={<CogIcon />}>Settings</Dropdown.Item>
+              <Link to='/profile-setting'> <Dropdown.Item icon={<UserInfoIcon />}>Profile</Dropdown.Item></Link>
+              <Link to='/site-setting'><Dropdown.Item icon={<CogIcon />}>Settings</Dropdown.Item></Link>
               <Dropdown.Separator />
               <Link to='login'>
                 <Dropdown.Item icon={<SignOutIcon />}> Logout </Dropdown.Item>
