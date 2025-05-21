@@ -12,7 +12,7 @@ import MessageIcon from "@rsuite/icons/Message";
 import "rsuite/dist/rsuite.min.css";
 import React, { forwardRef, memo, useEffect, useState } from "react";
 import Logo from "../assets/icons/logo.png";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const DashboardSideBar = () => {
   const location = useLocation();
