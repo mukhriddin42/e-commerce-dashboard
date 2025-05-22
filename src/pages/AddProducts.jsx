@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import React, { forwardRef, useContext } from 'react'
 import { Button, ButtonToolbar, VStack, Form, Input, InputGroup, } from 'rsuite'
 import { Checkbox } from 'rsuite';
 
@@ -13,6 +13,7 @@ const styles = {
 import { SelectPicker } from 'rsuite';
 import ImagePickerHook from '../hooks/ImagePicker';
 import useFetch from '../hooks/api';
+import { ThemeContext } from '../hooks/useContext';
 
 const selectdata = ['USD', 'RUBL', 'EURO', 'BITC', 'UZS', 'KZTENGE', 'LOREM', 'LOREM2'].map(
   item => ({ label: item, value: item })
@@ -24,6 +25,8 @@ const AddProducts = () => {
 
   // const {data ,loading , error} = useFetch('https://67ff8e4c58f18d7209f1b2db.mockapi.io/users/imgget')
   // console.log(data);
+
+  const {theme} = useContext(ThemeContext)
 
   
   return (
@@ -45,7 +48,10 @@ const AddProducts = () => {
 
           <div className='grid grid-cols-1  md:grid-cols-3 gap-0 md:gap-5 mt-5'>
             <div className="col-span-2 ">
-              <div className='bg-gray-50 border border-gray-300 rounded-2xl'>
+              <div className={theme === "black" 
+                ? "bg-gray-900 border border-gray-600 rounded-2xl"
+                : "bg-gray-50 border border-gray-300 rounded-2xl"
+              }>
                 <h4 className='m-4!'>Basic</h4>
                 <hr className='m-0!' />
                 <div className="m-4!">
@@ -105,7 +111,10 @@ const AddProducts = () => {
               </div>
 
 
-              <div className='bg-gray-50 border border-gray-300 rounded-2xl mt-5 pb-5'>
+              <div className={theme === "black" 
+                ? "bg-gray-900 border border-gray-600 rounded-2xl mt-5 pb-5"
+                : "bg-gray-50 border border-gray-300 rounded-2xl mt-5 pb-5"
+              }>
                 <h4 className='m-4!'>Shipping</h4>
                 <hr className='m-0!' />
                 <div className="m-4!">
@@ -167,7 +176,10 @@ const AddProducts = () => {
 
 
             <div>
-              <div className='bg-gray-50 border mt-5 md:mt-0 border-gray-300 rounded-2xl  pb-5'>
+              <div className={theme === "black" 
+                ? "bg-gray-900 border border-gray-600 rounded-2xl"
+                : "bg-gray-50 border border-gray-300 rounded-2xl"
+              }>
                 <h4 className='m-4!'>Media</h4>
                 <hr className='m-0!' />
                 <div className="m-4!">
@@ -183,7 +195,10 @@ const AddProducts = () => {
               </div>
 
 
-              <div className='bg-gray-50 border  border-gray-300 rounded-2xl mt-5 pb-5'>
+              <div className={theme === "black" 
+                ? "bg-gray-900 border border-gray-600 rounded-2xl mt-5"
+                : "bg-gray-50 border border-gray-300 rounded-2xl mt-5"
+              }>
                 <h4 className='m-4!'>Organization</h4>
                 <hr className='m-0!' />
                 <div className="m-4!">

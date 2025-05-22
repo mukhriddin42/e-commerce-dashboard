@@ -17,7 +17,9 @@ const ApexChartColumn = () => {
         options: {
           chart: {
             type: 'bar',
-            height: 350
+            height: 350,
+            foreColor: '#ccc',
+
           },
           plotOptions: {
             bar: {

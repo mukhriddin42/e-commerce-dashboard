@@ -1,17 +1,23 @@
-import React, { memo, useContext, useEffect, useState } from 'react';
-import { Navbar, Nav, Avatar, Input, InputGroup, Badge, Button } from 'rsuite';
+import React, { memo, use, useContext, useEffect, useLayoutEffect, useState } from 'react';
+import { Navbar, Nav, Dropdown, Avatar } from 'rsuite';
 import CogIcon from '@rsuite/icons/legacy/Cog';
 import SignOutIcon from '@rsuite/icons/legacy/SignOut';
 import UserInfoIcon from '@rsuite/icons/legacy/UserInfo';
+import { Input, InputGroup } from 'rsuite';
 import SearchIcon from '@rsuite/icons/Search';
+import { Badge, Button } from 'rsuite';
 
+// react-icons
 import { IoTvSharp } from "react-icons/io5";
 import { FaEarthAmericas } from "react-icons/fa6";
-import { IoMdMoon } from "react-icons/io";
+import { IoMdMoon, IoIosSunny } from "react-icons/io";
 import { FaBell } from "react-icons/fa";
+
 
 import 'rsuite/dist/rsuite.min.css';
 import { Link } from 'react-router-dom';
+import { base_url } from '../pages/ProfileSettings';
+import axios from 'axios';
 import { fetchLastImage } from '../hooks/imagesFuncion';
 import { ThemeContext } from '../hooks/useContext';
 
@@ -20,7 +26,8 @@ const styles = {
 };
 
 const DashboardNavbar = () => {
-  const [image, setImage] = useState();
+  const [image, setImage] = useState()
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -28,89 +35,139 @@ const DashboardNavbar = () => {
         if (img !== image) setImage(img);
       });
     }, 3000);
+
     return () => clearInterval(interval);
   }, [image]);
 
-  const { theme, setTheme } = useContext(ThemeContext);
+
+  // DARK mode 
+  const {theme, setTheme} = useContext(ThemeContext);
+
+  const [iconColor, setIconColor] = useState("white")
 
   const handleMode = () => {
-    setTheme(theme === 'light' ? 'black' : 'light');
-  };
+    if (theme === "light"){
+      setTheme("black")
+    } else {
+      setTheme("light")
+    }
+  }
+
+  useLayoutEffect(() => {
+      if (theme === "light") {
+        setIconColor("black")
+      } else {
+        setIconColor("white")
+      }
+
+  }, [theme])
+  
+
+   
+
+
+
 
   return (
-    <div className="shadow-sm h-[110px] md:h-[64px] flex flex-col gap-2">
-      <div className="flex px-2 md:px-5 mt-2 w-full justify-end md:flex-row md:justify-between items-center">
+    <div className={theme === "black" 
+      ? "shadow-md shadow-gray-700 h-[110px] md:h-[64px]   flex flex-col gap-2 "
+      : "shadow-sm h-[110px] md:h-[64px]   flex flex-col gap-2 "
+    }>
 
-        {/* Chap tomon – Qidiruv */}
+      <div className=" flex px-2 md:px-5 mt-2 w-full justify-end md:flex-row  md:justify-between items-center">
+        {/* Chap tomon –  menyu */}
+
+
         <InputGroup style={styles} className='hidden! md:flex!'>
-          <Input className='bg-gray-100!' />
-          <InputGroup.Button className='bg-gray-200!'>
-            <SearchIcon />
+          <Input className={theme === "black"  ? "bg-gray-400! text-blue-900! " : "bg-gray-100!"} />
+          <InputGroup.Button className={theme === "black"
+            ? 'bg-gray-600!'
+            : "bg-gray-200!"
+          }>
+            <SearchIcon color={iconColor} />
           </InputGroup.Button>
         </InputGroup>
 
-        {/* O‘ng tomon */}
+
+        {/* O'ng tomon – foydalanuvchi menyusi */}
         <div className='flex gap-1 md:gap-3 mt-2 items-center'>
+
           <Badge content={3}>
-            <Button><FaBell size={15} /></Button>
+            <Button className={theme === "black" 
+            ? "bg-gray-600!"
+            : "bg-gray-100!"
+          } >
+              <FaBell color={iconColor} size={15} />
+
+            </Button>
           </Badge>
-          <Button onClick={handleMode}>
-            <IoMdMoon size={15} />
-          </Button>
-          <Button>
-            <IoTvSharp color='red' size={15} />
+          <Button className={theme === "black" 
+            ? "bg-gray-600!"
+            : "bg-gray-100!"
+          } onClick={() => handleMode()}>
+            {theme === "black" ? <IoIosSunny color={iconColor} size={15} /> : <IoMdMoon color={iconColor} size={15} /> }
+            
           </Button>
 
-          <Nav pullRight>
-            {/* Earth Icon Menu */}
-            <Nav.Menu
-              title={<FaEarthAmericas size={15} />}
+          <Button className={theme === "black" 
+            ? "bg-gray-600!"
+            : "bg-gray-100!"
+          } >
+            <IoTvSharp color={iconColor} size={15} />
+          </Button>
+          <Nav pullRight className=''>
+            <Dropdown
               placement="bottomEnd"
-              className='border border-gray-300 rounded-sm mr-2'
-            >
-              <Nav.Item icon={<UserInfoIcon />}>Profile</Nav.Item>
-              <Nav.Item icon={<CogIcon />}>Settings</Nav.Item>
-              <Nav.Item divider />
-              <Link to='login'>
-                <Nav.Item icon={<SignOutIcon />}>Logout</Nav.Item>
-              </Link>
-            </Nav.Menu>
+              className={theme === "black"
+                ? "border border-gray-700 bg-gray-600 rounded-sm mr-2"
+                : "border border-gray-300 rounded-sm mr-2"
+              }
+              title={
+                <FaEarthAmericas color={iconColor} size={15}  />
 
-            {/* Avatar Menu */}
-            <Nav.Menu
+              }
+            >
+              <Dropdown.Item icon={<UserInfoIcon />}>Profile</Dropdown.Item>
+              <Dropdown.Item icon={<CogIcon />}>Settings</Dropdown.Item>
+              <Dropdown.Separator />
+              <Link to='login'>
+                <Dropdown.Item icon={<SignOutIcon />}> Logout </Dropdown.Item>
+              </Link>
+            </Dropdown>
+            <Dropdown
+              placement="bottomEnd"
+              className={theme === "black" 
+                ? "border w-17 md:w-auto border-gray-700 bg-gray-600  rounded-sm"
+                : "border w-17 md:w-auto border-gray-300  rounded-sm"
+              }
               title={
                 <Avatar
                   circle
                   src={image}
                   alt="User"
-                  className='w-5! h-5! md:w-8! md:h-8!'
+                  className='w-5! h-5! md:w-8! md:h-8! '
                 />
               }
-              placement="bottomEnd"
-              className='border w-17 md:w-auto border-gray-300 rounded-sm'
             >
-              <Link to='/profile-setting'>
-                <Nav.Item icon={<UserInfoIcon />}>Profile</Nav.Item>
-              </Link>
-              <Link to='/site-setting'>
-                <Nav.Item icon={<CogIcon />}>Settings</Nav.Item>
-              </Link>
-              <Nav.Item divider />
+              <Link to='/profile-setting'> <Dropdown.Item icon={<UserInfoIcon />}>Profile</Dropdown.Item></Link>
+              <Link to='/site-setting'><Dropdown.Item icon={<CogIcon />}>Settings</Dropdown.Item></Link>
+              <Dropdown.Separator />
               <Link to='login'>
-                <Nav.Item icon={<SignOutIcon />}>Logout</Nav.Item>
+                <Dropdown.Item icon={<SignOutIcon />}> Logout </Dropdown.Item>
               </Link>
-            </Nav.Menu>
+            </Dropdown>
           </Nav>
         </div>
+
       </div>
 
-      {/* Mobilda qidiruv */}
-      <InputGroup className='flex! md:hidden! max-w-[80%] mx-auto'>
+      <InputGroup className='flex! md:hidden! max-w-[80%] mx-auto '>
         <Input className='bg-gray-50!' />
         <InputGroup.Button className='bg-gray-200!'>
           <SearchIcon />
         </InputGroup.Button>
       </InputGroup>
+
     </div>
   );
 };

@@ -9,7 +9,8 @@ const ApexChartRow = () => {
         options: {
             chart: {
                 type: 'bar',
-                height: 380
+                height: 380,
+                foreColor: '#ccc',
             },
             plotOptions: {
                 bar: {

@@ -31,7 +31,7 @@ const Dashboard = () => {
 
           <div 
           className={theme === "black"
-             ? "my-3 w-full xl:w-1/4 p-5 bg-green-900 rounded-md border border-green-500 shadow "
+             ? "my-3 w-full xl:w-1/4 p-5 bg-gray-900 rounded-md border border-gray-500 shadow "
              : "my-3 w-full xl:w-1/4 p-5 bg-green-50 rounded-md border border-green-200 shadow "
             
             }>
@@ -48,7 +48,7 @@ const Dashboard = () => {
           </div>
 
           <div className={theme === "black"
-             ? "my-3 w-full xl:w-1/4 p-5 bg-green-900 rounded-md border border-green-500 shadow"
+             ? "my-3 w-full xl:w-1/4 p-5 bg-gray-900 rounded-md border border-gray-500 shadow"
              : "my-3 w-full xl:w-1/4 p-5 bg-green-50 rounded-md border border-green-200 shadow"
             
             }>
@@ -66,7 +66,7 @@ const Dashboard = () => {
 
           <div 
           className={theme === "black"
-             ? "my-3 w-full xl:w-1/4 p-5 bg-green-900 rounded-md border border-green-500 shadow"
+             ? "my-3 w-full xl:w-1/4 p-5 bg-gray-900 rounded-md border border-gray-500 shadow"
              : "my-3 w-full xl:w-1/4 p-5 bg-green-50 rounded-md border border-green-200 shadow"
             
             }>
@@ -84,7 +84,7 @@ const Dashboard = () => {
 
           <div 
           className={theme === "black"
-             ? "my-3 w-full xl:w-1/4 p-5 bg-green-900 rounded-md border border-green-500 shadow"
+             ? "my-3 w-full xl:w-1/4 p-5 bg-gray-900 rounded-md border border-gray-500 shadow"
              : "my-3 w-full xl:w-1/4 p-5 bg-green-50 rounded-md border border-green-200 shadow"
             
             }>
@@ -108,7 +108,7 @@ const Dashboard = () => {
           <div className='w-full xl:w-4/6 '>
             {/* chart */}
             <div className={theme === "black" 
-              ? "bg-green-900 rounded-md border border-green-500 shadow my-3 py-5"
+              ? "bg-gray-900 rounded-md border border-gray-500 shadow my-3 py-5"
               : "bg-green-50 rounded-md border border-green-200 shadow my-3 py-5"
             }>
               <h4 className='m-2! font-bold!'>Sale Statistics</h4>
@@ -122,7 +122,7 @@ const Dashboard = () => {
 
 
               <div className={theme === 'black' 
-                ? "w-full xl:w-2/5 bg-green-900 rounded-xl border-1 border-green-500 p-3"
+                ? "w-full xl:w-2/5 bg-gray-900 rounded-xl border-1 border-gray-500 p-3"
                 : "w-full xl:w-2/5 bg-green-50 rounded-xl border-1 border-green-300 p-3"
               }>
                 {/* New members */}
@@ -152,7 +152,7 @@ const Dashboard = () => {
 
 
               <div className={theme === 'black'
-                ? "w-full xl:w-3/5 bg-green-900 rounded-xl border-1 border-green-500 p-3 flex"
+                ? "w-full xl:w-3/5 bg-gray-900 rounded-xl border-1 border-gray-500 p-3 flex"
                 : "w-full xl:w-3/5 bg-green-50 rounded-xl border-1 border-green-300 p-3 flex"
               }>
               {/* Steps */}
@@ -175,7 +175,7 @@ const Dashboard = () => {
 
             <div className={
               theme === "black"
-                ? "w-full bg-green-900 rounded-md border border-green-500 shadow my-3 py-2"
+                ? "w-full bg-gray-900 rounded-md border border-gray-500 shadow my-3 py-2"
                 : "w-full bg-green-50 rounded-md border border-green-200 shadow my-3 py-2"
             }>
               <h6 className='ml-3! font-bold!'>Revenue Base on Area</h6>
@@ -184,7 +184,7 @@ const Dashboard = () => {
 
             <div className={
               theme === "black"
-                ? "w-full bg-green-900 rounded-md border border-green-500 shadow my-3 py-2"
+                ? "w-full bg-gray-900 rounded-md border border-gray-500 shadow my-3 py-2"
                 : "w-full bg-green-50 rounded-md border border-green-200 shadow my-3 py-2"
             }>
               <ApexChartRow />

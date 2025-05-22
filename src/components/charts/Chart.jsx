@@ -46,6 +46,7 @@ const ApexChart = () => {
                 type: 'area',
                 height: 350,
                 stacked: true,
+                foreColor: '#ccc',
                 events: {
                     selection: function (chart, e) {
                         console.log(new Date(e.xaxis.min))
@@ -82,8 +83,8 @@ const ApexChart = () => {
 
     return (
         <div>
-            <div id="chart">
-                <ReactApexChart options={state.options} series={state.series} type="area" height={350} />
+            <div id="chart" >
+                <ReactApexChart options={state.options} series={state.series} type="area" height={350}  />
             </div>
             <div id="html-dist"></div>
         </div>

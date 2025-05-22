@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import React, { forwardRef, useContext } from 'react'
 import { Button, ButtonToolbar, VStack, Form, Input, InputGroup, } from 'rsuite'
 import { Checkbox } from 'rsuite';
 
@@ -11,19 +11,22 @@ const styles = {
 
 import { SelectPicker } from 'rsuite';
 import ImagePickerHook from '../hooks/ImagePicker';
+import { ThemeContext } from '../hooks/useContext';
 
 const data = ['USD', 'RUBL', 'EURO', 'BITC', 'UZS', 'KZTENGE', 'LOREM', 'LOREM2'].map(
     item => ({ label: item, value: item })
 );
 
 const AddProductTwo = () => {
+
+    const {theme} = useContext(ThemeContext)
     return (
         <>
 
             <div className="mx-3">
-                <div className="flex items-center justify-between">
-                    <h2 className='font-semibold! mb-3 font-sans!'>Add New Orders</h2>
-                    <div className="flex">
+                <div className="block md:flex md:items-center md:justify-between">
+                    <h2 className='font-semibold! mb-3  font-sans!'>Add New Orders</h2>
+                    <div className="flex flex-col justify-between   md:justify-end">
                         <ButtonToolbar>
                             <Button color='cyan' appearance='ghost' >Save to Drafts</Button>
                             <Button color="green" appearance="primary">
@@ -35,7 +38,11 @@ const AddProductTwo = () => {
 
                 <div className='grid grid-cols-1  md:grid-cols-3 gap-5 mt-5'>
                     <div className="col-span-2 ">
-                        <div className='bg-gray-50 border border-gray-300 rounded-2xl'>
+                        <div className={
+                            theme === "black"
+                                ? "bg-gray-900 border border-gray-600 rounded-2xl"
+                                : "bg-gray-50 border border-gray-300 rounded-2xl"
+                        }>
                             <h4 className='m-4!'>Basic</h4>
                             <hr className='m-0!' />
                             <div className="m-4!">
@@ -83,7 +90,11 @@ const AddProductTwo = () => {
                         </div>
 
 
-                        <div className='bg-gray-50 border border-gray-300 rounded-2xl mt-5 pb-5'>
+                        <div className={
+                            theme === "black"
+                                ? "bg-gray-900 border border-gray-600 rounded-2xl mt-5"
+                                : "bg-gray-50 border border-gray-300 rounded-2xl mt-5"
+                        }>
                             <h4 className='m-4!'>Images</h4>
                             <hr className='m-0!' />
                             <div className="m-4!">
@@ -106,7 +117,11 @@ const AddProductTwo = () => {
 
 
 
-                        <div className='bg-gray-50 border border-gray-300 rounded-2xl  pb-5'>
+                        <div className={
+                            theme === "black"
+                                ? "bg-gray-900 border border-gray-600 rounded-2xl"
+                                : "bg-gray-50 border border-gray-300 rounded-2xl"
+                        }>
                             <h4 className='m-4!'>Category</h4>
                             <hr className='m-0!' />
                             <div className="m-4!">
