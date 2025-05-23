@@ -1,9 +1,11 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { fetchLastImage, uploadImage } from '../hooks/imagesFuncion';
+import { ThemeContext } from '../hooks/useContext';
 export const base_url = 'https://682739736b7628c5290f890c.mockapi.io/ava'
 
 const ProfileSettings = () => {
+  const { theme } = useContext(ThemeContext)
 
   const [image, setImage] = useState(null);
 
@@ -29,7 +31,9 @@ const ProfileSettings = () => {
 
   return (
     <div className='w-full h-auto'>
-      <div className="w-full mx-auto p-10 bg-white border border-gray-300 rounded-lg flex flex-col md:flex-row gap-8">
+      <div className={theme === 'black'
+        ? '!bg-black !text-white  w-full mx-auto p-10 bg-white border border-gray-300 rounded-lg flex flex-col md:flex-row gap-8'
+        : '!bg-white !text-black w-full mx-auto p-10 bg-white border border-gray-300 rounded-lg flex flex-col md:flex-row gap-8'}>
 
         <form className="flex-1">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -81,7 +85,9 @@ const ProfileSettings = () => {
           </div>
 
           <label htmlFor="file_input"
-            className=" p-2 rounded border-green-300 block text-sm font-medium text-gray-900 cursor-pointer">
+            className={theme === 'black '
+              ? 'text-white p-2 !rounded !border !border-green-300 block text-sm font-medium cursor-pointer'
+              : 'p-2 !rounded !border !border-green-300 block text-sm font-medium cursor-pointer'}>
             Upload file
           </label>
           <input
@@ -95,14 +101,21 @@ const ProfileSettings = () => {
       </div>
 
       <div className='w-full h-40 flex items-center p-3 gap-5 border border-gray-300 mt-5 rounded'>
-        <div className='flex w-[50%] h-full bg-gray-100 rounded justify-between items-center p-3'>
-          <ul>
+        <div className={theme === 'black '
+          ? '!text-white !bg-black flex w-[50%] h-full  !rounded justify-between items-center p-3'
+          : ' flex w-[50%] h-full  !rounded justify-between items-center p-3'} >
+          <ul className={theme === 'black'
+            ? '!text-white bg-black'
+            : ''
+          }>
             <h1 className='!text-[25px]'>Password</h1>
             <li className='text-gray-400'>You can reset or change your password by <br /> clicking here</li>
           </ul>
           <button className='px-5 h-10 !rounded !border-gray-300 !border'>Change</button>
         </div>
-        <div className='flex w-[50%] h-full bg-gray-100 rounded justify-between items-center p-3'>
+        <div className={theme === 'black '
+          ? '!text-white  flex w-[50%] h-full  !rounded justify-between items-center p-3'
+          : 'flex w-[50%] h-full  !rounded justify-between items-center p-3'}>
           <ul>
             <h1 className='!text-[25px]'>Remove account</h1>
             <li className='text-gray-400'>Once you delete your account there is no <br /> going back</li>
@@ -110,7 +123,7 @@ const ProfileSettings = () => {
           <button className='px-5 h-10 !rounded !border-gray-300 !border'>Deactivate</button>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

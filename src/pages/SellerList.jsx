@@ -1,9 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import DetailButton from '../components/DetailButton'
 import useFetch from '../hooks/api'
 import axios from 'axios'
+import { ThemeContext } from '../hooks/useContext'
 
 const SellerList = () => {
+  const { theme } = useContext(ThemeContext)
+
   const { data, loading, error } = useFetch('https://682739736b7628c5290f890c.mockapi.io/users')
   const [users, setUsers] = useState([])
   const [select, setSelect] = useState('all')
@@ -79,7 +82,8 @@ const SellerList = () => {
     : users?.filter(item => item.status === select)
 
   return (
-    <div className='max-w-full min-h-150 h-max p-3 overflow-hidden'>
+    <div className={theme === "black"
+      ? '!text-white !bg-black max-w-full min-h-150 h-max p-3 overflow-hidden' : '!text-black !bg-white max-w-full min-h-150 h-max p-3 overflow-hidden'}>
       <div className='flex justify-between items-center'>
         <h1 className='text-4xl!'>Sellers List</h1>
         <button onClick={modalExit} className='bg-green-600 py-2 px-5 rounded! text-white!'>Create New</button>
@@ -92,7 +96,9 @@ const SellerList = () => {
             onChange={handleInput}
             type="search"
             placeholder='Search...'
-            className='bg-gray-100 w-70 p-2 rounded outline-none'
+            className={theme === 'black'
+              ? '!text-white !bg-black bg-gray-100 w-70 p-2 !rounded outline-none !border !border-white' : '!text-black !bg-white bg-gray-100 w-70 p-2 rounded outline-none'}
+
           />
           <ul className='flex gap-5'>
             <select
@@ -100,7 +106,9 @@ const SellerList = () => {
               onChange={selectvalue}
               name="select"
               id="selectStatus"
-              className='p-3 w-40 rounded bg-gray-100 outline-none'
+              className={theme === 'black'
+                ? '!text-white !bg-black  p-3 w-40 !rounded bg-gray-100 outline-none !border !border-white '
+                : '!text-black !bg-white p-3 w-40 rounded bg-gray-100 outline-none'}
             >
               <option value="all">All</option>
               <option value="active">Active</option>
@@ -109,7 +117,9 @@ const SellerList = () => {
             <select
               name="select"
               id="selectShow"
-              className='p-3 w-40 rounded bg-gray-100 outline-none'
+              className={theme === 'black'
+                ? '!text-white !bg-black  p-3 w-40 !rounded bg-gray-100 outline-none !border !border-white '
+                : '!text-black !bg-white p-3 w-40 rounded bg-gray-100 outline-none'}
             >
               <option value="active">Show 20</option>
               <option value="inactive">Show 10</option>
@@ -119,7 +129,9 @@ const SellerList = () => {
 
         <table className="w-full border-separate !border-spacing-y-4">
           <thead>
-            <tr className="text-left bg-gray-100 h-10">
+            <tr className={theme === 'black'
+              ? '!text-white !bg-black text-left bg-gray-100 h-10'
+              : '!text-black !bg-white text-left bg-gray-100 h-10'}>
               <th className="p-2">User</th>
               <th className="p-2">Email</th>
               <th className="p-2">Status</th>
@@ -132,7 +144,7 @@ const SellerList = () => {
               <tr>
                 <td colSpan={5} className=' h-100'>
                   <div className='flex justify-center items-center w-full h-40'>
-                    <div className='loader'></div>
+                    <div className={`loader ${theme === 'black' ? 'loader-dark' : ''}`}></div>
                   </div>
                 </td>
               </tr>
@@ -140,7 +152,10 @@ const SellerList = () => {
               filteredUsers
                 ?.filter(user => user.firstname?.toLowerCase().includes(searchTerm.toLowerCase()))
                 .map(user => (
-                  <tr key={user.id} className="bg-white shadow h-15">
+                  <tr key={user.id} className={theme === 'black'
+                    ? '!text-white !bg-black shadow h-15'
+                    : '!text-black !bg-white shadow h-15'
+                  }>
                     <td className="p-2">
                       <div className="flex items-center gap-3">
                         <div className="bg-gray-600 w-10 h-10 rounded-full"></div>
@@ -181,7 +196,7 @@ const SellerList = () => {
           </form>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 

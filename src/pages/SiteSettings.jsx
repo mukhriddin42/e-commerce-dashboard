@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { ThemeContext } from '../hooks/useContext';
 
 const SiteSettings = () => {
   const [registration, setRegistration] = useState("all");
   const [notify, setNotify] = useState(false);
+  const { theme } = useContext(ThemeContext)
+
 
   return (
-    <div className="max-w-6xl mx-auto bg-white p-8 rounded-lg shadow ">
+    <div className={theme === 'black'
+      ? '!text-white !bg-black max-w-6xl mx-auto  p-8 !rounded-lg shadow'
+      : '!text-black !bg-white max-w-6xl mx-auto  p-8 !rounded-lg shadow'}>
       {/* Website name */}
       <div className="mb-6 ">
         <h2 className="text-xl font-semibold mb-1">Website name</h2>
@@ -14,7 +19,7 @@ const SiteSettings = () => {
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="homepage" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="homepage" className="block text-sm font-medium text-gray-700 my-3">
               Home page title
             </label>
             <input
@@ -25,7 +30,7 @@ const SiteSettings = () => {
             />
           </div>
           <div>
-            <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="description" className="my-3 block text-sm font-medium text-gray-700">
               Description
             </label>
             <textarea
@@ -41,7 +46,7 @@ const SiteSettings = () => {
       {/* Access options */}
       <div className="mb-6">
         <h2 className="text-xl font-semibold mb-1">Access</h2>
-        <p className="text-sm text-gray-500 mb-4">
+        <p className="text-sm text-gray-500 !my-4">
           Give access of all users including each product/shop owner
         </p>
         <div className="space-y-2">
@@ -60,10 +65,10 @@ const SiteSettings = () => {
                   {type === "all"
                     ? "All registration is enabled"
                     : type === "buyers"
-                    ? "Only buyers is enabled"
-                    : type === "sellers"
-                    ? "Only sellers is enabled"
-                    : "Stop new shop registration"}
+                      ? "Only buyers is enabled"
+                      : type === "sellers"
+                        ? "Only sellers is enabled"
+                        : "Stop new shop registration"}
                 </span>
               </label>
             </div>
