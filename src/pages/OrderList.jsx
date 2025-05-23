@@ -151,7 +151,7 @@ const OrderList = () => {
       </div>
       <div className="mx-auto flex flex-col md:flex-row gap-6">
         {/* Left Table */}
-        <div className="flex-1 w-full bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 overflow-x-auto">
+        <div className={`flex-1 w-full ${theme === 'black' ? 'dark:bg-gray-800':'bg-white'} rounded-lg shadow-lg p-6 overflow-x-auto`}>
           <div className="flex justify-between items-center mb-4 border-b border-gray-200 dark:border-gray-700 pb-3">
             <input
               type="text"
@@ -234,7 +234,7 @@ const OrderList = () => {
         </div>
 
         {/* Right Filter Panel */}
-        <div className="w-full md:w-65 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+        <div className={`w-full md:w-65  ${theme === 'black'?'dark:bg-gray-800':'bg-white'} rounded-lg shadow-lg p-6`}>
           <h2 className="font-bold text-lg mb-4 text-gray-800 dark:text-gray-200">
             Filter by
           </h2>

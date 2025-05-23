@@ -1,8 +1,9 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CiCalendar } from "react-icons/ci";
 import { GoDownload } from "react-icons/go";
 import { useNavigate, useParams } from "react-router-dom";
+import { ThemeContext } from "../hooks/useContext";
 
 const OrderDetails = () => {
   const { id } = useParams(); // URL dan orderId olish
@@ -15,6 +16,8 @@ const OrderDetails = () => {
       .toFixed(2);
   };
 
+  const { theme } = useContext(ThemeContext);
+
   const [status, setStatus] = useState(order?.status || "new");
 
   const handleStatusChange = (e) => {
@@ -22,18 +25,18 @@ const OrderDetails = () => {
   };
 
   useEffect(() => {
-  if (order) {
-    setStatus(order.status);
-  }
-}, [order]);
+    if (order) {
+      setStatus(order.status);
+    }
+  }, [order]);
 
-const handleSave = () => {
-  setOrder(prevOrder => ({
-    ...prevOrder,
-    status: status,
-  }));
-  alert(`Status changed to: ${status}`);
-};
+  const handleSave = () => {
+    setOrder((prevOrder) => ({
+      ...prevOrder,
+      status: status,
+    }));
+    alert(`Status changed to: ${status}`);
+  };
 
   useEffect(() => {
     // Ma'lumotni yuklash, sizda data.json ni olish
@@ -66,22 +69,48 @@ const handleSave = () => {
   if (!order) return <div>Order topilmadi</div>;
 
   return (
-    <div className="bg-gray-50 min-h-screen p-6">
+    <div
+      className={`${
+        theme === "black" ? "bg-gray-900" : "bg-gray-50"
+      } min-h-screen p-6`}
+    >
       <div className="w-50! text-[20px]! ml-8 mb-2.5 font-semibold!">
         <p>Order detail</p>
-        <h6 className="text-[12px]!">Details for Order ID: {order.id}</h6>
+        <h6
+          className={`${
+            theme === "black" ? "text-gray-400" : "text-gray-500"
+          } text-[12px]!`}
+        >
+          Details for Order ID: {order.id}
+        </h6>
       </div>
-      <div className="max-w-7xl mx-auto bg-white p-6 shadow-sm">
-        <div className="flex flex-col space-y-6">
+      <div
+        className={`${
+          theme === "black" ? "bg-gray-700" : "bg-white"
+        } max-w-7xl mx-auto p-6 shadow-sm`}
+      >
+        <div className="flex flex-col space-y-6" >
           {/* Header */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
             <div className="flex items-start space-x-2">
-              <CiCalendar className="h-5 w-5 text-gray-500 mt-0.5" />
+              <CiCalendar
+                className={`${
+                  theme === "black" ? "text-gray-400" : "text-gray-500"
+                } h-5 w-5 mt-0.5`}
+              />
               <div className="flex flex-col">
-                <span className="text-sm text-gray-500">
+                <span
+                  className={`${
+                    theme === "black" ? "text-gray-400" : "text-gray-500"
+                  } text-sm`}
+                >
                   Order Date: {order.date}
                 </span>
-                <span className="text-sm text-gray-500">
+                <span
+                  className={`${
+                    theme === "black" ? "text-gray-400" : "text-gray-500"
+                  } text-sm`}
+                >
                   Order ID: {order.id}
                 </span>
               </div>
@@ -91,7 +120,11 @@ const handleSave = () => {
                 <select
                   value={status}
                   onChange={handleStatusChange}
-                  className="appearance-none bg-gray-100 border border-gray-200 rounded-md pl-3 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className={`appearance-none ${
+                    theme === "black"
+                      ? "bg-gray-700 border-gray-600 text-gray-300"
+                      : "bg-gray-100 border-gray-200 text-gray-900"
+                  } rounded-md pl-3 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500`}
                 >
                   <option>Change status</option>
                   <option>Processing</option>
@@ -115,10 +148,17 @@ const handleSave = () => {
                   </svg>
                 </div>
               </div>
-              <button className="bg-green-500 hover:bg-green-600 text-white">
+              <button className="bg-green-500 h-[30px] w-[60px] mr-1.5! hover:bg-green-600 text-white">
                 Save
               </button>
-              <button variant="outline" className="border-gray-200">
+              <button
+                variant="outline"
+                className={`${
+                  theme === "black"
+                    ? "border-gray-600 text-gray-300"
+                    : "border-gray-200"
+                }`}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -147,10 +187,28 @@ const handleSave = () => {
                 <span className="text-green-500 text-lg">👤</span>
               </div>
               <div>
-                <h3 className="text-sm font-medium mb-2">Customer</h3>
+                <h3
+                  className={`${
+                    theme === "black" ? "text-gray-300" : "text-gray-900"
+                  } text-sm font-medium mb-2`}
+                >
+                  Customer
+                </h3>
                 <p className="text-sm">{order?.name}</p>
-                <p className="text-sm text-gray-500">alex@example.com</p>
-                <p className="text-sm text-gray-500">{order.details?.phone}</p>
+                <p
+                  className={`${
+                    theme === "black" ? "text-gray-400" : "text-gray-500"
+                  } text-sm`}
+                >
+                  alex@example.com
+                </p>
+                <p
+                  className={`${
+                    theme === "black" ? "text-gray-400" : "text-gray-500"
+                  } text-sm`}
+                >
+                  {order.details?.phone}
+                </p>
                 <a href="#" className="text-sm text-green-500 hover:underline">
                   View profile
                 </a>
@@ -163,7 +221,13 @@ const handleSave = () => {
                 <span className="text-green-500 text-lg">📦</span>
               </div>
               <div>
-                <h3 className="text-sm font-medium mb-2">Order info</h3>
+                <h3
+                  className={`${
+                    theme === "black" ? "text-gray-300" : "text-gray-900"
+                  } text-sm font-medium mb-2`}
+                >
+                  Order info
+                </h3>
                 <p className="text-sm">Shipping: Express</p>
                 <p className="text-sm">Pay method: card</p>
                 <p className="text-sm">
@@ -185,7 +249,13 @@ const handleSave = () => {
                 <span className="text-green-500 text-lg">🏠</span>
               </div>
               <div>
-                <h3 className="text-sm font-medium mb-2">Deliver to</h3>
+                <h3
+                  className={`${
+                    theme === "black" ? "text-gray-300" : "text-gray-900"
+                  } text-sm font-medium mb-2`}
+                >
+                  Deliver to
+                </h3>
                 <p className="text-sm">City: Tashkent, Uzbekistan</p>
                 <p className="text-sm">{order.details?.address}</p>
                 <p className="text-sm">Po Box 10000</p>
@@ -198,8 +268,12 @@ const handleSave = () => {
 
           <div className="w-full! flex gap-5">
             {/* Product Table */}
-            <div className="w-2/3! mt-6">
-              <table className="min-w-full divide-y divide-gray-200">
+            <div className="w-2/3! mt-5">
+              <table
+                className={`${
+                  theme === "black" ? "text-gray-300" : "text-gray-900"
+                } min-w-full divide-y divide-gray-200 mb-1`}
+              >
                 <thead>
                   <tr>
                     <th
@@ -228,12 +302,18 @@ const handleSave = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody
+                  className={`${
+                    theme === "black"
+                      ? "bg-gray-800 divide-gray-700"
+                      : "bg-white divide-gray-200"
+                  } border-separate! border-spacing-y-2!`}
+                >
                   {order.details.items.map((item, index) => (
-                    <tr key={index}>
-                      <td className="px-3 py-4 whitespace-nowrap">
+                    <tr key={index} className="h-[70px] border-b">
+                      <td className="px-3! p-5 lmpy-4 whitespace-nowrap">
                         <div className="flex items-center">
-                          <div className="flex-shrink-0 h-10 w-10 bg-amber-100 rounded-md flex items-center justify-center">
+                          <div className="flex-shrink-0 h-8 w-8 bg-amber-100 rounded-md flex items-center justify-center">
                             <span className="text-amber-800">🍦</span>
                           </div>
                           <div className="ml-4">
@@ -249,7 +329,7 @@ const handleSave = () => {
                       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
                         {item.quantity}
                       </td>
-                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
                         ${(item.price * item.quantity).toFixed(2)}
                       </td>
                     </tr>
@@ -258,23 +338,57 @@ const handleSave = () => {
               </table>
               {/* Order Summary */}
               <div>
-                <div className="bg-gray-50 p-4 rounded-md">
+                <div
+                  className={`${
+                    theme === "black" ? "bg-gray-700" : "bg-gray-50"
+                  } pt-4 rounded-md`}
+                >
                   <div className="flex justify-between mb-2">
-                    <span className="text-sm text-gray-600">Subtotal:</span>
-                    <span className="text-sm font-medium">
+                    <span
+                      className={`${
+                        theme === "black" ? "text-gray-300" : "text-gray-600"
+                      } text-sm`}
+                    >
+                      Subtotal:
+                    </span>
+                    <span
+                      className={`${
+                        theme === "black" ? "text-gray-300" : "text-gray-900"
+                      } text-sm font-medium`}
+                    >
                       {calculateSubtotal()}
                     </span>
                   </div>
                   <div className="flex justify-between mb-2">
-                    <span className="text-sm text-gray-600">
+                    <span
+                      className={`${
+                        theme === "black" ? "text-gray-300" : "text-gray-600"
+                      } text-sm`}
+                    >
                       Shipping cost:
                     </span>
-                    <span className="text-sm font-medium">$10.00</span>
+                    <span
+                      className={`${
+                        theme === "black" ? "text-gray-300" : "text-gray-900"
+                      } text-sm font-medium`}
+                    >
+                      $10.00
+                    </span>
                   </div>
                   <div className="flex justify-between pt-4 border-t border-gray-200 mt-4">
-                    <span className="text-sm font-medium">Grand total:</span>
-                    <span className="text-lg font-bold">
-                     ${(Number(calculateSubtotal()) + 10).toFixed(2)}
+                    <span
+                      className={`${
+                        theme === "black" ? "text-gray-300" : "text-gray-600"
+                      } text-sm font-semibold`}
+                    >
+                      Grand total:
+                    </span>
+                    <span
+                      className={`${
+                        theme === "black" ? "text-green-400" : "text-green-600"
+                      } text-sm font-semibold`}
+                    >
+                      ${(Number(calculateSubtotal()) + 10).toFixed(2)}
                     </span>
                   </div>
                   <div className="mt-6">
@@ -289,23 +403,48 @@ const handleSave = () => {
             {/* Order Summary and Payment Info */}
             <div className="w-1/3">
               {/* Payment Info */}
-              <div>
-                <h3 className="text-sm font-medium mb-4">Payment info</h3>
-                <div className="bg-gray-50 p-4 rounded-md">
-                  <div className="flex items-center mb-3">
+              <div
+                className={`${
+                  theme === "black" ? "bg-gray-700" : "bg-gray-50"
+                } p-6 rounded-md`}
+              >
+                <h3
+                  className={`${
+                    theme === "black" ? "text-gray-300" : "text-gray-900"
+                  } mb-4 text-lg font-semibold`}
+                >
+                  Payment Summary
+                </h3>
+                <div className={`${
+                  theme === "black" ? "bg-gray-700" : "bg-gray-50"
+                } pt-3 pb-3 rounded-md`}>
+                  <div className={`${
+                  theme === "black" ? "bg-gray-400" : "bg-gray-600"
+                } p-3 rounded-md flex justify-center items-center`}>
                     <div className="h-5 w-5 rounded-full bg-red-500 mr-2"></div>
-                    <span className="text-sm">
+                    <span className={`${theme === 'black' ? 'text-gray-50' : 'text-gray-300'}`}>
                       Master Card **** **** **** 4768
                     </span>
                   </div>
                   <p className="text-sm">Business name: Grand Market LLC</p>
                   <p className="text-sm">Phone: +1 (800) 555-154-52</p>
+                  <p
+                      className={`${
+                        theme === "black" ? "text-gray-300" : "text-gray-900"
+                      } mb-2 font-semibold text-[20px]`}
+                    >
+                      Total amount: ${calculateSubtotal()}
+                    </p>
                 </div>
 
                 <h3 className="text-sm font-medium mt-6 mb-4">Notes</h3>
-                <div className="bg-gray-50 p-4 rounded-md h-32">
+                <div  className={`${
+                    theme === "black"
+                      ? "bg-gray-800 divide-gray-700"
+                      : "bg-white divide-gray-200"
+                  } h-32 p1`}>
                   <textarea
-                    className="w-full h-full bg-transparent border-0 focus:ring-0 resize-none text-sm"
+                    className="w-full p-1 h-full bg-transparent border-0 focus:ring-0 resize-none text-sm"
                     placeholder="Add notes about the order"
                   ></textarea>
                 </div>

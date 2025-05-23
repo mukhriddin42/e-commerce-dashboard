@@ -42,6 +42,25 @@ const DashboardSideBar = () => {
     setLastViewedOrderId(localStorage.getItem("lastId"));
   }, [location]);
 
+  useEffect(() => {
+  const path = location.pathname;
+
+  if (path === "/") setActiveKey("1");
+  else if (path === "/products") setActiveKey("2-1");
+  else if (path === "/categories") setActiveKey("2-2");
+  else if (path === "/order-list") setActiveKey("3-1");
+  else if (path.startsWith("/order-details/")) setActiveKey("3-2");
+  else if (path === "/seller-list") setActiveKey("4-1");
+  else if (path === "/seller-profile") setActiveKey("4-2");
+  else if (path === "/addproduct") setActiveKey("5-1");
+  else if (path === "/addproducttwo") setActiveKey("5-2");
+  else if (path === "/transactions") setActiveKey("6");
+  else if (path === "/profile-setting") setActiveKey("7-1");
+  else if (path === "/site-setting") setActiveKey("7-2");
+  else if (path === "/reviews") setActiveKey("8");
+  else setActiveKey(null);
+}, [location.pathname]);
+
   // NavLink remains same
   const NavLink = forwardRef(({ href, children, ...rest }, ref) => (
     <Link ref={ref} to={href} {...rest}>

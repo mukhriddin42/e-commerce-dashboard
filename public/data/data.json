@@ -21,9 +21,12 @@
     "status": "Cancelled",
     "date": "25.05.2020",
     "details": {
-      "address": "5678 Oak St, Springfield",
-      "phone": "+998909876543",
-      "items": []
+      "address": "1234 Elm St, Springfield",
+      "phone": "+998901234567",
+      "items": [
+        { "product": "Laptop", "quantity": 5, "price": "900" },
+        { "product": "Mouse", "quantity": 3, "price": "48.55" }
+      ]
     }
   },
     {
