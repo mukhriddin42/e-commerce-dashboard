@@ -419,7 +419,7 @@ const OrderDetails = () => {
                   theme === "black" ? "bg-gray-700" : "bg-gray-50"
                 } pt-3 pb-3 rounded-md`}>
                   <div className={`${
-                  theme === "black" ? "bg-gray-400" : "bg-gray-600"
+                  theme === "black" ? "bg-gray-800" : "bg-gray-600"
                 } p-3 rounded-md flex justify-center items-center`}>
                     <div className="h-5 w-5 rounded-full bg-red-500 mr-2"></div>
                     <span className={`${theme === 'black' ? 'text-gray-50' : 'text-gray-300'}`}>

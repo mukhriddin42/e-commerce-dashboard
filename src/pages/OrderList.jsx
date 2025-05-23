@@ -13,7 +13,7 @@ const statusClasses = {
 const OrderList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
   const baseUrl = "/data/data.json";
   const [data, setData] = useState([]);
   const { theme } = useContext(ThemeContext);
@@ -152,18 +152,18 @@ const OrderList = () => {
       <div className="mx-auto flex flex-col md:flex-row gap-6">
         {/* Left Table */}
         <div className={`flex-1 w-full ${theme === 'black' ? 'dark:bg-gray-800':'bg-white'} rounded-lg shadow-lg p-6 overflow-x-auto`}>
-          <div className="flex justify-between items-center mb-4 border-b border-gray-200 dark:border-gray-700 pb-3">
+          <div className={`flex justify-between items-center mb-4 border-b ${theme === 'black'?' dark:border-gray-700!':'border-gray-200!'} pb-3`}>
             <input
               type="text"
               placeholder="Search by customer name..."
-              className="border bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-600 rounded px-4 py-2 w-1/3"
+              className={`border ${theme === 'black'?'dark:bg-gray-700 dark:text-gray-200  dark:border-gray-600':'bg-gray-200 text-gray-700 border-gray-300'} rounded px-4 py-2 w-1/3`}
               name="name"
               value={filters.name}
               onChange={handleFilterChange}
             />
             <div className="flex space-x-3 gap-5">
               <select
-                className="border border-gray-300 dark:border-gray-600 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded px-4 py-2"
+                className={`border ${theme === 'black'?'dark:bg-gray-700 dark:text-gray-200  dark:border-gray-600':'bg-gray-200 text-gray-700 border-gray-300'} rounded px-4 py-2`}
                 name="status"
                 value={filters.status}
                 onChange={handleFilterChange}
@@ -177,10 +177,10 @@ const OrderList = () => {
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left text-gray-800 dark:text-gray-200">
-              <thead className="bg-gray-50 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
+            <table className={`w-full text-sm text-left ${theme === 'black'?'  dark:text-gray-300':' text-gray-600'}`}>
+              <thead className={`${theme === 'black'?' bg-gray-700 text-gray-300':'bg-gray-50 text-gray-600'}`}>
                 <tr>
-                  <th className="py-3 px-4">ID</th>
+                  <th className="py-3 pl-1! px-4">ID</th>
                   <th>Customer name</th>
                   <th>Price</th>
                   <th>Status</th>
@@ -202,7 +202,7 @@ const OrderList = () => {
                   currentOrders.map((order) => (
                     <tr
                       key={order.id}
-                      className="border-none h-[60px] hover:bg-gray-50 dark:hover:bg-gray-700"
+                      className={`border-none h-[60px] ${theme === 'black'?' dark:hover:bg-gray-700':'hover:bg-gray-50'}`}
                     >
                       <td className="p-2">{order.id}</td>
                       <td>{order.name}</td>
@@ -220,7 +220,7 @@ const OrderList = () => {
                       <td>
                         <button
                           onClick={() => navigate(`/order-details/${order.id}`)}
-                          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                          className="bg-green-500 text-white px-3 py-1.5 rounded! hover:bg-green-600"
                         >
                           Detail
                         </button>
@@ -238,18 +238,19 @@ const OrderList = () => {
           <h2 className="font-bold text-lg mb-4 text-gray-800 dark:text-gray-200">
             Filter by
           </h2>
-          <div className="space-y-4 text-gray-700 dark:text-gray-200">
+          <div className={`space-y-4 ${theme === 'black'?'dark:text-gray-200':'text-gray-700!'}`}>
             {["id", "name", "customer2", "price", "date"].map((key) => (
               <div key={key}>
                 <label className="block text-sm font-medium mb-1 capitalize">
                   {key}
                 </label>
                 <input
+                  placeholder="Type here"
                   name={key}
                   type={key === "date" ? "date" : "text"}
                   value={filters[key]}
                   onChange={handleFilterChange}
-                  className="w-full border-none bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded px-3 py-2"
+                  className={`w-full border-none ${theme === 'black' ?'dark:bg-gray-700  dark:text-gray-200':'bg-gray-100 text-gray-900'} rounded px-3 py-2`}
                 />
               </div>
             ))}
@@ -260,7 +261,7 @@ const OrderList = () => {
                 name="status"
                 value={filters.status}
                 onChange={handleFilterChange}
-                className="w-full border-none bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded px-3 py-2"
+                className={`w-full border-none   ${theme === 'black' ?'dark:bg-gray-700 dark:text-gray-200 ':'bg-gray-100 text-gray-900'} rounded px-3 py-2`}
               >
                 <option value="">All</option>
                 <option value="Received">Received</option>
@@ -273,7 +274,7 @@ const OrderList = () => {
       </div>
 
       {/* Pagination */}
-      <div className="mt-6 flex justify-center space-x-2 text-gray-700 dark:text-gray-300">
+      <div className={`mt-6 flex justify-center space-x-2 ${theme === 'black'?' dark:text-gray-300':'text-gray-700'}`}>
         <button
           disabled={currentPage === 1}
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
