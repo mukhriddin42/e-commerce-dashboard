@@ -220,7 +220,7 @@ const OrderList = () => {
                       <td>
                         <button
                           onClick={() => navigate(`/order-details/${order.id}`)}
-                          className="bg-green-500 text-white px-3 py-1.5 rounded! hover:bg-green-600"
+                          className="bg-green-500 text-white! px-3 py-1.5 rounded! hover:bg-green-600"
                         >
                           Detail
                         </button>
