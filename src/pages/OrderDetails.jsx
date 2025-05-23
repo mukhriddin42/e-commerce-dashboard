@@ -341,7 +341,7 @@ const OrderDetails = () => {
                 <div
                   className={`${
                     theme === "black" ? "bg-gray-700" : "bg-gray-50"
-                  } pt-4 rounded-md`}
+                  } pt-4! pl-4 rounded-md`}
                 >
                   <div className="flex justify-between mb-2">
                     <span
