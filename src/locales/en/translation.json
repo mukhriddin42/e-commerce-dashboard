@@ -84,5 +84,33 @@
         "all": "All",
         "prev": "Prev",
         "next": "Next"
+    },
+    "createaccount": {
+        "title": "Create an Account",
+        "emailPlaceholder": "Your email",
+        "phonePlaceholder": "Phone",
+        "passwordPlaceholder": "Password",
+        "confirmText": "By signing up, you confirm that you've read and accepted our",
+        "userNotice": "User Notice",
+        "privacyPolicy": "Privacy Policy",
+        "submitBtn": "Login",
+        "orText": "or sign up with",
+        "google": "Google",
+        "facebook": "Facebook",
+        "alreadyHaveAccount": "Already have an account?",
+        "signin": "Sign in now"
+    },
+    "sign": {
+        "title": "Sign in",
+        "usernamePlaceholder": "Username or email",
+        "passwordPlaceholder": "Password",
+        "remember": "Remember",
+        "forgotPassword": "Forgot password?",
+        "loginBtn": "Login",
+        "orSignupWith": "or sign up with",
+        "signInGoogle": "Sign in using Google",
+        "signInFacebook": "Sign in using Facebook",
+        "dontHaveAccount": "Don't have an account?",
+        "signUpLink": "Sign up"
     }
 }
