@@ -32,7 +32,7 @@ const DashboardNavbar = () => {
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
   };
-  
+
 
 
   useEffect(() => {
@@ -47,12 +47,12 @@ const DashboardNavbar = () => {
 
 
   // DARK mode 
-  const {theme, setTheme} = useContext(ThemeContext);
+  const { theme, setTheme } = useContext(ThemeContext);
 
   const [iconColor, setIconColor] = useState("white")
 
   const handleMode = () => {
-    if (theme === "light"){
+    if (theme === "light") {
       setTheme("black")
     } else {
       setTheme("light")
@@ -60,24 +60,24 @@ const DashboardNavbar = () => {
   }
 
   useLayoutEffect(() => {
-      if (theme === "light") {
-        setIconColor("black")
-      } else {
-        setIconColor("white")
-      }
+    if (theme === "light") {
+      setIconColor("black")
+    } else {
+      setIconColor("white")
+    }
 
   }, [theme])
-  
 
-   
+
+
 
 
 
 
   return (
-    <div className={theme === "black" 
-      ? "shadow-md shadow-gray-700 h-[110px] md:h-[64px]   flex flex-col gap-2 "
-      : "shadow-sm h-[110px] md:h-[64px]   flex flex-col gap-2 "
+    <div className={theme === "black"
+      ? "!bg-[rgba(0,0,0,.9)] shadow-md shadow-gray-700 h-[110px] md:h-[64px]   flex flex-col gap-2 "
+      : "!bg-white shadow-sm h-[110px] md:h-[64px]   flex flex-col gap-2 "
     }>
 
       <div className=" flex px-2 md:px-5 mt-2 w-full justify-end md:flex-row  md:justify-between items-center">
@@ -85,7 +85,7 @@ const DashboardNavbar = () => {
 
 
         <InputGroup style={styles} className='hidden! md:flex!'>
-          <Input className={theme === "black"  ? "bg-gray-400! text-blue-900! " : "bg-gray-100!"} />
+          <Input className={theme === "black" ? "bg-gray-400! text-blue-900! " : "bg-gray-100!"} />
           <InputGroup.Button className={theme === "black"
             ? 'bg-gray-600!'
             : "bg-gray-200!"
@@ -99,23 +99,23 @@ const DashboardNavbar = () => {
         <div className='flex gap-1 md:gap-3 mt-2 items-center'>
 
           <Badge content={3}>
-            <Button className={theme === "black" 
-            ? "bg-gray-600!"
-            : "bg-gray-100!"
-          } >
+            <Button className={theme === "black"
+              ? "bg-gray-600!"
+              : "bg-gray-100!"
+            } >
               <FaBell color={iconColor} size={15} />
 
             </Button>
           </Badge>
-          <Button className={theme === "black" 
+          <Button className={theme === "black"
             ? "bg-gray-600!"
             : "bg-gray-100!"
           } onClick={() => handleMode()}>
-            {theme === "black" ? <IoIosSunny color={iconColor} size={15} /> : <IoMdMoon color={iconColor} size={15} /> }
-            
+            {theme === "black" ? <IoIosSunny color={iconColor} size={15} /> : <IoMdMoon color={iconColor} size={15} />}
+
           </Button>
 
-          <Button className={theme === "black" 
+          <Button className={theme === "black"
             ? "bg-gray-600!"
             : "bg-gray-100!"
           } >
@@ -129,18 +129,18 @@ const DashboardNavbar = () => {
                 : "border border-gray-300 rounded-sm mr-2"
               }
               title={
-                <FaEarthAmericas color={iconColor} size={15}  />
+                <FaEarthAmericas color={iconColor} size={15} />
 
               }
             >
               <Dropdown.Item onClick={() => handleLanguageChange('uz')}>O'zbek</Dropdown.Item>
               <Dropdown.Item onClick={() => handleLanguageChange('en')}>English</Dropdown.Item>
               <Dropdown.Item onClick={() => handleLanguageChange('ru')}>Русский</Dropdown.Item>
-              
+
             </Dropdown>
             <Dropdown
               placement="bottomEnd"
-              className={theme === "black" 
+              className={theme === "black"
                 ? "border w-17 md:w-auto border-gray-700 bg-gray-600  rounded-sm"
                 : "border w-17 md:w-auto border-gray-300  rounded-sm"
               }

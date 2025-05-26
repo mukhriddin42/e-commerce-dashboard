@@ -85,6 +85,34 @@
         "prev": "Oldingi",
         "next": "Keyingi"
     },
+    "createaccount": {
+        "title": "Hisob yarating",
+        "emailPlaceholder": "Elektron pochtangiz",
+        "phonePlaceholder": "Telefon raqamingiz",
+        "passwordPlaceholder": "Parol",
+        "confirmText": "Roʻyxatdan oʻtish orqali siz foydalanuvchi qoidalari va maxfiylik siyosatiga rozilik bildirasiz",
+        "userNotice": "Foydalanuvchi qoidalari",
+        "privacyPolicy": "Maxfiylik siyosati",
+        "submitBtn": "Kirish",
+        "orText": "yoki quyidagilar orqali roʻyxatdan oʻting",
+        "google": "Google",
+        "facebook": "Facebook",
+        "alreadyHaveAccount": "Hisobingiz bormi?",
+        "signin": "Hozir kiring"
+    },
+    "sign": {
+        "title": "Kirish",
+        "usernamePlaceholder": "Foydalanuvchi nomi yoki email",
+        "passwordPlaceholder": "Parol",
+        "remember": "Eslab qolish",
+        "forgotPassword": "Parolni unutdingizmi?",
+        "loginBtn": "Kirish",
+        "orSignupWith": "yoki quyidagilar bilan kirish",
+        "signInGoogle": "Google bilan kirish",
+        "signInFacebook": "Facebook bilan kirish",
+        "dontHaveAccount": "Hisobingiz yo‘qmi?",
+        "signUpLink": "Hozir ro‘yxatdan o‘ting"
+    },
     "order_detail": {
         "loading": "Yuklanmoqda...",
         "order_not_found": "Order topilmadi",
