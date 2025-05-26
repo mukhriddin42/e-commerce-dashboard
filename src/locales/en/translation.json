@@ -28,5 +28,38 @@
         "arrDate": "Register Date",
         "arrAction": "Action",
         "arrButton": "View Detail"
+    },
+    "profilesetings": {
+        "firstName": "First name",
+        "lastName": "Last name",
+        "email": "Email",
+        "phone": "Phone",
+        "address": "Address",
+        "birthday": "Birthday",
+        "saveChanges": "Save changes",
+        "uploadFile": "Upload file",
+        "noImage": "No image",
+        "password": "Password",
+        "passwordHint": "You can reset or change your password by clicking here",
+        "change": "Change",
+        "removeAccount": "Remove account",
+        "removeHint": "Once you delete your account there is no going back",
+        "deactivate": "Deactivate"
+    },
+    "sitesettings": {
+        "websiteName": "Website name",
+        "websiteDesc": "Supported languages of all pages including each product",
+        "homeTitle": "Home page title",
+        "homePlaceholder": "Type here",
+        "descLabel": "Description",
+        "descPlaceholder": "Write description here",
+        "access": "Access",
+        "accessDesc": "Give access of all users including each product/shop owner",
+        "all": "All registration is enabled",
+        "buyers": "Only buyers is enabled",
+        "sellers": "Only sellers is enabled",
+        "stop": "Stop new shop registration",
+        "notification": "Notification",
+        "notifyText": "Send notification on each user registration"
     }
 }

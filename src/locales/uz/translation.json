@@ -28,5 +28,38 @@
         "arrDate": "Ro‘yxatdan o‘tgan sana",
         "arrAction": "Amal",
         "arrButton": "Batafsil ko‘rish"
+    },
+    "profilesetings": {
+        "firstName": "Ism",
+        "lastName": "Familiya",
+        "email": "Elektron pochta",
+        "phone": "Telefon",
+        "address": "Manzil",
+        "birthday": "Tug'ilgan sana",
+        "saveChanges": "O'zgarishlarni saqlash",
+        "uploadFile": "Fayl yuklash",
+        "noImage": "Rasm yo'q",
+        "password": "Parol",
+        "passwordHint": "Parolingizni bu yerga bosib o‘zgartirishingiz yoki tiklashingiz mumkin",
+        "change": "O'zgartirish",
+        "removeAccount": "Hisobni o‘chirish",
+        "removeHint": "Agar hisobingizni o‘chirsangiz, uni qaytarib bo‘lmaydi",
+        "deactivate": "Faolsizlantirish"
+    },
+    "sitesettings": {
+        "websiteName": "Vebsayt nomi",
+        "websiteDesc": "Barcha sahifalar va mahsulotlar uchun qo‘llab-quvvatlanadigan tillar",
+        "homeTitle": "Bosh sahifa sarlavhasi",
+        "homePlaceholder": "Bu yerga yozing",
+        "descLabel": "Tavsif",
+        "descPlaceholder": "Tavsifni bu yerga yozing",
+        "access": "Kirish",
+        "accessDesc": "Barcha foydalanuvchilarga va do‘kon egalariga ruxsat bering",
+        "all": "Barcha foydalanuvchilar ro‘yxatdan o‘ta oladi",
+        "buyers": "Faqat xaridorlar ro‘yxatdan o‘ta oladi",
+        "sellers": "Faqat sotuvchilar ro‘yxatdan o‘ta oladi",
+        "stop": "Yangi do‘kon ro‘yxatdan o‘tishini to‘xtatish",
+        "notification": "Bildirishnoma",
+        "notifyText": "Har bir foydalanuvchi ro‘yxatdan o‘tganida xabar yuborish"
     }
 }
