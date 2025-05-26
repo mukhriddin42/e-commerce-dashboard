@@ -85,9 +85,9 @@ const DashboardNavbar = () => {
 
 
         <InputGroup style={styles} className='hidden! md:flex!'>
-          <Input className={theme === "black"  ? "bg-gray-400! text-blue-900! " : "bg-gray-100!"} />
+          <Input className={theme === "black"  ? "bg-gray-700! text-white! " : "bg-gray-100!"} />
           <InputGroup.Button className={theme === "black"
-            ? 'bg-gray-600!'
+            ? 'bg-gray-600! '
             : "bg-gray-200!"
           }>
             <SearchIcon color={iconColor} />
