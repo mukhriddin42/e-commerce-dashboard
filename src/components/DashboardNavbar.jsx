@@ -16,10 +16,9 @@ import { FaBell } from "react-icons/fa";
 
 import 'rsuite/dist/rsuite.min.css';
 import { Link } from 'react-router-dom';
-import { base_url } from '../pages/ProfileSettings';
-import axios from 'axios';
 import { fetchLastImage } from '../hooks/imagesFuncion';
 import { ThemeContext } from '../hooks/useContext';
+import { LanguageContext } from '../hooks/useLanguageContext';
 
 const styles = {
   width: 300,
@@ -27,6 +26,13 @@ const styles = {
 
 const DashboardNavbar = () => {
   const [image, setImage] = useState()
+
+  const { setLanguage } = useContext(LanguageContext)
+  // Tarjima funksiyasi
+  const handleLanguageChange = (lang) => {
+    setLanguage(lang);
+  };
+  
 
 
   useEffect(() => {
@@ -127,12 +133,10 @@ const DashboardNavbar = () => {
 
               }
             >
-              <Dropdown.Item icon={<UserInfoIcon />}>Profile</Dropdown.Item>
-              <Dropdown.Item icon={<CogIcon />}>Settings</Dropdown.Item>
-              <Dropdown.Separator />
-              <Link to='login'>
-                <Dropdown.Item icon={<SignOutIcon />}> Logout </Dropdown.Item>
-              </Link>
+              <Dropdown.Item onClick={() => handleLanguageChange('uz')}>O'zbek</Dropdown.Item>
+              <Dropdown.Item onClick={() => handleLanguageChange('en')}>English</Dropdown.Item>
+              <Dropdown.Item onClick={() => handleLanguageChange('ru')}>Русский</Dropdown.Item>
+              
             </Dropdown>
             <Dropdown
               placement="bottomEnd"

@@ -3,6 +3,8 @@ import { Avatar, Button } from 'rsuite'
 import AddOutlineIcon from '@rsuite/icons/AddOutline';
 import avatarimg from "../assets/blog-1.jpg"
 
+import { useTranslation } from "react-i18next";
+
 // icons
 import { AiFillDollarCircle } from "react-icons/ai";
 import { FaTruckMoving } from "react-icons/fa";
@@ -18,14 +20,16 @@ import { ThemeContext } from '../hooks/useContext';
 
 
 const Dashboard = () => {
+
+  const {t} = useTranslation()
   const {theme} = useContext(ThemeContext)
 
   return (
     <>
       <div className="mx-3 duration-200 ease-in-out">
-        <h2 className='font-bold!'>Dashboard</h2>
-        <p className='mt-3!'>Whole data about your business here</p>
-        <Button color="green" appearance="primary"  startIcon={<AddOutlineIcon  />}>Create Report</Button>
+        <h2 className='font-bold!'>{t("dashboard.dashboard_t")}</h2>
+        <p className='mt-3!'>{t("dashboard.dashboard_p")}</p>
+        <Button color="green" appearance="primary"  startIcon={<AddOutlineIcon  />}>{t("dashboard.createReport")}</Button>
 
         <div className='flex flex-col md:flex-col xl:flex-row xl:gap-2'>
 
@@ -40,7 +44,7 @@ const Dashboard = () => {
                 <AiFillDollarCircle size={35} color='green' />
               </div>
               <div>
-                <h6 className='font-bold!'>Revenu</h6>
+                <h6 className='font-bold!'>{t("dashboard.revenue")}</h6>
                 <h3 className='font-mono!'>$13.405.09</h3>
                 <p className='opacity-50'>Shipping fees are not included</p>
               </div>
@@ -57,7 +61,7 @@ const Dashboard = () => {
                 <FaTruckMoving  size={35} color='green' />
               </div>
               <div>
-                <h6 className='font-bold!'>Orders</h6>
+                <h6 className='font-bold!'>{t("dashboard.orders")}</h6>
                 <h3 className='font-mono!'>509</h3>
                 <p className='opacity-50'>Shipping fees are not included</p>
               </div>
@@ -75,7 +79,7 @@ const Dashboard = () => {
                 <AiFillProduct size={35} color='orange' />
               </div>
               <div>
-                <h6 className='font-bold!'>Products</h6>
+                <h6 className='font-bold!'>{t("dashboard.products")}</h6>
                 <h3 className='font-mono!'>9.003</h3>
                 <p className='opacity-50'>Shipping fees are not included</p>
               </div>
@@ -93,7 +97,7 @@ const Dashboard = () => {
                 <FaOpencart size={35} color='blue' />
               </div>
               <div>
-                <h6 className='font-bold!'>Monthly Earnging</h6>
+                <h6 className='font-bold!'>{t("dashboard.MonthlyEarnging")}</h6>
                 <h3 className='font-mono!'>$6.002</h3>
                 <p className='opacity-50'>Shipping fees are not included</p>
               </div>
@@ -111,7 +115,7 @@ const Dashboard = () => {
               ? "bg-gray-900 rounded-md border border-gray-500 shadow my-3 py-5"
               : "bg-green-50 rounded-md border border-green-200 shadow my-3 py-5"
             }>
-              <h4 className='m-2! font-bold!'>Sale Statistics</h4>
+              <h4 className='m-2! font-bold!'>{t("dashboard.SaleStatistics")}</h4>
               <ApexChart />
 
             </div>
@@ -126,27 +130,27 @@ const Dashboard = () => {
                 : "w-full xl:w-2/5 bg-green-50 rounded-xl border-1 border-green-300 p-3"
               }>
                 {/* New members */}
-                <h5 className="font-bold!">New Members</h5>
+                <h5 className="font-bold!">{t("dashboard.New Members")}</h5>
                 <div className="flex justify-between items-center mt-5">
                   <div className="flex gap-2 items-center">
                     <img src={avatarimg} className='w-10 h-10 rounded-full' alt="" />
                     <p className='font-bold! text-[12px]'>Patric Adams</p>
                   </div>
-                  <Button color="green" appearance="primary"  startIcon={<AddOutlineIcon />}>Add</Button>
+                  <Button color="green" appearance="primary"  startIcon={<AddOutlineIcon />}>{t("add")}</Button>
                 </div>
                 <div className="flex justify-between items-center mt-5">
                   <div className="flex gap-2 items-center">
                     <img src={avatarimg} className='w-10 h-10 rounded-full' alt="" />
                     <p className='font-bold! text-[12px]'>Patric Adams</p>
                   </div>
-                  <Button color="green" appearance="primary"  startIcon={<AddOutlineIcon />}>Add</Button>
+                  <Button color="green" appearance="primary"  startIcon={<AddOutlineIcon />}>{t("add")}</Button>
                 </div>
                 <div className="flex justify-between items-center my-5">
                   <div className="flex gap-2 items-center">
                     <img src={avatarimg} className='w-10 h-10 rounded-full' alt="" />
                     <p className='font-bold! text-[12px]'>Patric Adams</p>
                   </div>
-                  <Button color="green" appearance="primary"  startIcon={<AddOutlineIcon />}>Add</Button>
+                  <Button color="green" appearance="primary"  startIcon={<AddOutlineIcon />}>{t("add")}</Button>
                 </div>
               </div>
 
@@ -178,7 +182,7 @@ const Dashboard = () => {
                 ? "w-full bg-gray-900 rounded-md border border-gray-500 shadow my-3 py-2"
                 : "w-full bg-green-50 rounded-md border border-green-200 shadow my-3 py-2"
             }>
-              <h6 className='ml-3! font-bold!'>Revenue Base on Area</h6>
+              <h6 className='ml-3! font-bold!'>{t("dashboard.RevenueBase")}</h6>
               <ApexChartColumn />
             </div>
 

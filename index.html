@@ -19,9 +19,15 @@
     // darkmode uchun
   
     let storedTheme = localStorage.getItem("theme")
+    let storedLang = localStorage.getItem("selectedLanguage")
+    
     
     if (!storedTheme) {
       localStorage.setItem("theme", "light")
+    }
+
+    if (!storedLang) {
+      localStorage.setItem("selectedLanguage", "en")
     }
   
   </script>

@@ -1,0 +1,16 @@
+{
+    "dashboard": {
+        "dashboard_t":"Панель инструментов",
+        "dashboard_p":"Здесь вы найдете полную информацию о вашем бизнесе",
+        "revenue":"Доходы",
+        "orders":"Заказы",
+        "products":"Продукты",
+        "MonthlyEarnging":"Ежемесячный доход",
+        "SaleStatistics":"Статистика продаж",
+        "RevenueBase":"База доходов по местам",
+        "New Members":"Новые участники",
+        "marketingChannel":"Маркетинговые каналы",
+        "createReport":"Создать отчет"
+    },
+    "add":"добавить"
+}

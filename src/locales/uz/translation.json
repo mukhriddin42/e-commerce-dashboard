@@ -1,0 +1,16 @@
+{
+    "dashboard": {
+        "dashboard_t":"Boshqaruv paneli",
+        "dashboard_p":"Sizning biznesingiz haqida to'liq ma'lumotlar bu erda",
+        "revenue":"Daromad",
+        "orders":"Buyurtmalar",
+        "products":"Mahsulotlar",
+        "MonthlyEarnging":"Yillik daromad",
+        "SaleStatistics":"Sotish statistikasi",
+        "RevenueBase":"Daromad bazasi Joylar bo'yicha",
+        "New Members":"Yangi a'zolar",
+        "marketingChannel":"Marketing kanallari",
+        "createReport":"Hisobot yaratish"
+    },
+    "add":"qo'shish"
+}

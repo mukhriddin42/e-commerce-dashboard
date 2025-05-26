@@ -1,0 +1,16 @@
+{
+    "dashboard": {
+        "dashboard_t":"Dashboard",
+        "dashboard_p":"Here you will find complete information about your business",
+        "revenue":"Revenue",
+        "orders":"Orders",
+        "products":"Products",
+        "MonthlyEarnging":"Monthly Earnings",
+        "SaleStatistics":"Sale Statistics",
+        "RevenueBase":"Revenue Base by Locations",
+        "New Members":"New Members",
+        "marketingChannel":"Marketing Channels",
+        "createReport":"Create Report"
+    },
+    "add":"add"
+}

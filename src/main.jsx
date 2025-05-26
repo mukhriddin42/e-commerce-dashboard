@@ -1,5 +1,6 @@
 import { StrictMode, useContext } from 'react'
 import { createRoot } from 'react-dom/client'
+import './i18n';
 import './index.css'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
@@ -20,6 +21,7 @@ import Login from './components/Login.jsx'
 import Sign from './components/Routes/Sign.jsx'
 import Createakk from './components/Routes/Createakk.jsx'
 import ContextThemeProvider  from './hooks/useContext.jsx'
+import LanguageProvider from './hooks/useLanguageContext.jsx';
 
 
 const router = createBrowserRouter([
@@ -101,8 +103,10 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   
   <StrictMode>
-    <ContextThemeProvider>
-      <RouterProvider router={router}></RouterProvider>
-    </ContextThemeProvider>
+    <LanguageProvider>
+      <ContextThemeProvider>
+        <RouterProvider router={router}></RouterProvider>
+      </ContextThemeProvider>
+    </LanguageProvider>
   </StrictMode>,
 )
