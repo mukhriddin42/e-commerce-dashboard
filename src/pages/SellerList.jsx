@@ -3,8 +3,14 @@ import DetailButton from '../components/DetailButton'
 import useFetch from '../hooks/api'
 import axios from 'axios'
 import { ThemeContext } from '../hooks/useContext'
+import { useTranslation } from 'react-i18next'
+
+
 
 const SellerList = () => {
+
+
+  const { t } = useTranslation()
   const { theme } = useContext(ThemeContext)
 
   const { data, loading, error } = useFetch('https://682739736b7628c5290f890c.mockapi.io/users')
@@ -85,8 +91,8 @@ const SellerList = () => {
     <div className={theme === "black"
       ? '!text-white !bg-black max-w-full min-h-150 h-max p-3 overflow-hidden' : '!text-black !bg-white max-w-full min-h-150 h-max p-3 overflow-hidden'}>
       <div className='flex justify-between items-center'>
-        <h1 className='text-4xl!'>Sellers List</h1>
-        <button onClick={modalExit} className='bg-green-600 py-2 px-5 rounded! text-white!'>Create New</button>
+        <h1 className='text-4xl!'>{t('sellerList.sellerlist')}</h1>
+        <button onClick={modalExit} className='bg-green-600 py-2 px-5 rounded! text-white!'>{t("sellerList.button")}</button>
       </div>
 
       <div className='flex flex-col my-3 gap-1 relative'>
@@ -95,9 +101,9 @@ const SellerList = () => {
             ref={search}
             onChange={handleInput}
             type="search"
-            placeholder='Search...'
+            placeholder={t('sellerList.inputsearch')}
             className={theme === 'black'
-              ? '!text-white !bg-black bg-gray-100 w-70 p-2 !rounded outline-none !border !border-white' : '!text-black !bg-white bg-gray-100 w-70 p-2 rounded outline-none'}
+              ? '!text-white !bg-black  w-70 p-2 !rounded outline-none !border !border-white' : '!text-black !bg-white bg-gray-100 w-70 p-2 rounded outline-none'}
 
           />
           <ul className='flex gap-5'>
@@ -107,22 +113,22 @@ const SellerList = () => {
               name="select"
               id="selectStatus"
               className={theme === 'black'
-                ? '!text-white !bg-black  p-3 w-40 !rounded bg-gray-100 outline-none !border !border-white '
-                : '!text-black !bg-white p-3 w-40 rounded bg-gray-100 outline-none'}
+                ? '!text-white !bg-black  p-3 w-40 !rounded  outline-none !border !border-white '
+                : '!text-black !bg-white p-3 w-40 rounded  outline-none'}
             >
-              <option value="all">All</option>
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
+              <option value="all">{t("sellerList.sectionAll")}</option>
+              <option value="active">{t("sellerList.sectionActive")}</option>
+              <option value="inactive">{t("sellerList.sectionInactive")}</option>
             </select>
             <select
               name="select"
               id="selectShow"
               className={theme === 'black'
-                ? '!text-white !bg-black  p-3 w-40 !rounded bg-gray-100 outline-none !border !border-white '
-                : '!text-black !bg-white p-3 w-40 rounded bg-gray-100 outline-none'}
+                ? '!text-white !bg-black  p-3 w-40 !rounded  outline-none !border !border-white '
+                : '!text-black !bg-white p-3 w-40 rounded  outline-none'}
             >
-              <option value="active">Show 20</option>
-              <option value="inactive">Show 10</option>
+              <option value="active">{t("sellerList.show20")}</option>
+              <option value="inactive">{t("sellerList.show10")}</option>
             </select>
           </ul>
         </ul>
@@ -130,13 +136,13 @@ const SellerList = () => {
         <table className="w-full border-separate !border-spacing-y-4">
           <thead>
             <tr className={theme === 'black'
-              ? '!text-white !bg-black text-left bg-gray-100 h-10'
-              : '!text-black !bg-white text-left bg-gray-100 h-10'}>
-              <th className="p-2">User</th>
-              <th className="p-2">Email</th>
-              <th className="p-2">Status</th>
-              <th className="p-2">Register Date</th>
-              <th className="p-2">Action</th>
+              ? '!text-white !bg-black text-left  h-10'
+              : '!text-black !bg-white text-left  h-10'}>
+              <th className="p-2">{t("sellerList.arrUser")}</th>
+              <th className="p-2">{t("sellerList.arrEmail")}</th>
+              <th className="p-2">{t("sellerList.arrStatus")}</th>
+              <th className="p-2">{t("sellerList.arrDate")}</th>
+              <th className="p-2">{t("sellerList.arrAction")}</th>
             </tr>
           </thead>
           <tbody className='relative'>
@@ -173,7 +179,7 @@ const SellerList = () => {
                     </td>
                     <td className="p-2">{user.registerDate}</td>
                     <td className="p-2">
-                      <DetailButton onClick={() => handleUser(user.id)} text='View detail' />
+                      <DetailButton onClick={() => handleUser(user.id)} text={t("sellerList.arrButton")} />
                     </td>
                   </tr>
                 ))

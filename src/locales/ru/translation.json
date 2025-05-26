@@ -1,16 +1,32 @@
 {
     "dashboard": {
-        "dashboard_t":"Панель инструментов",
-        "dashboard_p":"Здесь вы найдете полную информацию о вашем бизнесе",
-        "revenue":"Доходы",
-        "orders":"Заказы",
-        "products":"Продукты",
-        "MonthlyEarnging":"Ежемесячный доход",
-        "SaleStatistics":"Статистика продаж",
-        "RevenueBase":"База доходов по местам",
-        "New Members":"Новые участники",
-        "marketingChannel":"Маркетинговые каналы",
-        "createReport":"Создать отчет"
+        "dashboard_t": "Панель инструментов",
+        "dashboard_p": "Здесь вы найдете полную информацию о вашем бизнесе",
+        "revenue": "Доходы",
+        "orders": "Заказы",
+        "products": "Продукты",
+        "MonthlyEarnging": "Ежемесячный доход",
+        "SaleStatistics": "Статистика продаж",
+        "RevenueBase": "База доходов по местам",
+        "New Members": "Новые участники",
+        "marketingChannel": "Маркетинговые каналы",
+        "createReport": "Создать отчет"
     },
-    "add":"добавить"
+    "add": "добавить",
+    "sellerList": {
+        "sellerlist": "Список продавцов",
+        "inputsearch": "Поиск",
+        "button": "Создать нового",
+        "sectionAll": "Все",
+        "sectionAvtive": "Активные",
+        "sectionInactive": "Неактивные",
+        "show20": "Показать 20",
+        "show10": "Показать 10",
+        "arrUser": "Пользователь",
+        "arrEmail": "Электронная почта",
+        "arrStatus": "Статус",
+        "arrDate": "Дата регистрации",
+        "arrAction": "Действие",
+        "arrButton": "Посмотреть детали"
+    }
 }
