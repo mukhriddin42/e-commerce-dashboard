@@ -28,5 +28,28 @@
         "arrDate": "Дата регистрации",
         "arrAction": "Действие",
         "arrButton": "Посмотреть детали"
+    },
+    "order_list": {
+        "loading": "Загрузка данных...",
+        "not_found": "Данные не найдены",
+        "order_list": "Список заказов",
+        "order_subtitle": "Lorem ipsum dolor sit amet.",
+        "search_name": "Поиск по имени клиента...",
+        "all_status": "Все статусы",
+        "received": "Получено",
+        "cancelled": "Отменено",
+        "pending": "В ожидании",
+        "id": "ID",
+        "customer_name": "Имя клиента",
+        "price": "Цена",
+        "status": "Статус",
+        "date": "Дата",
+        "action": "Действие",
+        "detail": "Подробнее",
+        "filter_by": "Фильтр по",
+        "type_here": "Введите здесь",
+        "all": "Все",
+        "prev": "Назад",
+        "next": "Вперед"
     }
 }

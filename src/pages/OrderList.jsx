@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useMemo, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ThemeContext } from "../hooks/useContext";
+import { useTranslation } from 'react-i18next';
 
 const statusClasses = {
   Received: "bg-green-100 text-green-700 dark:bg-green-800 dark:text-green-200",
@@ -18,6 +19,7 @@ const OrderList = () => {
   const [data, setData] = useState([]);
   const { theme } = useContext(ThemeContext);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [filters, setFilters] = useState({
     id: "",
@@ -124,193 +126,190 @@ const OrderList = () => {
     setCurrentPage(1);
   }, [filters]);
 
-  if (loading)
-    return (
-      <div className="text-gray-700 dark:text-gray-200">
-        Ma’lumot yuklanmoqda...
-      </div>
-    );
-  if (!data.length)
-    return (
-      <div className="text-gray-700 dark:text-gray-200">Ma’lumot topilmadi</div>
-    );
-
+if (loading)
   return (
-    <div
-      className={`min-h-screen w-full p-6 ${
-        theme === "black" ? "dark:bg-gray-900" : "bg-gray-100"
-      }`}
-    >
-      <div className="mb-4">
-        <h1 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
-          Order List
-        </h1>
-        <p className="text-gray-500 dark:text-gray-400 text-sm">
-          Lorem ipsum dolor sit amet.
-        </p>
-      </div>
-      <div className="mx-auto flex flex-col md:flex-row gap-6">
-        {/* Left Table */}
-        <div className={`flex-1 w-full ${theme === 'black' ? 'dark:bg-gray-800':'bg-white'} rounded-lg shadow-lg p-6 overflow-x-auto`}>
-          <div className={`flex justify-between items-center mb-4 border-b ${theme === 'black'?' dark:border-gray-700!':'border-gray-200!'} pb-3`}>
-            <input
-              type="text"
-              placeholder="Search by customer name..."
-              className={`border ${theme === 'black'?'dark:bg-gray-700 dark:text-gray-200  dark:border-gray-600':'bg-gray-200 text-gray-700 border-gray-300'} rounded px-4 py-2 w-1/3`}
-              name="name"
-              value={filters.name}
-              onChange={handleFilterChange}
-            />
-            <div className="flex space-x-3 gap-5">
-              <select
-                className={`border ${theme === 'black'?'dark:bg-gray-700 dark:text-gray-200  dark:border-gray-600':'bg-gray-200 text-gray-700 border-gray-300'} rounded px-4 py-2`}
-                name="status"
-                value={filters.status}
-                onChange={handleFilterChange}
-              >
-                <option value="">All Status</option>
-                <option value="Received">Received</option>
-                <option value="Cancelled">Cancelled</option>
-                <option value="Pending">Pending</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="overflow-x-auto">
-            <table className={`w-full text-sm text-left ${theme === 'black'?'  dark:text-gray-300':' text-gray-600'}`}>
-              <thead className={`${theme === 'black'?' bg-gray-700 text-gray-300':'bg-gray-50 text-gray-600'}`}>
-                <tr>
-                  <th className="py-3 pl-1! px-4">ID</th>
-                  <th>Customer name</th>
-                  <th>Price</th>
-                  <th>Status</th>
-                  <th>Date</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentOrders.length === 0 ? (
-                  <tr>
-                    <td
-                      colSpan={6}
-                      className="text-center py-10 text-gray-500 dark:text-gray-400"
-                    >
-                      No orders found.
-                    </td>
-                  </tr>
-                ) : (
-                  currentOrders.map((order) => (
-                    <tr
-                      key={order.id}
-                      className={`border-none h-[60px] ${theme === 'black'?' dark:hover:bg-gray-700':'hover:bg-gray-50'}`}
-                    >
-                      <td className="p-2">{order.id}</td>
-                      <td>{order.name}</td>
-                      <td>{order.price}</td>
-                      <td>
-                        <span
-                          className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                            statusClasses[order.status]
-                          }`}
-                        >
-                          {order.status}
-                        </span>
-                      </td>
-                      <td>{order.date}</td>
-                      <td>
-                        <button
-                          onClick={() => navigate(`/order-details/${order.id}`)}
-                          className="bg-green-500 text-white! px-3 py-1.5 rounded! hover:bg-green-600"
-                        >
-                          Detail
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {/* Right Filter Panel */}
-        <div className={`w-full md:w-65  ${theme === 'black'?'dark:bg-gray-800':'bg-white'} rounded-lg shadow-lg p-6`}>
-          <h2 className="font-bold text-lg mb-4 text-gray-800 dark:text-gray-200">
-            Filter by
-          </h2>
-          <div className={`space-y-4 ${theme === 'black'?'dark:text-gray-200':'text-gray-700!'}`}>
-            {["id", "name", "customer2", "price", "date"].map((key) => (
-              <div key={key}>
-                <label className="block text-sm font-medium mb-1 capitalize">
-                  {key}
-                </label>
-                <input
-                  placeholder="Type here"
-                  name={key}
-                  type={key === "date" ? "date" : "text"}
-                  value={filters[key]}
-                  onChange={handleFilterChange}
-                  className={`w-full border-none ${theme === 'black' ?'dark:bg-gray-700  dark:text-gray-200':'bg-gray-100 text-gray-900'} rounded px-3 py-2`}
-                />
-              </div>
-            ))}
-
-            <div>
-              <label className="block text-sm font-medium mb-1">Status</label>
-              <select
-                name="status"
-                value={filters.status}
-                onChange={handleFilterChange}
-                className={`w-full border-none   ${theme === 'black' ?'dark:bg-gray-700 dark:text-gray-200 ':'bg-gray-100 text-gray-900'} rounded px-3 py-2`}
-              >
-                <option value="">All</option>
-                <option value="Received">Received</option>
-                <option value="Cancelled">Cancelled</option>
-                <option value="Pending">Pending</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Pagination */}
-      <div className={`mt-6 flex justify-center space-x-2 ${theme === 'black'?' dark:text-gray-300':'text-gray-700'}`}>
-        <button
-          disabled={currentPage === 1}
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          className="px-3 py-1 border rounded disabled:opacity-50"
-        >
-          Prev
-        </button>
-        {getCurrentRange().map((page, index) =>
-          page === "..." ? (
-            <span key={index} className="px-2 py-1">
-              ...
-            </span>
-          ) : (
-            <button
-              key={index}
-              onClick={() => setCurrentPage(page)}
-              className={`px-3 py-1 border rounded ${
-                currentPage === page
-                  ? "bg-blue-600 text-white"
-                  : "hover:bg-gray-200 dark:hover:bg-gray-600"
-              }`}
-            >
-              {page}
-            </button>
-          )
-        )}
-        <button
-          disabled={currentPage === totalPages}
-          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-          className="px-3 py-1 border rounded disabled:opacity-50"
-        >
-          Next
-        </button>
-      </div>
+    <div className="text-gray-700 dark:text-gray-200">
+      {t('order_list.loading')}
     </div>
   );
+if (!data.length)
+  return (
+    <div className="text-gray-700 dark:text-gray-200">
+      {t('order_list.not_found')}
+    </div>
+  );
+
+return (
+  <div
+    className={`min-h-screen w-full p-6 ${
+      theme === "black" ? "dark:bg-gray-900" : "bg-gray-100"
+    }`}
+  >
+    <div className="mb-4">
+      <h1 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
+        {t('order_list.order_list')}
+      </h1>
+      <p className="text-gray-500 dark:text-gray-400 text-sm">
+        {t('order_list.order_subtitle')}
+      </p>
+    </div>
+
+    <div className="mx-auto flex flex-col md:flex-row gap-6">
+      <div className={`flex-1 w-full ${theme === 'black' ? 'dark:bg-gray-800':'bg-white'} rounded-lg shadow-lg p-6 overflow-x-auto`}>
+        <div className={`flex justify-between items-center mb-4 border-b ${theme === 'black'?' dark:border-gray-700':'border-gray-200'} pb-3`}>
+          <input
+            type="text"
+            placeholder={t('order_list.search_name')}
+            className={`border ${theme === 'black'?'dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600':'bg-gray-200 text-gray-700 border-gray-300'} rounded px-4 py-2 w-1/3`}
+            name="name"
+            value={filters.name}
+            onChange={handleFilterChange}
+          />
+          <div className="flex space-x-3 gap-5">
+            <select
+              className={`border ${theme === 'black'?'dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600':'bg-gray-200 text-gray-700 border-gray-300'} rounded px-4 py-2`}
+              name="status"
+              value={filters.status}
+              onChange={handleFilterChange}
+            >
+              <option value="">{t('order_list.all_status')}</option>
+              <option value="Received">{t('order_list.received')}</option>
+              <option value="Cancelled">{t('order_list.cancelled')}</option>
+              <option value="Pending">{t('order_list.pending')}</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className={`w-full text-sm text-left ${theme === 'black'?'dark:text-gray-300':'text-gray-600'}`}>
+            <thead className={`${theme === 'black'?'bg-gray-700 text-gray-300':'bg-gray-50 text-gray-600'}`}>
+              <tr>
+                <th className="py-3 pl-1 px-4">{t('order_list.id')}</th>
+                <th>{t('order_list.customer_name')}</th>
+                <th>{t('order_list.price')}</th>
+                <th>{t('order_list.status')}</th>
+                <th>{t('order_list.date')}</th>
+                <th>{t('order_list.action')}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentOrders.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="text-center py-10 text-gray-500 dark:text-gray-400">
+                    {t('order_list.not_found')}
+                  </td>
+                </tr>
+              ) : (
+                currentOrders.map((order) => (
+                  <tr
+                    key={order.id}
+                    className={`border-none h-[60px] ${theme === 'black'?'dark:hover:bg-gray-700':'hover:bg-gray-50'}`}
+                  >
+                    <td className="p-2">{order.id}</td>
+                    <td>{order.name}</td>
+                    <td>{order.price}</td>
+                    <td>
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                          statusClasses[order.status]
+                        }`}
+                      >
+                        {t(`order_list.${order.status.toLowerCase()}`)}
+                      </span>
+                    </td>
+                    <td>{order.date}</td>
+                    <td>
+                      <button
+                        onClick={() => navigate(`/order-details/${order.id}`)}
+                        className="bg-green-500 text-white! px-3 py-1.5 rounded! hover:bg-green-600"
+                      >
+                        {t('order_list.detail')}
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Filter panel */}
+      <div className={`w-full md:w-65 ${theme === 'black'?'dark:bg-gray-800':'bg-white'} rounded-lg shadow-lg p-6`}>
+        <h2 className="font-bold text-lg mb-4 text-gray-800 dark:text-gray-200">
+          {t('order_list.filter_by')}
+        </h2>
+        <div className={`space-y-4 ${theme === 'black'?'dark:text-gray-200':'text-gray-700'}`}>
+          {["id", "name", "customer2", "price", "date"].map((key) => (
+            <div key={key}>
+              <label className="block text-sm font-medium mb-1 capitalize">
+                {t(`order_list.${key}`)}
+              </label>
+              <input
+                placeholder={t('order_list.type_here')}
+                name={key}
+                type={key === "date" ? "date" : "text"}
+                value={filters[key]}
+                onChange={handleFilterChange}
+                className={`w-full border-none ${theme === 'black' ?'dark:bg-gray-700 dark:text-gray-200':'bg-gray-100 text-gray-900'} rounded px-3 py-2`}
+              />
+            </div>
+          ))}
+
+          <div>
+            <label className="block text-sm font-medium mb-1">{t('order_list.status')}</label>
+            <select
+              name="status"
+              value={filters.status}
+              onChange={handleFilterChange}
+              className={`w-full border-none ${theme === 'black' ?'dark:bg-gray-700 dark:text-gray-200':'bg-gray-100 text-gray-900'} rounded px-3 py-2`}
+            >
+              <option value="">{t('order_list.all')}</option>
+              <option value="Received">{t('order_list.received')}</option>
+              <option value="Cancelled">{t('order_list.cancelled')}</option>
+              <option value="Pending">{t('order_list.pending')}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Pagination */}
+    <div className={`mt-6 flex justify-center space-x-2 ${theme === 'black'?'dark:text-gray-300':'text-gray-700'}`}>
+      <button
+        disabled={currentPage === 1}
+        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+        className="px-3 py-1 border rounded disabled:opacity-50"
+      >
+        {t('order_list.prev')}
+      </button>
+      {getCurrentRange().map((page, index) =>
+        page === "..." ? (
+          <span key={index} className="px-2 py-1">...</span>
+        ) : (
+          <button
+            key={index}
+            onClick={() => setCurrentPage(page)}
+            className={`px-3 py-1 border rounded ${
+              currentPage === page
+                ? "bg-blue-600 text-white"
+                : "hover:bg-gray-200 dark:hover:bg-gray-600"
+            }`}
+          >
+            {page}
+          </button>
+        )
+      )}
+      <button
+        disabled={currentPage === totalPages}
+        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+        className="px-3 py-1 border rounded disabled:opacity-50"
+      >
+        {t('order_list.next')}
+      </button>
+    </div>
+  </div>
+);
 };
 
 export default OrderList;

@@ -28,5 +28,28 @@
         "arrDate": "Register Date",
         "arrAction": "Action",
         "arrButton": "View Detail"
+    },
+    "order_list": {
+        "loading": "Loading data...",
+        "not_found": "No data found",
+        "order_list": "Order List",
+        "order_subtitle": "Lorem ipsum dolor sit amet.",
+        "search_name": "Search by customer name...",
+        "all_status": "All Status",
+        "received": "Received",
+        "cancelled": "Cancelled",
+        "pending": "Pending",
+        "id": "ID",
+        "customer_name": "Customer name",
+        "price": "Price",
+        "status": "Status",
+        "date": "Date",
+        "action": "Action",
+        "detail": "Detail",
+        "filter_by": "Filter by",
+        "type_here": "Type here",
+        "all": "All",
+        "prev": "Prev",
+        "next": "Next"
     }
 }
