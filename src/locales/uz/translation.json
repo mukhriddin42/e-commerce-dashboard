@@ -61,5 +61,28 @@
         "stop": "Yangi do‘kon ro‘yxatdan o‘tishini to‘xtatish",
         "notification": "Bildirishnoma",
         "notifyText": "Har bir foydalanuvchi ro‘yxatdan o‘tganida xabar yuborish"
+    },
+     "order_list": {
+        "loading": "Ma'lumotlar yuklanmoqda...",
+        "not_found": "Hech qanday ma'lumot topilmadi",
+        "order_list": "Buyurtmalar ro'yxati",
+        "order_subtitle": "Lorem ipsum dolor sit amet.",
+        "search_name": "Mijoz nomi bo‘yicha qidirish...",
+        "all_status": "Barcha holatlar",
+        "received": "Qabul qilingan",
+        "cancelled": "Bekor qilingan",
+        "pending": "Kutilmoqda",
+        "id": "ID",
+        "customer_name": "Mijoz nomi",
+        "price": "Narxi",
+        "status": "Holati",
+        "date": "Sana",
+        "action": "Amal",
+        "detail": "Batafsil",
+        "filter_by": "Saralash",
+        "type_here": "Bu yerga yozing",
+        "all": "Barchasi",
+        "prev": "Oldingi",
+        "next": "Keyingi"
     }
 }
