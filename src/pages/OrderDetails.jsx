@@ -4,12 +4,14 @@ import { CiCalendar } from "react-icons/ci";
 import { GoDownload } from "react-icons/go";
 import { useNavigate, useParams } from "react-router-dom";
 import { ThemeContext } from "../hooks/useContext";
+import { useTranslation } from 'react-i18next';
 
 const OrderDetails = () => {
   const { id } = useParams(); // URL dan orderId olish
   const navigate = useNavigate();
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
   const calculateSubtotal = () => {
     return order.details.items
       .reduce((acc, item) => acc + item.price * item.quantity, 0)
@@ -65,8 +67,8 @@ const OrderDetails = () => {
     fetchOrder();
   }, [id, navigate]);
 
-  if (loading) return <div>Yuklanmoqda...</div>;
-  if (!order) return <div>Order topilmadi</div>;
+  if (loading) return <div>{t('order_detail.loading')}</div>;
+  if (!order) return <div>{t("order_detail.order_not_found")}</div>;
 
   return (
     <div
@@ -75,13 +77,13 @@ const OrderDetails = () => {
       } min-h-screen p-6`}
     >
       <div className="w-50! text-[20px]! ml-8 mb-2.5 font-semibold!">
-        <p>Order detail</p>
+        <p>{t('order_detail.order_detail')}</p>
         <h6
           className={`${
             theme === "black" ? "text-gray-400" : "text-gray-500"
           } text-[12px]!`}
         >
-          Details for Order ID: {order.id}
+          {t("order_detail.details_for_order_id", { id: order.id })}
         </h6>
       </div>
       <div
@@ -104,14 +106,14 @@ const OrderDetails = () => {
                     theme === "black" ? "text-gray-400" : "text-gray-500"
                   } text-sm`}
                 >
-                  Order Date: {order.date}
+                  {t('order_detail.order_date')} {order.date}
                 </span>
                 <span
                   className={`${
                     theme === "black" ? "text-gray-400" : "text-gray-500"
                   } text-sm`}
                 >
-                  Order ID: {order.id}
+                  {t("order_detail.order_id", { id: order.id })}
                 </span>
               </div>
             </div>
@@ -126,11 +128,11 @@ const OrderDetails = () => {
                       : "bg-gray-100 border-gray-200 text-gray-900"
                   } rounded-md pl-3 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500`}
                 >
-                  <option>Change status</option>
-                  <option>Processing</option>
-                  <option>Shipped</option>
-                  <option>Delivered</option>
-                  <option>Cancelled</option>
+                  <option>{t('order_detail.change_status')}</option>
+                  <option>{t('order_detail.processing')}</option>
+                  <option>{t('order_detail.shipped')}</option>
+                  <option>{t('order_detail.delivered')}</option>
+                  <option>{t('order_detail.cancelled')}</option>
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
                   <svg
@@ -149,7 +151,7 @@ const OrderDetails = () => {
                 </div>
               </div>
               <button className="bg-green-500 h-[30px] w-[60px] mr-1.5! hover:bg-green-600 text-white">
-                Save
+                {t('order_detail.save')}
               </button>
               <button
                 variant="outline"
@@ -192,7 +194,7 @@ const OrderDetails = () => {
                     theme === "black" ? "text-gray-300" : "text-gray-900"
                   } text-sm font-medium mb-2`}
                 >
-                  Customer
+                  {t('order_detail.customer')}
                 </h3>
                 <p className="text-sm">{order?.name}</p>
                 <p
@@ -210,7 +212,7 @@ const OrderDetails = () => {
                   {order.details?.phone}
                 </p>
                 <a href="#" className="text-sm text-green-500 hover:underline">
-                  View profile
+                  {t('order_detail.view_profile')}
                 </a>
               </div>
             </div>
@@ -226,19 +228,19 @@ const OrderDetails = () => {
                     theme === "black" ? "text-gray-300" : "text-gray-900"
                   } text-sm font-medium mb-2`}
                 >
-                  Order info
+                  {t('order_detail.order_info')}
                 </h3>
-                <p className="text-sm">Shipping: Express</p>
-                <p className="text-sm">Pay method: card</p>
+                <p className="text-sm">{t('order_detail.shipping_express')}</p>
+                <p className="text-sm">{t('order_detail.pay_method_card')}</p>
                 <p className="text-sm">
-                  Status: <span className="text-green-500">{order.status}</span>
+                  {t('order_detail.status')} <span className="text-green-500">{order.status}</span>
                 </p>
                 <a
                   href="#"
                   className="text-sm text-green-500 hover:underline flex items-center"
                 >
                   <GoDownload className="h-3 w-3 mr-1" />
-                  Download info
+                  {t('order_detail.download_info')}
                 </a>
               </div>
             </div>
@@ -254,13 +256,13 @@ const OrderDetails = () => {
                     theme === "black" ? "text-gray-300" : "text-gray-900"
                   } text-sm font-medium mb-2`}
                 >
-                  Deliver to
+                  {t('order_detail.delivered')}
                 </h3>
-                <p className="text-sm">City: Tashkent, Uzbekistan</p>
+                <p className="text-sm">{t('order_detail.city')} Toshkent, O‘zbekiston</p>
                 <p className="text-sm">{order.details?.address}</p>
                 <p className="text-sm">Po Box 10000</p>
                 <a href="#" className="text-sm text-green-500 hover:underline">
-                  View profile
+                  {t('order_detail.view_profile')}
                 </a>
               </div>
             </div>
@@ -280,25 +282,25 @@ const OrderDetails = () => {
                       scope="col"
                       className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      Product
+                      {t('order_detail.product')}
                     </th>
                     <th
                       scope="col"
                       className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      Unit Price
+                      {t('order_detail.unit-price')}
                     </th>
                     <th
                       scope="col"
                       className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      Quantity
+                      {t('order_detail.quantity')}
                     </th>
                     <th
                       scope="col"
                       className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      Total
+                      {t('order_detail.total')}
                     </th>
                   </tr>
                 </thead>
@@ -349,7 +351,7 @@ const OrderDetails = () => {
                         theme === "black" ? "text-gray-300" : "text-gray-600"
                       } text-sm`}
                     >
-                      Subtotal:
+                      {t('order_detail.subtotal')}
                     </span>
                     <span
                       className={`${
@@ -365,7 +367,7 @@ const OrderDetails = () => {
                         theme === "black" ? "text-gray-300" : "text-gray-600"
                       } text-sm`}
                     >
-                      Shipping cost:
+                      {t('order_detail.shipping_cost')}
                     </span>
                     <span
                       className={`${
@@ -381,7 +383,7 @@ const OrderDetails = () => {
                         theme === "black" ? "text-gray-300" : "text-gray-600"
                       } text-sm font-semibold`}
                     >
-                      Grand total:
+                      {t('order_detail.grand_total')}
                     </span>
                     <span
                       className={`${
@@ -393,7 +395,7 @@ const OrderDetails = () => {
                   </div>
                   <div className="mt-6">
                     <div className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-1 rounded-md inline-block">
-                      Payment done
+                      {t('order_detail.payment_done')}
                     </div>
                   </div>
                 </div>
@@ -413,7 +415,7 @@ const OrderDetails = () => {
                     theme === "black" ? "text-gray-300" : "text-gray-900"
                   } mb-4 text-lg font-semibold`}
                 >
-                  Payment Summary
+                  {t('order_detail.pay_method_card')}
                 </h3>
                 <div className={`${
                   theme === "black" ? "bg-gray-700" : "bg-gray-50"
@@ -426,14 +428,14 @@ const OrderDetails = () => {
                       Master Card **** **** **** 4768
                     </span>
                   </div>
-                  <p className="text-sm">Business name: Grand Market LLC</p>
-                  <p className="text-sm">Phone: +1 (800) 555-154-52</p>
+                  <p className="text-sm">{t('order_detail.biznes_name')} Grand Market LLC</p>
+                  <p className="text-sm">{t('order_detail.phone')} +1 (800) 555-154-52</p>
                   <p
                       className={`${
                         theme === "black" ? "text-gray-300" : "text-gray-900"
                       } mb-2 font-semibold text-[20px]`}
                     >
-                      Total amount: ${calculateSubtotal()}
+                      {t('order_detail.grand_total')} ${calculateSubtotal()}
                     </p>
                 </div>
 
@@ -453,7 +455,7 @@ const OrderDetails = () => {
                     onClick={handleSave}
                     className="!border !border-gray-200 !px-3 !py-1 !rounded-md !hover:bg-gray-100"
                   >
-                    Save
+                    {t('order_detail.save')}
                   </button>
                 </div>
               </div>
