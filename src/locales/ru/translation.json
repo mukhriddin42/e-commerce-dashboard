@@ -117,5 +117,34 @@
         "total": "Сумма",
         "biznes_name": "Название бизнеса:",
         "phone": "Телефон:"
+    },
+    "createaccount": {
+        "title": "Создать аккаунт",
+        "emailPlaceholder": "Ваш email",
+        "phonePlaceholder": "Ваш номер телефона",
+        "passwordPlaceholder": "Пароль",
+        "confirmText": "Регистрируясь, вы подтверждаете, что прочитали и приняли наши",
+        "userNotice": "Пользовательское соглашение",
+        "privacyPolicy": "Политику конфиденциальности",
+        "submitBtn": "Войти",
+        "orText": "или зарегистрируйтесь через",
+        "google": "Google",
+        "facebook": "Facebook",
+        "alreadyHaveAccount": "Уже есть аккаунт?",
+        "signin": "Войти сейчас"
+    },
+    "sign": {
+        "title": "Вход",
+        "usernamePlaceholder": "Имя пользователя или email",
+        "passwordPlaceholder": "Пароль",
+        "remember": "Запомнить",
+        "forgotPassword": "Забыли пароль?",
+        "loginBtn": "Войти",
+        "orSignupWith": "или войти через",
+        "signInGoogle": "Войти через Google",
+        "signInFacebook": "Войти через Facebook",
+        "dontHaveAccount": "Нет аккаунта?",
+        "signUpLink": "Зарегистрируйтесь сейчас"
     }
+
 }
