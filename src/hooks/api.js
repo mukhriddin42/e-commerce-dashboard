@@ -1,4 +1,4 @@
-const acssesToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImFnZW50IjoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzEzNi4wLjAuMCBTYWZhcmkvNTM3LjM2Iiwicm9sZSI6MSwiaWF0IjoxNzQ4NDM0ODkwLCJleHAiOjE3NDg0MzU3OTB9.-yAygChv0EMGOUYq1LpsE9KeY6m5EkwVENQ79yNjubA'
+const acssesToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsImFnZW50IjoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzEzNi4wLjAuMCBTYWZhcmkvNTM3LjM2Iiwicm9sZSI6MSwiaWF0IjoxNzQ4NDM4MTEzLCJleHAiOjE3NDg0MzkwMTN9.BWnoUOoWNV560Grn5oySs8QnoIhvQsMJNcLaGvvk5Fo"
 
 localStorage.setItem('accessToken', acssesToken)
 
@@ -9,7 +9,7 @@ let failedQueue = [];
 
 const api = axios.create({
   baseURL: 'https://api-ojta.onrender.com/api',
-  timeout: 5000,
+  
 });
 
 

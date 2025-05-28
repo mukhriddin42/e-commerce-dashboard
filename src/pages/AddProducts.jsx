@@ -1,4 +1,4 @@
-import React, { forwardRef, useContext } from 'react'
+import React, { forwardRef, useContext, useEffect, useState } from 'react'
 import { Button, ButtonToolbar, VStack, Form, Input, InputGroup, } from 'rsuite'
 import { Checkbox } from 'rsuite';
 
@@ -22,12 +22,28 @@ const selectdata = ['USD', 'RUBL', 'EURO', 'BITC', 'UZS', 'KZTENGE', 'LOREM', 'L
 
 
 const AddProducts = () => {
-
-  // const {data ,loading , error} = useFetch('https://67ff8e4c58f18d7209f1b2db.mockapi.io/users/imgget')
-  // console.log(data);
+  const [proData, setProData] = useState([])  
 
   const {theme} = useContext(ThemeContext)
 
+  // const {data , loading , error } = useFetch('/product')
+
+  // console.log(data);
+
+  // useEffect(() => {
+  //   if(data) {
+  //     setProData(data)
+  //     console.log(proData);
+      
+  //   }
+  // })
+  
+ 
+  
+    
+
+  
+ 
   
   return (
     <>
