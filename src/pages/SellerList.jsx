@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import DetailButton from '../components/DetailButton'
-import useFetch from '../hooks/api'
+import useFetch from '../hooks/fetch'
 import axios from 'axios'
 import { ThemeContext } from '../hooks/useContext'
 import { useTranslation } from 'react-i18next'
+import api from '../hooks/api'
 
 
 
@@ -13,17 +14,26 @@ const SellerList = () => {
   const { t } = useTranslation()
   const { theme } = useContext(ThemeContext)
 
-  const { data, loading, error } = useFetch('https://682739736b7628c5290f890c.mockapi.io/users')
   const [users, setUsers] = useState([])
   const [select, setSelect] = useState('all')
   const [searchTerm, setSearchTerm] = useState('')
-
-  useEffect(() => {
-    setUsers(data)
-  }, [data])
-
   const filter = useRef(null)
   const search = useRef(null)
+
+
+  const {data , loading , error} = useFetch('/seller/all?page=1&limit=10')
+
+  console.log(data);
+  
+
+  useEffect(() => {
+    if (data) {
+      setUsers(data)
+    }
+  }, [])
+
+
+
 
   function modalExit() {
     let modal = document.querySelector('.modal')
@@ -37,7 +47,9 @@ const SellerList = () => {
   }
 
   function getUser(e) {
+
     e.preventDefault()
+
     let modal = document.querySelector('.modal')
     let mymodalo = document.querySelector('.mymodal')
     let form = document.querySelector('form')
@@ -58,7 +70,7 @@ const SellerList = () => {
       registerDate: formattedDate
     }
 
-    axios.post('https://682739736b7628c5290f890c.mockapi.io/users', obj)
+    api.post('/seller/become', obj)
       .then(response => {
         setUsers(prevUsers => [...prevUsers, response.data])
       })
@@ -83,9 +95,12 @@ const SellerList = () => {
     alert(id)
   }
 
+
   const filteredUsers = select === 'all'
     ? users
-    : users?.filter(item => item.status === select)
+    : users?.filter(item => item.status === select);
+
+
 
   return (
     <div className={theme === "black"
@@ -103,7 +118,7 @@ const SellerList = () => {
             type="search"
             placeholder={t('sellerList.inputsearch')}
             className={theme === 'black'
-              ? '!text-white !bg-black  w-70 p-2 !rounded outline-none !border !border-white' : '!text-black !bg-white  w-70 p-2 rounded outline-none'}
+              ? '!text-white !bg-black  w-70 p-2 !rounded outline-none !border !border-white' : '!text-black !bg-gray-200  w-70 p-2 rounded outline-none'}
 
           />
           <ul className='flex gap-5'>
@@ -114,7 +129,7 @@ const SellerList = () => {
               id="selectStatus"
               className={theme === 'black'
                 ? '!text-white !bg-black  p-3 w-40 !rounded  outline-none !border !border-white '
-                : '!text-black !bg-white p-3 w-40 rounded  outline-none'}
+                : '!text-black !bg-gray-200 p-3 w-40 rounded  outline-none'}
             >
               <option value="all">{t("sellerList.sectionAll")}</option>
               <option value="active">{t("sellerList.sectionActive")}</option>
@@ -125,7 +140,7 @@ const SellerList = () => {
               id="selectShow"
               className={theme === 'black'
                 ? '!text-white !bg-black  p-3 w-40 !rounded  outline-none !border !border-white '
-                : '!text-black !bg-white p-3 w-40 rounded  outline-none'}
+                : '!text-black !bg-gray-200 p-3 w-40 rounded  outline-none'}
             >
               <option value="active">{t("sellerList.show20")}</option>
               <option value="inactive">{t("sellerList.show10")}</option>
@@ -146,7 +161,7 @@ const SellerList = () => {
             </tr>
           </thead>
           <tbody className='relative'>
-            {loading ? (
+            {/* {loading ? (
               <tr>
                 <td colSpan={5} className=' h-100'>
                   <div className='flex justify-center items-center w-full h-40'>
@@ -164,7 +179,7 @@ const SellerList = () => {
                   }>
                     <td className="p-2">
                       <div className="flex items-center gap-3">
-                        <div className="bg-gray-600 w-10 h-10 rounded-full"></div>
+                        <img src={user.avatar} className=" w-10 h-10 rounded-full" alt="" />
                         <div>
                           <div>{user.firstname} {user.lastname}</div>
                           <div className="text-[13px] text-gray-400">Seller ID: #{user.id}</div>
@@ -183,24 +198,50 @@ const SellerList = () => {
                     </td>
                   </tr>
                 ))
-            )}
+            )} */}
           </tbody>
         </table>
 
         {/* Modal */}
-        <div className='modal w-100 h-100 shadow-md p-3 absolute right-[-500px] top-0 flex flex-col items-center z-50 bg-white rounded-[10px] duration-300 ease-in-out'>
-          <h3>New Seller</h3>
-          <form onSubmit={getUser} className='flex flex-col gap-7 mt-4'>
-            <input name='firstname' type="text" placeholder='FirstName' className='border-1 p-2 rounded border-green-600 outline-none' />
-            <input name='lastname' type="text" placeholder='LastName' className='border-1 p-2 rounded border-green-600 outline-none' />
-            <input name='email' type="email" placeholder='Email' className='border-1 p-2 rounded border-green-600 outline-none' />
-            <select name='select' id="select" className='border-1 p-2 rounded border-green-600 outline-none'>
+        {/* Modal */}
+        <div className={`modal w-100 h-100 shadow-md p-3 absolute right-[-500px] top-0 flex flex-col items-center z-50 rounded-[10px] duration-300 ease-in-out 
+  ${theme === 'black' ? '!bg-black !text-white !border !border-white' : '!bg-white !text-black'}`}>
+          <h3 className='text-xl font-semibold'>New Seller</h3>
+          <form onSubmit={getUser} className='flex flex-col gap-7 mt-4 w-full'>
+            <input
+              name='firstname'
+              type="text"
+              placeholder='FirstName'
+              className={`p-2 rounded outline-none ${theme === 'black' ? '!bg-black !text-white !border !border-white' : '!text-black border border-green-600'}`}
+            />
+            <input
+              name='lastname'
+              type="text"
+              placeholder='LastName'
+              className={`p-2 rounded outline-none ${theme === 'black' ? '!bg-black !text-white !border !border-white' : '!text-black border border-green-600'}`}
+            />
+            <input
+              name='email'
+              type="email"
+              placeholder='Email'
+              className={`p-2 rounded outline-none ${theme === 'black' ? '!bg-black !text-white border border-white' : '!text-black border border-green-600'}`}
+            />
+            <select
+              name='select'
+              id="select"
+              className={`p-2 rounded outline-none ${theme === 'black' ? '!bg-black !text-white border border-white' : '!text-black border border-green-600'}`}
+            >
               <option value="active">Active</option>
               <option value="inactive">Inactive</option>
             </select>
-            <button className='p-1 text-[20px]! border! duration-300 ease-in-out border-green-600 rounded! hover:bg-green-600! hover:text-white!'>Submit</button>
+            <button
+              className={`bg-green-600 p-2 !text-white text-[16px] !rounded  duration-300 ease-in-out`}
+            >
+              Submit
+            </button>
           </form>
         </div>
+
       </div>
     </div >
   )
