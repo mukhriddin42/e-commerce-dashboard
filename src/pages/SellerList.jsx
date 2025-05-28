@@ -103,7 +103,7 @@ const SellerList = () => {
             type="search"
             placeholder={t('sellerList.inputsearch')}
             className={theme === 'black'
-              ? '!text-white !bg-black  w-70 p-2 !rounded outline-none !border !border-white' : '!text-black !bg-white bg-gray-100 w-70 p-2 rounded outline-none'}
+              ? '!text-white !bg-black  w-70 p-2 !rounded outline-none !border !border-white' : '!text-black !bg-white  w-70 p-2 rounded outline-none'}
 
           />
           <ul className='flex gap-5'>

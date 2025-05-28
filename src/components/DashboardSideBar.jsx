@@ -79,6 +79,7 @@ const DashboardSideBar = () => {
   return (
     <CustomProvider theme={myAppearance}>
       <Sidenav
+        
         expanded={expanded}
         className="w-[50vw] absolute md:relative md:max-w-[15vw]! z-20 shadow-lg  transition-all duration-100 ease-in-out"
       >
@@ -102,7 +103,7 @@ const DashboardSideBar = () => {
             </Nav.Item>
 
             <Nav.Menu
-              placement=""
+              placement="rightStart"
               eventKey="2"
               title="Products"
               icon={<CreditCardMinusIcon />}
@@ -117,6 +118,7 @@ const DashboardSideBar = () => {
             <Nav.Menu
               eventKey="3"
               title="Orders"
+              placement="rightStart"
               icon={<SwitchCoordinatesIcon />}
             >
               <Nav.Item eventKey="3-1" as={NavLink} href="/order-list">
@@ -134,7 +136,7 @@ const DashboardSideBar = () => {
             </Nav.Menu>
 
             <Nav.Menu
-              placement=""
+              placement="rightStart"
               eventKey="4"
               title="Sellers"
               icon={<RelatedMapIcon />}
@@ -148,7 +150,7 @@ const DashboardSideBar = () => {
             </Nav.Menu>
 
             <Nav.Menu
-              placement=""
+              placement="rightStart"
               eventKey="5"
               title="Add Product"
               icon={<AddOutlineIcon />}
@@ -171,7 +173,7 @@ const DashboardSideBar = () => {
             </Nav.Item>
 
             <Nav.Menu
-              placement=""
+              placement="rightStart"
               eventKey="7"
               title="Account"
               icon={<OperatePeopleIcon />}

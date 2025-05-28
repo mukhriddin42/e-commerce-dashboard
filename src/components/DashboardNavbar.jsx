@@ -32,7 +32,10 @@ const DashboardNavbar = () => {
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
   };
-  
+
+
+
+
 
 
   useEffect(() => {
@@ -47,12 +50,12 @@ const DashboardNavbar = () => {
 
 
   // DARK mode 
-  const {theme, setTheme} = useContext(ThemeContext);
+  const { theme, setTheme } = useContext(ThemeContext);
 
   const [iconColor, setIconColor] = useState("white")
 
   const handleMode = () => {
-    if (theme === "light"){
+    if (theme === "light") {
       setTheme("black")
     } else {
       setTheme("light")
@@ -60,24 +63,24 @@ const DashboardNavbar = () => {
   }
 
   useLayoutEffect(() => {
-      if (theme === "light") {
-        setIconColor("black")
-      } else {
-        setIconColor("white")
-      }
+    if (theme === "light") {
+      setIconColor("black")
+    } else {
+      setIconColor("white")
+    }
 
   }, [theme])
-  
 
-   
+
+
 
 
 
 
   return (
-    <div className={theme === "black" 
-      ? "shadow-md shadow-gray-700 h-[110px] md:h-[64px]   flex flex-col gap-2 "
-      : "shadow-sm h-[110px] md:h-[64px]   flex flex-col gap-2 "
+    <div className={theme === "black"
+      ? "!bg-[rgba(0,0,0,.9)] shadow-md shadow-gray-700 h-[110px] md:h-[64px]   flex flex-col gap-2 "
+      : "!bg-white shadow-sm h-[110px] md:h-[64px]   flex flex-col gap-2 "
     }>
 
       <div className=" flex px-2 md:px-5 mt-2 w-full justify-end md:flex-row  md:justify-between items-center">
@@ -85,7 +88,7 @@ const DashboardNavbar = () => {
 
 
         <InputGroup style={styles} className='hidden! md:flex!'>
-          <Input className={theme === "black"  ? "bg-gray-700! text-white! " : "bg-gray-100!"} />
+          <Input className={theme === "black" ? "bg-gray-500! text-blue-100! " : "bg-gray-100!"} />
           <InputGroup.Button className={theme === "black"
             ? 'bg-gray-600! '
             : "bg-gray-200!"
@@ -99,75 +102,64 @@ const DashboardNavbar = () => {
         <div className='flex gap-1 md:gap-3 mt-2 items-center'>
 
           <Badge content={3}>
-            <Button className={theme === "black" 
-            ? "bg-gray-600!"
-            : "bg-gray-100!"
-          } >
+            <Button className={theme === "black"
+              ? "bg-gray-600!"
+              : "bg-gray-100!"
+            } >
               <FaBell color={iconColor} size={15} />
 
             </Button>
           </Badge>
-          <Button className={theme === "black" 
+          <Button className={theme === "black"
             ? "bg-gray-600!"
             : "bg-gray-100!"
           } onClick={() => handleMode()}>
-            {theme === "black" ? <IoIosSunny color={iconColor} size={15} /> : <IoMdMoon color={iconColor} size={15} /> }
-            
+            {theme === "black" ? <IoIosSunny color={iconColor} size={15} /> : <IoMdMoon color={iconColor} size={15} />}
+
           </Button>
 
-          <Button className={theme === "black" 
+          <Button className={theme === "black"
             ? "bg-gray-600!"
             : "bg-gray-100!"
           } >
             <IoTvSharp color={iconColor} size={15} />
           </Button>
-          <Nav pullRight className=''>
-            <Dropdown
-              placement="bottomEnd"
-              className={theme === "black"
+         
+          <Nav pullRight>
+            <Nav.Menu title={<FaEarthAmericas color={iconColor} size={15} />} placement="bottomEnd" className={theme === "black"
                 ? "border border-gray-700 bg-gray-600 rounded-sm mr-2"
                 : "border border-gray-300 rounded-sm mr-2"
-              }
-              title={
-                <FaEarthAmericas color={iconColor} size={15}  />
+              }>
+              <Nav.Item onClick={() => handleLanguageChange('uz')}>O'zbek</Nav.Item>
+              <Nav.Item onClick={() => handleLanguageChange('en')}>English</Nav.Item>
+              <Nav.Item onClick={() => handleLanguageChange('ru')}>Русский</Nav.Item>
+            </Nav.Menu>
 
-              }
-            >
-              <Dropdown.Item onClick={() => handleLanguageChange('uz')}>O'zbek</Dropdown.Item>
-              <Dropdown.Item onClick={() => handleLanguageChange('en')}>English</Dropdown.Item>
-              <Dropdown.Item onClick={() => handleLanguageChange('ru')}>Русский</Dropdown.Item>
-              
-            </Dropdown>
-            <Dropdown
+            <Nav.Menu
+              title={<Avatar circle src={image} alt="User" className='w-5 h-5 md:w-8 md:h-8' />}
               placement="bottomEnd"
-              className={theme === "black" 
+              className={theme === "black"
                 ? "border w-17 md:w-auto border-gray-700 bg-gray-600  rounded-sm"
                 : "border w-17 md:w-auto border-gray-300  rounded-sm"
               }
-              title={
-                <Avatar
-                  circle
-                  src={image}
-                  alt="User"
-                  className='w-5! h-5! md:w-8! md:h-8! '
-                />
-              }
             >
-              <Link to='/profile-setting'> <Dropdown.Item icon={<UserInfoIcon />}>Profile</Dropdown.Item></Link>
-              <Link to='/site-setting'><Dropdown.Item icon={<CogIcon />}>Settings</Dropdown.Item></Link>
-              <Dropdown.Separator />
-              <Link to='login'>
-                <Dropdown.Item icon={<SignOutIcon />}> Logout </Dropdown.Item>
-              </Link>
-            </Dropdown>
+              <Nav.Item as={Link} to='/profile-setting' icon={<UserInfoIcon />}>Profile</Nav.Item>
+              <Nav.Item as={Link} to='/site-setting' icon={<CogIcon />}>Settings</Nav.Item>
+              <Nav.Item divider />
+              <Nav.Item as={Link} to='/login' icon={<SignOutIcon />}>Logout</Nav.Item>
+            </Nav.Menu>
           </Nav>
+
         </div>
 
       </div>
 
       <InputGroup className='flex! md:hidden! max-w-[80%] mx-auto '>
-        <Input className='bg-gray-50!' />
-        <InputGroup.Button className='bg-gray-200!'>
+        <Input className={theme === "black"
+          ? "bg-gray-500! text-blue-100! "
+          : "bg-gray-100!"
+        } />
+        <InputGroup.Button className='bg-gray-300!'>
           <SearchIcon />
         </InputGroup.Button>
       </InputGroup>
