@@ -1,4 +1,5 @@
 import React, { memo, use, useContext, useEffect, useLayoutEffect, useState } from 'react';
+import { useAuth } from '../context/authContext';
 import { Navbar, Nav, Dropdown, Avatar } from 'rsuite';
 import CogIcon from '@rsuite/icons/legacy/Cog';
 import SignOutIcon from '@rsuite/icons/legacy/SignOut';
@@ -74,7 +75,7 @@ const DashboardNavbar = () => {
 
 
 
-
+  const {logout} = useAuth()
 
 
   return (
@@ -146,7 +147,7 @@ const DashboardNavbar = () => {
               <Nav.Item as={Link} to='/profile-setting' icon={<UserInfoIcon />}>Profile</Nav.Item>
               <Nav.Item as={Link} to='/site-setting' icon={<CogIcon />}>Settings</Nav.Item>
               <Nav.Item divider />
-              <Nav.Item as={Link} to='/login' icon={<SignOutIcon />}>Logout</Nav.Item>
+              <Nav.Item as={Link} to='/login' onClick={logout} icon={<SignOutIcon />}>Logout</Nav.Item>
             </Nav.Menu>
           </Nav>
 

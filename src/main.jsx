@@ -18,74 +18,17 @@ import ProfileSettings from './pages/ProfileSettings.jsx'
 import SiteSettings from './pages/SiteSettings.jsx'
 import AddProductTwo from './pages/AddProductTwo.jsx'
 import Login from './components/Login.jsx'
-import Sign from './components/Routes/Sign.jsx'
-import Createakk from './components/Routes/Createakk.jsx'
+import Sign from './components/Login/Sign.jsx'
+import Createakk from './components/Login/Createakk.jsx'
 import ContextThemeProvider  from './hooks/useContext.jsx'
 import LanguageProvider from './hooks/useLanguageContext.jsx';
+import { AuthProvider } from './context/authContext.jsx';
+import ProtectedRoute from './routes/ProtectedRoute.jsx';
 
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <App />,
-    children: [
-      {
-        index: true,
-        element: <Dashboard />
-      },
-      {
-        path: "addproduct",
-        element: <AddProducts />
-      },
-      {
-        path: "addproducttwo",
-        element: <AddProductTwo />
-      },
-      {
-        path: "products",
-        element: <Products />
-      },
-      {
-        path: "order-list",
-        element: <OrderList />
-      },
-      {
-        path: "order-details/:id",
-
-        element: <OrderDetails />
-      },
-      {
-        path: "reviews",
-        element: <Reviews />
-      },
-      {
-        path: "seller-list",
-        element: <SellerList />
-      },
-      {
-        path: "seller-profile",
-        element: <SellerProfile />
-      },
-      {
-        path: "profile-setting",
-        element: <ProfileSettings />
-      },
-      {
-        path: "site-setting",
-        element: <SiteSettings />
-      },
-      {
-        path: "transactions",
-        element: <Transactions />
-      },
-      {
-        path: "categories",
-        element: <Categories />
-      }
-    ]
-  },
-  {
-    path: 'login',
+    path: "/login",
     element: <Login />,
     children: [
       {
@@ -97,16 +40,43 @@ const router = createBrowserRouter([
         element: <Createakk />
       }
     ]
+  },
+  {
+    path: "/",
+    element: <ProtectedRoute />, // bu protected route
+    children: [
+      {
+        path: "/",
+        element: <App />,
+        children: [
+          { index: true, element: <Dashboard /> },
+          { path: "addproduct", element: <AddProducts /> },
+          { path: "addproducttwo", element: <AddProductTwo /> },
+          { path: "products", element: <Products /> },
+          { path: "order-list", element: <OrderList /> },
+          { path: "order-details/:id", element: <OrderDetails /> },
+          { path: "reviews", element: <Reviews /> },
+          { path: "seller-list", element: <SellerList /> },
+          { path: "seller-profile", element: <SellerProfile /> },
+          { path: "profile-setting", element: <ProfileSettings /> },
+          { path: "site-setting", element: <SiteSettings /> },
+          { path: "transactions", element: <Transactions /> },
+          { path: "categories", element: <Categories /> }
+        ]
+      }
+    ]
   }
+]);
 
-])
 createRoot(document.getElementById('root')).render(
   
   <StrictMode>
-    <LanguageProvider>
-      <ContextThemeProvider>
-        <RouterProvider router={router}></RouterProvider>
-      </ContextThemeProvider>
-    </LanguageProvider>
-  </StrictMode>,
+    <AuthProvider>
+      <LanguageProvider>
+        <ContextThemeProvider>
+          <RouterProvider router={router} />
+        </ContextThemeProvider>
+      </LanguageProvider>
+    </AuthProvider>
+  </StrictMode>
 )

@@ -4,7 +4,7 @@ import { fetchLastImage, uploadImage } from '../hooks/imagesFuncion';
 import { ThemeContext } from '../hooks/useContext';
 import { useTranslation } from 'react-i18next';
 
-export const base_url = 'https://682739736b7628c5290f890c.mockapi.io/ava';
+// export const base_url = 'https://682739736b7628c5290f890c.mockapi.io/ava';
 
 const ProfileSettings = () => {
   const { theme } = useContext(ThemeContext);

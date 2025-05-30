@@ -1,45 +1,96 @@
-import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { ThemeContext } from '../../hooks/useContext';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../../context/authContext';
+
 
 const Createakk = () => {
+    const { register } = useAuth(); // Assuming you have an AuthContext for registration
     const { theme } = useContext(ThemeContext);
     const { t } = useTranslation();
+
+    const navigate = useNavigate()
+
+
+    const [form, setForm] = useState({
+        firsname: '',
+        lastname: '',
+        email: '',
+        password: ''
+    })
 
     const inputClass = `w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${theme === 'black' ? 'bg-black text-white' : 'bg-white text-black'}`;
     const phoneInputClass = `flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${theme === 'black' ? 'bg-black text-white' : 'bg-white text-black'}`;
 
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            await register(form.firsname, form.lastname, form.email, form.password);
+            navigate('/'); // Redirect to login after successful registration
+        }
+        catch (err) {
+            console.error("Registration failed:", err);
+            // Optionally, you can set an error state to display an error message to the user
+            // setError("Registration failed. Please try again.");
+            alert('Registration failed: ' + err.response?.data?.message);
+        }
+        // console.log(form.firsname, form.lastname, form.email, form.password);
+        
+    }
     return (
         <div className={theme === 'black'
             ? '!bg-black !text-white flex items-center justify-center !rounded'
             : '!bg-white !text-black flex items-center justify-center'}>
             <div className={theme === 'black'
-                ? '!bg-black !text-white p-8 rounded-xl shadow-md w-full max-w-md'
+                ? '!bg-gray-900 !text-white p-8 rounded-xl shadow-md w-full max-w-md'
                 : '!bg-white !text-black p-8 rounded-xl shadow-md w-full max-w-md'}>
 
                 <h2 className="text-2xl font-semibold text-center">{t("createaccount.title")}</h2>
 
-                <form className={`${theme === 'black' ? '!bg-black !text-white' : '!bg-white'} flex flex-col gap-5 mt-5`}>
+                <form onSubmit={handleSubmit}
+                className={`${theme === 'black' ? '!bg-black !text-white' : '!bg-white'} flex flex-col gap-5 mt-5`}>
+
+                    <input
+                        type="text"
+                        placeholder="First Name"
+                        className={inputClass}
+                        value={form.firsname}
+                        onChange={(e) => setForm({ ...form, firsname: e.target.value })}
+                        required
+                    />
+
+                    <input
+                        type="text"
+                        placeholder="Last Name"
+                        className={inputClass}
+                        value={form.lastname}
+                        onChange={(e) => setForm({ ...form, lastname: e.target.value })}
+                        required
+                    />
+
+                    
                     <input
                         type="email"
                         placeholder={t("createaccount.emailPlaceholder")}
                         className={inputClass}
+                        value={form.email}
+                        onChange={(e) => setForm({ ...form, email: e.target.value })}
+                        required
                     />
 
-                    <div className="flex space-x-2">
-                        <span className={`flex items-center px-4 py-2 border border-gray-300 rounded-md select-none ${theme === 'black' ? 'bg-black text-white' : 'bg-gray-100 text-black'}`}>+998</span>
-                        <input
-                            type="tel"
-                            placeholder={t("createaccount.phonePlaceholder")}
-                            className={phoneInputClass}
-                        />
-                    </div>
+
 
                     <input
                         type="password"
                         placeholder={t("createaccount.passwordPlaceholder")}
                         className={inputClass}
+                        autocomplete="username" 
+                        value={form.password}
+                        onChange={(e) => setForm({ ...form, password: e.target.value })}
+                        required
                     />
 
                     <p className="text-xs text-gray-500">
