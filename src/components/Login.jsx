@@ -9,10 +9,11 @@ const Login = () => {
 
     return (
         <div className=' w-full h-[100vh]'>
-            <DashboardNavbar />
-            <div className={theme === 'black' ? '!bg-black !text-white w-full h-[90%]  flex items-center justify-center'
-                : '!bg-white !text-black w-full h-[90%]  flex items-center justify-center'
+            {/* <DashboardNavbar /> */}
+            <div className={theme === 'black' ? '!bg-black !text-white w-full h-full flex items-center justify-center'
+                : '!bg-white !text-black w-full h-full flex items-center justify-center'
             }>
+            
                 <Outlet />
             </div>
         </div >
