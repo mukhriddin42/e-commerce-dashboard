@@ -1,8 +1,34 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
+import {
+  Box,
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  Typography,
+  Card,
+  CardContent,
+  CardHeader,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material"
+import { Edit, Delete, Add, ArrowBack } from "@mui/icons-material"
 
-export default function Categories() {
+export default function Categories({ onBack }) {
   const [categories, setCategories] = useState([])
   const [formData, setFormData] = useState({
     name: "",
@@ -11,22 +37,20 @@ export default function Categories() {
     description: "",
   })
   const [editingCategory, setEditingCategory] = useState(null)
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const [categoryToDelete, setCategoryToDelete] = useState(null)
 
   useEffect(() => {
-    // Load initial data
     fetch("/data/categories.json")
       .then((res) => res.json())
       .then((data) => setCategories(data))
       .catch(() => {
-        // Fallback data
         const fallbackData = [
-          {
-            id: 1,
-            name: "Cafe & Milk",
-            description: "Cafe & Milk",
-            slug: "cafe",
-            order: 1,
-          },
+          { id: 1, name: "Organic food", description: "Fresh and organic food products", slug: "organic-food", order: 1 },
+          { id: 2, name: "Beverages", description: "All kinds of drinks and beverages", slug: "beverages", order: 2 },
+          { id: 3, name: "Bakery", description: "Fresh bread and bakery items", slug: "bakery", order: 3 },
+          { id: 4, name: "Electronics", description: "Electronic devices and gadgets", slug: "electronics", order: 4 },
+          { id: 5, name: "Clothing", description: "Fashion and clothing items", slug: "clothing", order: 5 },
         ]
         setCategories(fallbackData)
       })
@@ -34,7 +58,10 @@ export default function Categories() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
+    if (!formData.name.trim()) {
+      alert("Category name is required")
+      return
+    }
     if (editingCategory) {
       setCategories(
         categories.map((cat) =>
@@ -58,13 +85,7 @@ export default function Categories() {
       }
       setCategories([...categories, newCategory])
     }
-
-    setFormData({
-      name: "",
-      slug: "",
-      parent: "",
-      description: "",
-    })
+    setFormData({ name: "", slug: "", parent: "", description: "" })
   }
 
   const handleEdit = (category) => {
@@ -72,124 +93,205 @@ export default function Categories() {
     setFormData({
       name: category.name,
       slug: category.slug,
-      parent: "",
+      parent: category.parent || "",
       description: category.description,
     })
   }
 
   const handleDelete = (id) => {
     setCategories(categories.filter((cat) => cat.id !== id))
+    setDeleteDialogOpen(false)
+    setCategoryToDelete(null)
+  }
+
+  const openDeleteDialog = (category) => {
+    setCategoryToDelete(category)
+    setDeleteDialogOpen(true)
   }
 
   const handleCancel = () => {
     setEditingCategory(null)
-    setFormData({
-      name: "",
-      slug: "",
-      parent: "",
-      description: "",
-    })
+    setFormData({ name: "", slug: "", parent: "", description: "" })
+  }
+
+  const exportCategories = () => {
+    const dataStr = JSON.stringify(categories, null, 2)
+    const dataUri = "data:application/json;charset=utf-8," + encodeURIComponent(dataStr)
+    const exportFileDefaultName = "categories.json"
+    const linkElement = document.createElement("a")
+    linkElement.setAttribute("href", dataUri)
+    linkElement.setAttribute("download", exportFileDefaultName)
+    linkElement.click()
   }
 
   return (
-    <div style={{ padding: "20px", fontFamily: "sans-serif" }}>
-      <h1 style={{ fontSize: "24px", fontWeight: "bold" }}>Categories</h1>
-      <p style={{ color: "#666" }}>Add, edit or delete a category</p>
+    <Box sx={{ p: 3 }}>
+      {/* Header */}
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 4 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+          {onBack && (
+            <Button variant="outlined" startIcon={<ArrowBack />} onClick={onBack}>
+              Back to Products
+            </Button>
+          )}
+          <Box>
+            <Typography variant="h4" fontWeight="bold">
+              Categories
+            </Typography>
+            <Typography color="text.secondary" mt={0.5}>
+              Add, edit or delete categories
+            </Typography>
+          </Box>
+        </Box>
+        <Button variant="outlined" onClick={exportCategories}>
+          Export Categories
+        </Button>
+      </Box>
 
-      <div style={{ display: "flex", gap: "20px", marginTop: "20px", flexWrap: "wrap" }}>
+      <Box sx={{ display: "flex", gap: 3, flexWrap: "wrap" }}>
         {/* Form */}
-        <form onSubmit={handleSubmit} style={{ flex: "1", minWidth: "300px", border: "1px solid #ddd", padding: "20px", borderRadius: "8px" }}>
-          <div style={{ marginBottom: "10px" }}>
-            <label htmlFor="name">Name</label><br />
-            <input
-              id="name"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              placeholder="Category name"
-              required
-              style={{ width: "100%", padding: "8px" }}
-            />
-          </div>
+        <Card sx={{ flex: "1 1 300px", maxWidth: 400 }}>
+          <CardHeader
+            title={
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <Add />
+                {editingCategory ? "Edit Category" : "Add New Category"}
+              </Box>
+            }
+          />
+          <CardContent>
+            <form onSubmit={handleSubmit}>
+              <TextField
+                fullWidth
+                required
+                label="Name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                margin="normal"
+              />
+              <TextField
+                fullWidth
+                label="Slug"
+                value={formData.slug}
+                onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+                helperText="Leave empty to auto-generate from name"
+                margin="normal"
+              />
+              <FormControl fullWidth margin="normal">
+                <InputLabel id="parent-label">Parent Category</InputLabel>
+                <Select
+                  labelId="parent-label"
+                  value={formData.parent}
+                  label="Parent Category"
+                  onChange={(e) => setFormData({ ...formData, parent: e.target.value })}
+                >
+                  <MenuItem value="">No parent</MenuItem>
+                  {categories
+                    .filter((cat) => (editingCategory ? cat.id !== editingCategory.id : true))
+                    .map((cat) => (
+                      <MenuItem key={cat.id} value={cat.name}>
+                        {cat.name}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+              <TextField
+                fullWidth
+                multiline
+                rows={3}
+                label="Description"
+                value={formData.description}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                margin="normal"
+              />
 
-          <div style={{ marginBottom: "10px" }}>
-            <label htmlFor="slug">Slug</label><br />
-            <input
-              id="slug"
-              value={formData.slug}
-              onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-              placeholder="category-slug"
-              style={{ width: "100%", padding: "8px" }}
-            />
-          </div>
-
-          <div style={{ marginBottom: "10px" }}>
-            <label htmlFor="parent">Parent</label><br />
-            <select
-              id="parent"
-              value={formData.parent}
-              onChange={(e) => setFormData({ ...formData, parent: e.target.value })}
-              style={{ width: "100%", padding: "8px" }}
-            >
-              <option value="">No parent</option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.name}>{category.name}</option>
-              ))}
-            </select>
-          </div>
-
-          <div style={{ marginBottom: "10px" }}>
-            <label htmlFor="description">Description</label><br />
-            <textarea
-              id="description"
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              placeholder="Category description"
-              rows={3}
-              style={{ width: "100%", padding: "8px" }}
-            ></textarea>
-          </div>
-
-          <div style={{ display: "flex", gap: "10px" }}>
-            <button type="submit" style={{ flex: 1, background: "green", color: "white", padding: "10px", border: "none", cursor: "pointer" }}>
-              {editingCategory ? "Update category" : "Create category"}
-            </button>
-            {editingCategory && (
-              <button type="button" onClick={handleCancel} style={{ padding: "10px" }}>
-                Cancel
-              </button>
-            )}
-          </div>
-        </form>
+              <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+                <Button variant="contained" type="submit" fullWidth>
+                  {editingCategory ? "Update Category" : "Create Category"}
+                </Button>
+                {editingCategory && (
+                  <Button variant="outlined" onClick={handleCancel} fullWidth>
+                    Cancel
+                  </Button>
+                )}
+              </Box>
+            </form>
+          </CardContent>
+        </Card>
 
         {/* Table */}
-        <div style={{ flex: "2", minWidth: "400px", border: "1px solid #ddd", borderRadius: "8px", padding: "10px" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr style={{ backgroundColor: "#f0f0f0" }}>
-                <th style={{ padding: "8px", border: "1px solid #ddd" }}>Name</th>
-                <th style={{ padding: "8px", border: "1px solid #ddd" }}>Description</th>
-                <th style={{ padding: "8px", border: "1px solid #ddd" }}>Slug</th>
-                <th style={{ padding: "8px", border: "1px solid #ddd" }}>Order</th>
-                <th style={{ padding: "8px", border: "1px solid #ddd" }}>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {categories.map((category) => (
-                <tr key={category.id}>
-                  <td style={{ padding: "8px", border: "1px solid #ddd" }}>{category.name}</td>
-                  <td style={{ padding: "8px", border: "1px solid #ddd" }}>{category.description}</td>
-                  <td style={{ padding: "8px", border: "1px solid #ddd", color: "blue" }}>{category.slug}</td>
-                  <td style={{ padding: "8px", border: "1px solid #ddd" }}>{category.order}</td>
-                  <td style={{ padding: "8px", border: "1px solid #ddd" }}>
-                    <button onClick={() => handleEdit(category)} style={{ marginRight: "5px" }}>Edit</button>
-                    <button onClick={() => handleDelete(category.id)} style={{ color: "red" }}>Delete</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+        <Card sx={{ flex: "2 1 600px" }}>
+          <CardHeader title={`Categories List (${categories.length})`} />
+          <CardContent sx={{ p: 0 }}>
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Description</TableCell>
+                    <TableCell>Slug</TableCell>
+                    <TableCell>Order</TableCell>
+                    <TableCell align="right">Actions</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {categories.map((category) => (
+                    <TableRow key={category.id}>
+                      <TableCell>
+                        {category.name}
+                        {category.parent && (
+                          <Typography variant="caption" color="text.secondary" display="block">
+                            Parent: {category.parent}
+                          </Typography>
+                        )}
+                      </TableCell>
+                      <TableCell sx={{ maxWidth: 250, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                        {category.description}
+                      </TableCell>
+                      <TableCell>
+                        <code>{category.slug}</code>
+                      </TableCell>
+                      <TableCell>{category.order}</TableCell>
+                      <TableCell align="right">
+                        <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}>
+                          <Button variant="outlined" size="small" startIcon={<Edit />} onClick={() => handleEdit(category)}>
+                            Edit
+                          </Button>
+                          <Button
+                            variant="outlined"
+                            color="error"
+                            size="small"
+                            startIcon={<Delete />}
+                            onClick={() => openDeleteDialog(category)}
+                          >
+                            Delete
+                          </Button>
+                        </Box>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </CardContent>
+        </Card>
+      </Box>
+
+      {/* Delete confirmation dialog */}
+      <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
+        <DialogTitle>Confirm Delete</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete the category "{categoryToDelete?.name}"? This action cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDeleteDialogOpen(false)}>Cancel</Button>
+          <Button color="error" onClick={() => handleDelete(categoryToDelete?.id)} autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
   )
 }
