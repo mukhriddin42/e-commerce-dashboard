@@ -9,7 +9,7 @@ let failedQueue = [];
 
 const api = axios.create({
   baseURL: 'https://api-ojta.onrender.com/api',
-  
+
 });
 
 
@@ -45,10 +45,7 @@ api.interceptors.response.use(
           });
         });
       }
-
       isRefreshing = true;
-
-
     }
 
     return Promise.reject(error);

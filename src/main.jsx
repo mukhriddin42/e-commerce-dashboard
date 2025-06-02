@@ -17,27 +17,29 @@ import SellerProfile from './pages/SellerProfile.jsx'
 import ProfileSettings from './pages/ProfileSettings.jsx'
 import SiteSettings from './pages/SiteSettings.jsx'
 import AddProductTwo from './pages/AddProductTwo.jsx'
-import Login from './components/Login.jsx'
-import Sign from './components/Login/Sign.jsx'
-import Createakk from './components/Login/Createakk.jsx'
 import ContextThemeProvider  from './hooks/useContext.jsx'
 import LanguageProvider from './hooks/useLanguageContext.jsx';
 import { AuthProvider } from './context/authContext.jsx';
 import ProtectedRoute from './routes/ProtectedRoute.jsx';
+import AuthLayout from './components/layouts/AuthLayout';
+import Login from './components/Login/Login.jsx';
+import SignUp from './components/Login/Signup.jsx';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 
 const router = createBrowserRouter([
   {
     path: "/login",
-    element: <Login />,
+    element: <AuthLayout />,
     children: [
       {
         index: true,
-        element: <Sign />
+        element: <Login />
       },
       {
         path: 'createAkk',
-        element: <Createakk />
+        element: <SignUp />
       }
     ]
   },
@@ -69,8 +71,9 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById('root')).render(
-  
+
   <StrictMode>
+    <Provider store={store}>
     <AuthProvider>
       <LanguageProvider>
         <ContextThemeProvider>
@@ -78,5 +81,6 @@ createRoot(document.getElementById('root')).render(
         </ContextThemeProvider>
       </LanguageProvider>
     </AuthProvider>
+    </Provider>
   </StrictMode>
 )

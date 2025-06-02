@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/authContext';
 
 
-const Createakk = () => {
+const SignUp = () => {
     const { register } = useAuth(); // Assuming you have an AuthContext for registration
     const { theme } = useContext(ThemeContext);
     const { t } = useTranslation();
@@ -38,7 +38,7 @@ const Createakk = () => {
             alert('Registration failed: ' + err.response?.data?.message);
         }
         // console.log(form.firsname, form.lastname, form.email, form.password);
-        
+
     }
     return (
         <div className={theme === 'black'
@@ -71,7 +71,7 @@ const Createakk = () => {
                         required
                     />
 
-                    
+
                     <input
                         type="email"
                         placeholder={t("createaccount.emailPlaceholder")}
@@ -87,7 +87,7 @@ const Createakk = () => {
                         type="password"
                         placeholder={t("createaccount.passwordPlaceholder")}
                         className={inputClass}
-                        autocomplete="username" 
+                        // autocomplete="username"
                         value={form.password}
                         onChange={(e) => setForm({ ...form, password: e.target.value })}
                         required
@@ -136,4 +136,4 @@ const Createakk = () => {
     );
 };
 
-export default Createakk;
+export default SignUp;

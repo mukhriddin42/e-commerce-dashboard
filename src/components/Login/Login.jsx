@@ -4,31 +4,31 @@ import { ThemeContext } from '../../hooks/useContext';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/authContext';
 
-const Sign = () => {
+const Login = () => {
     const { theme } = useContext(ThemeContext);
     const { t } = useTranslation();
     const [form, setForm] = React.useState({
         email: '',
         password: ''
     })
-    const navigate = useNavigate(); 
-    
-    const { login } = useAuth(); 
+    const navigate = useNavigate();
 
-    
-    
+    const { login } = useAuth();
+
+
+
     const handleLogin = async (e) => {
         e.preventDefault();
 
         try {
             await login(form.email, form.password);
-            navigate('/'); // Redirect to home 
+            navigate('/'); // Redirect to home
         }
         catch (err) {
             console.error("Login failed:", err);
             alert('Login failed: ' + err.response?.data?.message);
         }
-        
+
     }
 
 
@@ -66,7 +66,7 @@ const Sign = () => {
 
                     <input
                         type="password"
-                        autocomplete="username"
+                        // autocomplete="username"
                         placeholder={t('sign.passwordPlaceholder')}
                         value={form.password}
                         onChange={(e) => setForm({ ...form, password: e.target.value })}
@@ -82,14 +82,14 @@ const Sign = () => {
                         <a href="#" className="text-blue-500 hover:underline">{t('sign.forgotPassword')}</a>
                     </div>
 
-                    
+
                         <button
                             type="submit"
                             className="w-full bg-green-500 !text-white py-2 !rounded-md hover:bg-green-600 transition"
                         >
                             {t('sign.loginBtn')}
                         </button>
-                    
+
                 </form>
 
                 <div className="flex items-center my-4">
@@ -118,4 +118,4 @@ const Sign = () => {
     );
 }
 
-export default Sign;
+export default Login;

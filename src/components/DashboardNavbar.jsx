@@ -1,6 +1,6 @@
-import React, { memo, use, useContext, useEffect, useLayoutEffect, useState } from 'react';
+import React, { memo, useContext, useLayoutEffect, useState } from 'react';
 import { useAuth } from '../context/authContext';
-import { Navbar, Nav, Dropdown, Avatar } from 'rsuite';
+import { Nav, Avatar } from 'rsuite';
 import CogIcon from '@rsuite/icons/legacy/Cog';
 import SignOutIcon from '@rsuite/icons/legacy/SignOut';
 import UserInfoIcon from '@rsuite/icons/legacy/UserInfo';
@@ -50,7 +50,7 @@ const DashboardNavbar = () => {
   // }, [image]);
 
 
-  // DARK mode 
+  // DARK mode
   const { theme, setTheme } = useContext(ThemeContext);
 
   const [iconColor, setIconColor] = useState("white")
@@ -125,7 +125,7 @@ const DashboardNavbar = () => {
           } >
             <IoTvSharp color={iconColor} size={15} />
           </Button>
-         
+
           <Nav pullRight>
             <Nav.Menu title={<FaEarthAmericas color={iconColor} size={15} />} placement="bottomEnd" className={theme === "black"
                 ? "border border-gray-700 bg-gray-600 rounded-sm mr-2"
