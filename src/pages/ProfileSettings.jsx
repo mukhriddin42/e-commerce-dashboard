@@ -12,17 +12,17 @@ const ProfileSettings = () => {
   const [image, setImage] = useState(null);
 
   useEffect(() => {
-    fetchLastImage().then(img => {
-      if (img) setImage(img);
-    });
+    // fetchLastImage().then(img => {
+    //   if (img) setImage(img);
+    // });
   }, []);
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
       try {
-        const uploadedImg = await uploadImage(file);
-        setImage(uploadedImg);
+        // const uploadedImg = await uploadImage(file);
+        // setImage(uploadedImg);
       } catch (err) {
         console.error("Uploadda xatolik:", err);
       }

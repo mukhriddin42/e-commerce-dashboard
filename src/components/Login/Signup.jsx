@@ -81,8 +81,6 @@ const SignUp = () => {
                         required
                     />
 
-
-
                     <input
                         type="password"
                         placeholder={t("createaccount.passwordPlaceholder")}

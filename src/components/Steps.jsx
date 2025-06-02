@@ -8,8 +8,6 @@ const styles = {
 
 const MySteps = () => (
   <>
-    
-
     <Steps current={1} vertical style={styles} >
       <Steps.Item title="Today" />
       <Steps.Item title="17 May" />
