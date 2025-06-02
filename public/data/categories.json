@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "name": "Cafe & Milk",
+    "description": "Cafe & Milk",
+    "slug": "cafe",
+    "order": 1
+  },
+  {
+    "id": 2,
+    "name": "Organic food",
+    "description": "EU standard",
+    "slug": "bio",
+    "order": 2
+  },
+  {
+    "id": 3,
+    "name": "Peach",
+    "description": "Peach",
+    "slug": "peach",
+    "order": 3
+  },
+  {
+    "id": 4,
+    "name": "Red Apple",
+    "description": "Red Apple",
+    "slug": "apple",
+    "order": 4
+  },
+  {
+    "id": 5,
+    "name": "Sauce",
+    "description": "Sauce",
+    "slug": "sauce",
+    "order": 5
+  },
+  {
+    "id": 6,
+    "name": "Vegetables",
+    "description": "Vegetables",
+    "slug": "vegetables",
+    "order": 6
+  },
+  {
+    "id": 7,
+    "name": "Strawberry",
+    "description": "Strawberry",
+    "slug": "strawberry",
+    "order": 7
+  },
+  {
+    "id": 8,
+    "name": "Black plum",
+    "description": "Black plum",
+    "slug": "plum",
+    "order": 8
+  }
+]

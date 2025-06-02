@@ -16,7 +16,7 @@ import { FaBell } from "react-icons/fa";
 
 import 'rsuite/dist/rsuite.min.css';
 import { Link } from 'react-router-dom';
-import { fetchLastImage } from '../hooks/imagesFuncion';
+// import { fetchLastImage } from '../hooks/imagesFuncion';
 import { ThemeContext } from '../hooks/useContext';
 import { LanguageContext } from '../hooks/useLanguageContext';
 
@@ -38,15 +38,15 @@ const DashboardNavbar = () => {
 
 
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      fetchLastImage().then(img => {
-        if (img !== image) setImage(img);
-      });
-    }, 3000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     fetchLastImage().then(img => {
+  //       if (img !== image) setImage(img);
+  //     });
+  //   }, 3000);
 
-    return () => clearInterval(interval);
-  }, [image]);
+  //   return () => clearInterval(interval);
+  // }, [image]);
 
 
   // DARK mode 

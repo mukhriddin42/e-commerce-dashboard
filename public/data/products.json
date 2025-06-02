@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "name": "Brands of Change Organic Quinoa",
+    "price": 24.5,
+    "status": "Active",
+    "date": "02.11.2023",
+    "image": "/placeholder.svg?height=40&width=40",
+    "category": "Organic food"
+  },
+  {
+    "id": 2,
+    "name": "All Natural Italian-Style Chicken",
+    "price": 199.99,
+    "status": "Active",
+    "date": "02.11.2023",
+    "image": "/placeholder.svg?height=40&width=40",
+    "category": "Meat"
+  },
+  {
+    "id": 3,
+    "name": "Gourmet Beer Battered Fish Fillets",
+    "price": 19.99,
+    "status": "Archived",
+    "date": "02.11.2023",
+    "image": "/placeholder.svg?height=40&width=40",
+    "category": "Seafood"
+  },
+  {
+    "id": 4,
+    "name": "Foster Farms Takeout Crispy Classic Buffalo",
+    "price": 19.0,
+    "status": "Active",
+    "date": "02.11.2023",
+    "image": "/placeholder.svg?height=40&width=40",
+    "category": "Meat"
+  },
+  {
+    "id": 5,
+    "name": "Blue Diamond Almonds Lightly Salted",
+    "price": 14.99,
+    "status": "Disabled",
+    "date": "02.11.2023",
+    "image": "/placeholder.svg?height=40&width=40",
+    "category": "Snacks"
+  },
+  {
+    "id": 6,
+    "name": "Chobani Complete Vanilla Greek Yogurt",
+    "price": 13.0,
+    "status": "Archived",
+    "date": "02.11.2023",
+    "image": "/placeholder.svg?height=40&width=40",
+    "category": "Dairy"
+  },
+  {
+    "id": 7,
+    "name": "Cereals Dry Ginger Ale 1 L Bottle",
+    "price": 19.99,
+    "status": "Active",
+    "date": "02.11.2023",
+    "image": "/placeholder.svg?height=40&width=40",
+    "category": "Beverages"
+  },
+  {
+    "id": 8,
+    "name": "Gourmet Beer Battered Fish Fillets",
+    "price": 19.0,
+    "status": "Active",
+    "date": "02.11.2023",
+    "image": "/placeholder.svg?height=40&width=40",
+    "category": "Seafood"
+  },
+  {
+    "id": 9,
+    "name": "Gourmet Beer Battered Fish Fillets",
+    "price": 19.99,
+    "status": "Active",
+    "date": "02.11.2023",
+    "image": "/placeholder.svg?height=40&width=40",
+    "category": "Seafood"
+  },
+  {
+    "id": 10,
+    "name": "Haagen-Dazs Caramel Cone Ice",
+    "price": 149.99,
+    "status": "Active",
+    "date": "02.11.2023",
+    "image": "/placeholder.svg?height=40&width=40",
+    "category": "Desserts"
+  }
+]

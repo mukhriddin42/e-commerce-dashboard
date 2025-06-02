@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import { fetchLastImage, uploadImage } from '../hooks/imagesFuncion';
+// import { fetchLastImage, uploadImage } from '../hooks/imagesFuncion';
 import { ThemeContext } from '../hooks/useContext';
 import { useTranslation } from 'react-i18next';
 
