@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
 const AuthContext = createContext();
 
@@ -14,27 +15,7 @@ export const AuthProvider = ({ children }) => {
 
   // Token olib kelish va tekshirish
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      axios.get(`${baseUrl}/auth/me`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-        .then(response => {
-          setUser(response.data.user);
-          console.log('User data:', response.data.user); // Konsolga foydalanuvchi ma'lumotlarini chiqarish
-           // Foydalanuvchi muvaffaqiyatli tekshirilsa, autentifikatsiya holatini yangilash
-        })
-        .catch(() => {
-          setUser(null);
-          localStorage.removeItem('token'); // Agar token noto'g'ri bo'lsa, uni o'chirish
-        })
-    }
-
-
-  }, [])
+  
 
 
 
@@ -48,12 +29,13 @@ export const AuthProvider = ({ children }) => {
         email: email,
         password: password
       });
-      console.log('Login response:', response.data.data.token); // Konsolga javobni chiqarish
+      console.log('Login response:', response.data.data.token, response.data.data); // Konsolga javobni chiqarish
 
 4
       if (response.data.data.token) {
         localStorage.setItem('token', response.data.data.token);
         setUser(response.data.user);
+        toast.success('Login successful!'); // Muvaffaqiyatli kirish haqida xabar berish
       }
 
 
@@ -87,8 +69,9 @@ export const AuthProvider = ({ children }) => {
 
       if (response.data.data.token) {
         localStorage.setItem('token', response.data.data.token);
-        setUser(response.data.user);
+        setUser(response.data.data.user);
         (true); // Foydalanuvchi muvaffaqiyatli ro'yxatdan o'tganda autentifikatsiya holatini yangilash
+        toast.success('Registration successful!'); // Muvaffaqiyatli ro'yxatdan o'tish haqida xabar berish
       }
     }
     catch (error) {
