@@ -137,7 +137,7 @@ const DashboardNavbar = () => {
             </Nav.Menu>
 
             <Nav.Menu
-              title={<Avatar circle src={image} alt="User" className='w-5 h-5 md:w-8 md:h-8' />}
+              title={<Avatar circle src={image} alt="User" className='w-7! h-7! md:w-10 md:h-8' />}
               placement="bottomEnd"
               className={theme === "black"
                 ? "border w-17 md:w-auto border-gray-700 bg-gray-600  rounded-sm"
