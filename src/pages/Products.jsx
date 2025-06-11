@@ -1,10 +1,56 @@
 "use client";
 
-import { Download, Plus, Upload } from "lucide-react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import {
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Badge,
+  IconButton,
+  Typography,
+  Box,
+} from "@mui/material";
 
-export default function Products() {
+import {
+  Download as DownloadIcon,
+  PlusOne as PlusIcon,
+  Upload as UploadIcon,
+  Edit as EditIcon,
+  Delete as DeleteIcon,
+  Search as SearchIcon,
+  Category as TagsIcon,
+} from "@mui/icons-material";
+
+const getStatusColor = (status) => {
+  switch (status) {
+    case "Active":
+      return "primary";
+    case "Archived":
+      return "default";
+    case "Disabled":
+      return "error";
+    default:
+      return "secondary";
+  }
+};
+
+export default function Products({ onNavigateToCategories }) {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All category");
@@ -23,7 +69,7 @@ export default function Products() {
   const itemsPerPage = 10;
 
   useEffect(() => {
-    // Load initial data
+    // Load products data
     fetch("/data/products.json")
       .then((res) => res.json())
       .then((data) => {
@@ -31,7 +77,7 @@ export default function Products() {
         setFilteredProducts(data);
       })
       .catch(() => {
-        // Fallback data if fetch fails
+        // Fallback products data
         const fallbackData = [
           {
             id: 1,
@@ -42,9 +88,52 @@ export default function Products() {
             image: "/placeholder.svg?height=40&width=40",
             category: "Organic food",
           },
+          {
+            id: 2,
+            name: "Premium Coffee Beans",
+            price: 18.99,
+            status: "Active",
+            date: "01.11.2023",
+            image: "/placeholder.svg?height=40&width=40",
+            category: "Beverages",
+          },
+          {
+            id: 3,
+            name: "Artisan Bread",
+            price: 5.5,
+            status: "Disabled",
+            date: "31.10.2023",
+            image: "/placeholder.svg?height=40&width=40",
+            category: "Bakery",
+          },
+          {
+            id: 4,
+            name: "Fresh Vegetables Pack",
+            price: 12.75,
+            status: "Archived",
+            date: "30.10.2023",
+            image: "/placeholder.svg?height=40&width=40",
+            category: "Organic food",
+          },
         ];
         setProducts(fallbackData);
         setFilteredProducts(fallbackData);
+      });
+
+    // Load categories data
+    fetch("/data/categories.json")
+      .then((res) => res.json())
+      .then((data) => setCategories(data))
+      .catch(() => {
+        // Fallback categories data
+        const fallbackCategories = [
+          { id: 1, name: "Organic food", slug: "organic-food" },
+          { id: 2, name: "Beverages", slug: "beverages" },
+          { id: 3, name: "Bakery", slug: "bakery" },
+          { id: 4, name: "Electronics", slug: "electronics" },
+          { id: 5, name: "Clothing", slug: "clothing" },
+        ];
+        setCategories(fallbackCategories);
       });
   }, []);
 
@@ -67,22 +156,14 @@ export default function Products() {
     setCurrentPage(1);
   }, [searchTerm, selectedCategory, products]);
 
-  const getStatusColor = (status) => {
-    switch (status) {
-      case "Active":
-        return "bg-green-100 text-green-800";
-      case "Archived":
-        return "bg-orange-100 text-orange-800";
-      case "Disabled":
-        return "bg-red-100 text-red-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
-
   const handleCreateProduct = () => {
+    if (!newProduct.name || !newProduct.price || !newProduct.category) {
+      alert("Please fill in all required fields");
+      return;
+    }
+
     const product = {
-      id: Math.max(...products.map((p) => p.id)) + 1,
+      id: Math.max(...products.map((p) => p.id), 0) + 1,
       name: newProduct.name,
       price: Number.parseFloat(newProduct.price),
       status: newProduct.status,
@@ -150,316 +231,354 @@ export default function Products() {
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
-  const categories = Array.from(new Set(products.map((p) => p.category)));
+  const availableCategories = Array.from(
+    new Set([
+      ...products.map((p) => p.category),
+      ...categories.map((c) => c.name),
+    ])
+  );
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-2xl font-semibold text-gray-900">
+    <Box sx={{ p: 3, spaceY: 4 }}>
+      {/* Header */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 2,
+        }}
+      >
+        <Box>
+          <Typography variant="h4" component="h1" gutterBottom>
             Products List
-          </h1>
-          <p className="text-sm text-gray-600">Lorem ipsum dolor sit amet.</p>
-        </div>
-        <div className="flex space-x-2">
-          <buutton variant="outline" onClick={handleExport}>
-            <Download className="w-4 h-4 mr-2" />
+          </Typography>
+          <Typography variant="subtitle1" color="text.secondary">
+            Manage your product inventory
+          </Typography>
+        </Box>
+
+        <Box sx={{ display: "flex", gap: 1 }}>
+          {onNavigateToCategories && (
+            <Button
+              variant="outlined"
+              startIcon={<TagsIcon />}
+              onClick={onNavigateToCategories}
+            >
+              Manage Categories
+            </Button>
+          )}
+
+          <Button
+            variant="outlined"
+            startIcon={<DownloadIcon />}
+            onClick={handleExport}
+          >
             Export
-          </buutton>
-          <button variant="outline" asChild>
-            <label>
-              <Upload className="w-4 h-4 mr-2" />
-              Import
-              <input
-                type="file"
-                accept=".json"
-                onChange={handleImport}
-                className="hidden"
-              />
-            </label>
-          </button>
-          <div open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-            <div>
-              <button className="bg-green-600 hover:bg-green-700">
-                <Plus className="w-4 h-4 mr-2" />
-                Create new
-              </button>
-            </div>
-            <div>
-              <div>
-                <h1>Create New Product</h1>
-              </div>
-              <div className="space-y-4">
-                <div>
-                  <label htmlFor="name">Name</label>
-                  <input
-                    id="name"
-                    value={newProduct.name}
-                    onChange={(e) =>
-                      setNewProduct({ ...newProduct, name: e.target.value })
-                    }
-                  />
-                </div>
-                <div>
-                  <label htmlFor="price">Price</label>
-                  <input
-                    id="price"
-                    type="number"
-                    step="0.01"
-                    value={newProduct.price}
-                    onChange={(e) =>
-                      setNewProduct({ ...newProduct, price: e.target.value })
-                    }
-                  />
-                </div>
-                <div>
-                  <label htmlFor="category">Category</label>
-                  <select
-                    value={newProduct.category}
-                    onValueChange={(value) =>
-                      setNewProduct({ ...newProduct, category: value })
-                    }
-                  >
-                    {/* <SelectTrigger>
-                      <SelectValue placeholder="Select category" />
-                    </SelectTrigger> */}
-                    <select>
-                      {categories.map((category) => (
-                        <option key={category} value={category}>
-                          {category}
-                        </option>
-                      ))}
-                    </select>
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor="status">Status</label>
-                  <select
-                    value={newProduct.status}
-                    onChange={(e) =>
-                      setNewProduct({ ...newProduct, status: e.target.value })
-                    }
-                  >
-                    <option value="Active">Active</option>
-                    <option value="Archived">Archived</option>
-                    <option value="Disabled">Disabled</option>
-                  </select>
-                </div>
-                <button onClick={handleCreateProduct} className="w-full">
-                  Create Product
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+          </Button>
 
-      <div className="flex justify-between items-center">
-        <select
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
-          className="w-48 border border-gray-300 rounded px-2 py-1"
-        >
-          <option value="All category">All category</option>
-          {categories.map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
+          <Button
+            variant="outlined"
+            component="label"
+            startIcon={<UploadIcon />}
+            sx={{ cursor: "pointer" }}
+          >
+            Import
+            <input type="file" accept=".json" hidden onChange={handleImport} />
+          </Button>
 
-        <div className="flex items-center space-x-2">
-          <input
-            placeholder="Search products..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-64"
-          />
-          <span className="text-sm text-gray-500">Status</span>
-        </div>
-      </div>
+          <Button
+            variant="contained"
+            color="success"
+            startIcon={<PlusIcon />}
+            onClick={() => setIsCreateDialogOpen(true)}
+          >
+            Create new
+          </Button>
+        </Box>
+      </Box>
 
-      <div className="bg-white rounded-lg border">
-        <table className="w-full border-collapse border border-gray-300 text-left">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="w-12 border px-2 py-1"></th>
-              <th className="border px-2 py-1">Name</th>
-              <th className="border px-2 py-1">Price</th>
-              <th className="border px-2 py-1">Status</th>
-              <th className="border px-2 py-1">Date</th>
-              <th className="border px-2 py-1">Action</th>
-            </tr>
-          </thead>
-          <tbody>
+      {/* Filters */}
+      <Paper
+        sx={{ p: 2, mb: 3, display: "flex", gap: 2, alignItems: "center" }}
+      >
+        <FormControl sx={{ minWidth: 180 }}>
+          <InputLabel id="category-select-label">Category</InputLabel>
+          <Select
+            labelId="category-select-label"
+            value={selectedCategory}
+            label="Category"
+            onChange={(e) => setSelectedCategory(e.target.value)}
+          >
+            <MenuItem value="All category">All category</MenuItem>
+            {availableCategories.map((cat) => (
+              <MenuItem key={cat} value={cat}>
+                {cat}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <TextField
+          variant="outlined"
+          placeholder="Search products..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          InputProps={{
+            startAdornment: <SearchIcon color="action" sx={{ mr: 1 }} />,
+          }}
+          sx={{ flexGrow: 1, maxWidth: 400 }}
+        />
+      </Paper>
+
+      {/* Products Table */}
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Image</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Price</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Date</TableCell>
+              <TableCell align="right">Actions</TableCell>
+            </TableRow>
+          </TableHead>
+
+          <TableBody>
             {paginatedProducts.map((product) => (
-              <tr key={product.id} className="hover:bg-gray-50">
-                <td className="border px-2 py-1">
+              <TableRow key={product.id}>
+                <TableCell>
                   <img
                     src={product.image || "/placeholder.svg"}
                     alt={product.name}
                     width={40}
                     height={40}
-                    className="rounded"
+                    style={{ borderRadius: 4, objectFit: "cover" }}
                   />
-                </td>
-                <td className="border px-2 py-1 font-medium">{product.name}</td>
-                <td className="border px-2 py-1">
-                  ${product.price.toFixed(2)}
-                </td>
-                <td className="border px-2 py-1">
-                  <span
-                    className={`px-2 py-1 rounded text-white ${getStatusColor(
-                      product.status
-                    )}`}
+                </TableCell>
+
+                <TableCell>{product.name}</TableCell>
+                <TableCell>${product.price.toFixed(2)}</TableCell>
+
+                <TableCell>
+                  <Badge
+                    color={getStatusColor(product.status)}
+                    badgeContent={product.status}
+                    sx={{
+                      "& .MuiBadge-badge": {
+                        right: -15,
+                        top: 10,
+                        padding: "0 8px",
+                        borderRadius: 1,
+                      },
+                    }}
+                  />
+                </TableCell>
+
+                <TableCell>{product.date}</TableCell>
+
+                <TableCell align="right">
+                  <Box
+                    sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}
                   >
-                    {product.status}
-                  </span>
-                </td>
-                <td className="border px-2 py-1">{product.date}</td>
-                <td className="border px-2 py-1">
-                  <div className="flex space-x-2">
-                    <button
+                    <IconButton
+                      color="primary"
                       onClick={() => {
                         setEditingProduct(product);
                         setIsEditDialogOpen(true);
                       }}
-                      className="text-green-600 border border-green-600 px-2 py-1 rounded hover:bg-green-50"
                     >
-                      ✏️
-                    </button>
-                    <button
+                      <EditIcon />
+                    </IconButton>
+
+                    <IconButton
+                      color="error"
                       onClick={() => handleDeleteProduct(product.id)}
-                      className="text-red-600 border border-red-600 px-2 py-1 rounded hover:bg-red-50"
                     >
-                      🗑️
-                    </button>
-                  </div>
-                </td>
-              </tr>
+                      <DeleteIcon />
+                    </IconButton>
+                  </Box>
+                </TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
-      </div>
+          </TableBody>
+        </Table>
+      </TableContainer>
 
-      <div className="flex justify-between items-center">
-        <div className="text-sm text-gray-500">
-          Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
-          {Math.min(currentPage * itemsPerPage, filteredProducts.length)} of{" "}
-          {filteredProducts.length} results
-        </div>
-        <div className="flex space-x-2">
-          <button
-            variant="outline"
-            size="sm"
-            onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </button>
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <button
-              key={page}
-              variant={page === currentPage ? "default" : "outline"}
-              size="sm"
-              onClick={() => setCurrentPage(page)}
-            >
-              {page}
-            </button>
-          ))}
-          <button
-            variant="outline"
-            size="sm"
-            onClick={() =>
-              setCurrentPage(Math.min(totalPages, currentPage + 1))
-            }
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
-        </div>
-      </div>
+      {/* Create Product Dialog */}
+      <Dialog
+        open={isCreateDialogOpen}
+        onClose={() => setIsCreateDialogOpen(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>Create New Product</DialogTitle>
+        <DialogContent dividers>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            <TextField
+              label="Name *"
+              value={newProduct.name}
+              onChange={(e) =>
+                setNewProduct({ ...newProduct, name: e.target.value })
+              }
+              fullWidth
+            />
+            <TextField
+              label="Price *"
+              type="number"
+              inputProps={{ step: "0.01" }}
+              value={newProduct.price}
+              onChange={(e) =>
+                setNewProduct({ ...newProduct, price: e.target.value })
+              }
+              fullWidth
+            />
+            <FormControl fullWidth>
+              <InputLabel>Status</InputLabel>
+              <Select
+                value={newProduct.status}
+                label="Status"
+                onChange={(e) =>
+                  setNewProduct({ ...newProduct, status: e.target.value })
+                }
+              >
+                <MenuItem value="Active">Active</MenuItem>
+                <MenuItem value="Archived">Archived</MenuItem>
+                <MenuItem value="Disabled">Disabled</MenuItem>
+              </Select>
+            </FormControl>
 
-      <div open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <div>
-          <div>
-            <p>Edit Product</p>
-          </div>
+            <FormControl fullWidth>
+              <InputLabel>Category *</InputLabel>
+              <Select
+                value={newProduct.category}
+                label="Category *"
+                onChange={(e) =>
+                  setNewProduct({ ...newProduct, category: e.target.value })
+                }
+              >
+                {categories.map((cat) => (
+                  <MenuItem key={cat.id} value={cat.name}>
+                    {cat.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+        </DialogContent>
+
+        <DialogActions>
+          <Button onClick={() => setIsCreateDialogOpen(false)}>Cancel</Button>
+          <Button
+  variant="contained"
+  onClick={handleCreateProduct}
+  disabled={
+    !newProduct.name || !newProduct.price}
+>
+            Create
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Edit Product Dialog */}
+      <Dialog
+        open={isEditDialogOpen}
+        onClose={() => setIsEditDialogOpen(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>Edit Product</DialogTitle>
+        <DialogContent dividers>
           {editingProduct && (
-            <div className="space-y-4">
-              <div>
-                <label htmlFor="edit-name">Name</label>
-                <input
-                  id="edit-name"
-                  value={editingProduct.name}
-                  onChange={(e) =>
-                    setEditingProduct({
-                      ...editingProduct,
-                      name: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div>
-                <label htmlFor="edit-price">Price</label>
-                <input
-                  id="edit-price"
-                  type="number"
-                  step="0.01"
-                  value={editingProduct.price}
-                  onChange={(e) =>
-                    setEditingProduct({
-                      ...editingProduct,
-                      price: Number.parseFloat(e.target.value),
-                    })
-                  }
-                />
-              </div>
-              <div>
-                <label htmlFor="edit-category">Category</label>
-                <select
-                  value={editingProduct.category}
-                  onValueChange={(value) =>
-                    setEditingProduct({ ...editingProduct, category: value })
-                  }
-                >
-                  {/* <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger> */}
-                  <select>
-                    {categories.map((category) => (
-                      <option key={category} value={category}>
-                        {category}
-                      </option>
-                    ))}
-                  </select>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="edit-status">Status</label>
-                <select
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              <TextField
+                label="Name"
+                value={editingProduct.name}
+                onChange={(e) =>
+                  setEditingProduct({ ...editingProduct, name: e.target.value })
+                }
+                fullWidth
+              />
+              <TextField
+                label="Price"
+                type="number"
+                inputProps={{ step: "0.01" }}
+                value={editingProduct.price}
+                onChange={(e) =>
+                  setEditingProduct({
+                    ...editingProduct,
+                    price: e.target.value,
+                  })
+                }
+                fullWidth
+              />
+              <FormControl fullWidth>
+                <InputLabel>Status</InputLabel>
+                <Select
                   value={editingProduct.status}
-                  onValueChange={(value) =>
-                    setEditingProduct({ ...editingProduct, status: value })
+                  label="Status"
+                  onChange={(e) =>
+                    setEditingProduct({
+                      ...editingProduct,
+                      status: e.target.value,
+                    })
                   }
                 >
-                  {/* <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger> */}
-                  
-                    <option value="Active">Active</option>
-                    <option value="Disabled">Disabled</option>
-                    <option value="Archived">Archived</option>
-                  
-                </select>
-              </div>
-              <button onClick={handleEditProduct} className="w-full">
-                Update Product
-              </button>
-            </div>
+                  <MenuItem value="Active">Active</MenuItem>
+                  <MenuItem value="Archived">Archived</MenuItem>
+                  <MenuItem value="Disabled">Disabled</MenuItem>
+                </Select>
+              </FormControl>
+
+              <FormControl fullWidth>
+                <InputLabel>Category</InputLabel>
+                <Select
+                  value={editingProduct.category}
+                  label="Category"
+                  onChange={(e) =>
+                    setEditingProduct({
+                      ...editingProduct,
+                      category: e.target.value,
+                    })
+                  }
+                >
+                  {categories.map((cat) => (
+                    <MenuItem key={cat.id} value={cat.name}>
+                      {cat.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
           )}
-        </div>
-      </div>
-    </div>
+        </DialogContent>
+
+        <DialogActions>
+          <Button onClick={() => setIsEditDialogOpen(false)}>Cancel</Button>
+          <Button variant="contained" onClick={handleEditProduct}>
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Box sx={{ mt: 2, display: "flex", justifyContent: "center", gap: 1 }}>
+        <Button
+          onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </Button>
+        <Typography sx={{ alignSelf: "center" }}>
+          Page {currentPage} of {totalPages}
+        </Typography>
+        <Button
+          onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </Button>
+      </Box>
+    </Box>
   );
 }
